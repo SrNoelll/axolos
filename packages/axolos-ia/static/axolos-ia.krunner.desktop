@@ -1,0 +1,18 @@
+[Desktop Entry]
+Name=Axo · IA local
+Comment=Pregunta a la IA local: escribe «ia» y tu pregunta
+Type=Service
+Icon=axolos-axo
+X-KDE-ServiceTypes=Plasma/Runner
+X-KDE-PluginInfo-Author=AxolOS
+X-KDE-PluginInfo-Name=axolos-ia
+X-KDE-PluginInfo-Version=1.0
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=true
+X-Plasma-API=DBus
+X-Plasma-API-Minimum-Version=2.0
+X-Plasma-DBusRunner-Service=org.axolos.ia.krunner
+X-Plasma-DBusRunner-Path=/runner
+X-Plasma-Request-Actions-Once=true
+X-Plasma-Runner-Syntaxes=ia :q:
+X-Plasma-Runner-Syntax-Descriptions=Pregunta :q: a la IA local de AxolOS

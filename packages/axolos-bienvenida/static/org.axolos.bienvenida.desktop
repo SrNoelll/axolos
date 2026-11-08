@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Bienvenida a AxolOS
+Comment=Prepara tu equipo para programar y usar IA local
+Exec=axolos-bienvenida
+Icon=axolos-bienvenida
+Terminal=false
+Categories=Settings;
+Keywords=bienvenida;welcome;configurar;perfiles;desarrollo;ia;git;github;

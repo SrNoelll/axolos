@@ -1,0 +1,16 @@
+[Trigger]
+Type = Package
+Operation = Install
+Operation = Upgrade
+Target = filesystem
+Target = lsb-release
+Target = axolos-branding
+# CachyOS reescribe /etc/os-release y /etc/lsb-release con sus hooks (cachyos-branding.hook,
+# os-release.hook, lsb-release.hook). pacman ejecuta los hooks por orden alfabético: este se
+# llama zz-… para ir el último y que la marca AxolOS no se pierda.
+Target = cachyos-hooks
+
+[Action]
+Description = Aplicando la marca AxolOS (os-release / lsb-release)...
+When = PostTransaction
+Exec = /usr/share/libalpm/scripts/axolos-branding apply

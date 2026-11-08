@@ -1,0 +1,94 @@
+#!/usr/bin/env python3
+"""AxolOS · vigila tus carpetas e indexa al momento lo nuevo para «ia busco …».
+
+Usa los avisos del sistema (inotify vía GIO): no recorre el disco ni gasta nada mientras no
+cambie nada. Cuando llegan archivos, espera unos segundos a que terminen de copiarse o
+descargarse y los añade al índice. El repaso completo lo sigue haciendo axolos-indice.timer.
+"""
+import os
+import sys
+import threading
+from pathlib import Path
+
+sys.path.insert(0, os.environ.get("AXOLOS_LIB", "/usr/lib/axolos"))
+import axolos_buscar as b  # noqa: E402
+from gi.repository import Gio, GLib  # noqa: E402
+
+ESPERA_S = 4          # tras el último cambio (descargas que aún se están escribiendo, copias en lote)
+EVENTOS = {Gio.FileMonitorEvent.CHANGES_DONE_HINT, Gio.FileMonitorEvent.CREATED,
+           Gio.FileMonitorEvent.MOVED_IN, Gio.FileMonitorEvent.RENAMED,
+           Gio.FileMonitorEvent.DELETED, Gio.FileMonitorEvent.MOVED_OUT}
+
+
+class Vigia:
+    def __init__(self):
+        self.monitores, self.temporizador = {}, None
+        self.ocupado, self.repetir = False, False
+        for raiz in b.carpetas():
+            self.vigilar_arbol(raiz)
+        print(f"Vigilando {len(self.monitores)} carpetas", flush=True)
+
+    def vigilar_arbol(self, raiz: Path):
+        for dirpath, dirnames, _ in os.walk(raiz):
+            dirnames[:] = [d for d in dirnames if not d.startswith(".") and d not in b.SALTAR]
+            self.vigilar(Path(dirpath))
+
+    def vigilar(self, d: Path):
+        k = str(d)
+        if k in self.monitores:
+            return
+        try:
+            m = Gio.File.new_for_path(k).monitor_directory(Gio.FileMonitorFlags.WATCH_MOVES, None)
+        except GLib.Error:
+            return
+        m.connect("changed", self.cambio)
+        self.monitores[k] = m
+
+    def cambio(self, _mon, f, otro, evento):
+        if evento not in EVENTOS:
+            return
+        ruta = Path((otro or f).get_path() or "")
+        nombre = ruta.name
+        if nombre.startswith(".") or any(p in b.SALTAR for p in ruta.parts):
+            return
+        if evento in (Gio.FileMonitorEvent.CREATED, Gio.FileMonitorEvent.MOVED_IN) and ruta.is_dir():
+            self.vigilar_arbol(ruta)                 # carpeta nueva: vigilarla también
+        elif not ruta.is_dir() and not b.tipo_de(ruta) and evento not in (
+                Gio.FileMonitorEvent.DELETED, Gio.FileMonitorEvent.MOVED_OUT, Gio.FileMonitorEvent.RENAMED):
+            return                                   # .part, .crdownload, tipos que no se indexan
+        if self.temporizador:
+            GLib.source_remove(self.temporizador)
+        self.temporizador = GLib.timeout_add_seconds(ESPERA_S, self.lanzar)
+
+    def lanzar(self):
+        self.temporizador = None
+        if self.ocupado:
+            self.repetir = True
+        else:
+            self.ocupado = True
+            threading.Thread(target=self.indexar, daemon=True).start()
+        return False
+
+    def indexar(self):
+        try:
+            b.indexar(aviso=lambda m: print(m, flush=True) if not m.startswith("   [") else None,
+                      max_bateria=40)
+        except Exception as e:  # noqa: BLE001  la IA puede estar apagada un momento: se reintenta luego
+            print(f"No se pudo indexar: {e}", flush=True)
+        GLib.idle_add(self.terminado)
+
+    def terminado(self):
+        self.ocupado = False
+        if self.repetir:
+            self.repetir = False
+            self.lanzar()
+        return False
+
+
+def main():
+    Vigia()
+    GLib.MainLoop().run()
+
+
+if __name__ == "__main__":
+    main()

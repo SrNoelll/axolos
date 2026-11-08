@@ -1,0 +1,16 @@
+# Maintainer: Noel Alarcón
+pkgname=axolos-menu
+pkgver=$(<"${startdir}/../../VERSION")
+pkgrel=3
+pkgdesc="Bento: el menú de aplicaciones de AxolOS (favoritas, recientes, búsqueda y sistema en mosaicos)"
+arch=('any')
+license=('GPL-3.0-or-later')
+depends=('plasma-workspace' 'plasma-nm' 'kirigami' 'kcoreaddons' 'axolos-branding')
+
+package() {
+  local d="$pkgdir/usr/share/plasma/plasmoids/org.axolos.bento"
+  install -d "$d"
+  cp -r --no-preserve=ownership "$startdir/org.axolos.bento/." "$d/"
+  find "$d" -type d -exec chmod 755 {} +
+  find "$d" -type f -exec chmod 644 {} +
+}

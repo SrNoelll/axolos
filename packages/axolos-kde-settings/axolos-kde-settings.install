@@ -1,0 +1,11 @@
+_sddm=/usr/share/sddm/themes/breeze/theme.conf.user
+post_install() {
+  # Solo si no lo has personalizado tú antes
+  if [ -d "${_sddm%/*}" ] && [ ! -e "$_sddm" ]; then
+    cp /usr/share/axolos/sddm-breeze-theme.conf.user "$_sddm"
+  fi
+}
+post_upgrade() { post_install; }
+post_remove() {
+  if [ -e "$_sddm" ] && grep -q wallpapers/AxolOS "$_sddm"; then rm -f "$_sddm"; fi
+}

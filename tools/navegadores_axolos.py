@@ -1,0 +1,1 @@
+../packages/axolos-kde-settings/axolos-navegadores

@@ -1,0 +1,9 @@
+[Unit]
+Description=AxolOS · mantener al día el índice de archivos para la IA
+
+[Timer]
+OnStartupSec=5min
+OnUnitActiveSec=2h
+
+[Install]
+WantedBy=timers.target

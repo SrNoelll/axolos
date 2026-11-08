@@ -1,0 +1,8 @@
+{
+    "KPlugin": {
+        "Authors": [{ "Name": "Noel Alarcón" }],
+        "Id": "AxolOS",
+        "License": "CC-BY-SA-4.0",
+        "Name": "AxolOS"
+    }
+}

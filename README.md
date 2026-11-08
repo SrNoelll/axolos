@@ -46,8 +46,28 @@ Huella de la clave: `3F7D A47A 1271 EB49 F17F  573F 992D B143 AB09 9E91`
 | `axolos-kde-settings` | Ajustes de Plasma para usuarios nuevos |
 | `axolos-dev` | Herramientas de desarrollo y perfiles de lenguajes |
 | `axolos-ia` | IA local: Ollama afinado, chat Axo, búsqueda en KRunner/Bento |
-| `axolos-bienvenida` | Asistente del primer inicio |
+| `axolos-bienvenida` | Asistente del primer inicio y Centro de AxolOS (ajustes) |
 
 También se publican `yaru-icon-theme`, `whitesur-cursor-theme-git` y `ttf-ia-writer` (del AUR),
 que usa el tema. Las fuentes de Apple (SF Pro, New York) **no** se publican porque su licencia no
 lo permite: son opcionales (`paru -S apple-fonts`) y, si no están, AxolOS usa Inter y Source Serif 4.
+
+## Instalar AxolOS desde cero
+
+La ISO de AxolOS arranca un sistema de prueba con el lanzador «Instalar AxolOS». Con conexión instala
+la versión más reciente de todo (CachyOS optimizado para tu procesador y tu gráfica, y AxolOS desde
+este repositorio); sin conexión, la versión de la ISO, que se pone al día al conectarte.
+
+## Desarrollo
+
+Este repositorio es también el código de AxolOS: los paquetes (`packages/`), la capa sobre el
+instalador de CachyOS y la ISO (`iso/`, `build-iso.sh`) y las herramientas (`tools/`). La
+documentación técnica está en [`docs/DESARROLLO.md`](docs/DESARROLLO.md).
+
+Los paquetes se publican solos: al subir cambios a `packages/`, GitHub Actions
+([`.github/workflows/publicar.yml`](.github/workflows/publicar.yml)) compila cada paquete, lo compara
+con el publicado, sube su versión si cambió, lo firma con la clave de AxolOS y actualiza la release
+[`x86_64`](https://github.com/SrNoelll/axolos/releases/tag/x86_64).
+
+El tema parte de MacTahoe de Vince Liuice (GPL-3.0). El fondo, el logo, los iconos y la animación de
+arranque son de AxolOS.

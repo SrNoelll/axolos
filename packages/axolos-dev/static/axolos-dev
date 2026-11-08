@@ -1,0 +1,118 @@
+#!/usr/bin/env python3
+"""axolos-dev · herramientas de desarrollo de AxolOS
+
+  axolos-dev                      perfiles disponibles y si ya están instalados
+  axolos-dev instalar PERFIL...   instala perfiles (web, python, rust…); pide la contraseña una vez
+  axolos-dev editores             tema AxolOS en VS Code / VSCodium / Antigravity
+"""
+import json
+import os
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+PERFILES = Path("/usr/share/axolos/perfiles.json")
+VSIX = Path("/usr/share/axolos/vscode/axolos-theme.vsix")
+ROOT_HELPER = "/usr/lib/axolos/axolos-root"
+MORADO, GRIS, VERDE, FIN = "\033[38;2;166;154;254m", "\033[38;2;138;138;153m", "\033[38;2;125;223;180m", "\033[0m"
+# Editores basados en VS Code: comando · carpeta de ajustes
+EDITORES = [("code", "Code"), ("codium", "VSCodium"), ("code-oss", "Code - OSS"), ("antigravity", "Antigravity")]
+
+
+def perfiles():
+    return json.loads(PERFILES.read_text(encoding="utf-8"))
+
+
+def nvidia():
+    return any(Path(p).read_text().strip() == "0x10de"
+               for p in map(str, Path("/sys/class/drm").glob("card*/device/vendor")))
+
+
+def paquetes(p):
+    extra = p.get("paquetes_nvidia" if nvidia() else "paquetes_otros", [])
+    return p["paquetes"] + extra
+
+
+def faltan(pkgs):
+    """Paquetes no satisfechos (pacman -T entiende los «provides»)."""
+    r = subprocess.run(["pacman", "-T", *pkgs], capture_output=True, text=True)
+    return r.stdout.split()
+
+
+def listar():
+    print(f"{MORADO}Perfiles de desarrollo de AxolOS{FIN}\n")
+    for k, p in perfiles().items():
+        f = faltan(paquetes(p))
+        estado = f"{VERDE}instalado{FIN}" if not f else f"{GRIS}faltan {len(f)}{FIN}"
+        print(f"  {MORADO}{k:<13}{FIN}{p['nombre']:<28}{estado}")
+        print(f"  {'':13}{GRIS}{p['descripcion']}{FIN}")
+    print(f"\nInstala con:  axolos-dev instalar web python …")
+
+
+def instalar(ids):
+    todos = perfiles()
+    malos = [i for i in ids if i not in todos]
+    if malos or not ids:
+        sys.exit(f"Perfil desconocido: {' '.join(malos) or '(ninguno)'} · disponibles: {' '.join(todos)}")
+    r = subprocess.run(["pkexec", ROOT_HELPER, "perfiles", *ids])
+    if r.returncode:
+        sys.exit("No se instalaron los perfiles (¿cancelaste la contraseña?).")
+    for i in ids:
+        for cmd in todos[i].get("usuario", []):
+            print(f"{MORADO}==>{FIN} {' '.join(cmd)}")
+            subprocess.run(cmd)
+    if any("docker" in todos[i].get("sistema", []) for i in ids):
+        print(f"{GRIS}Docker: cierra sesión y vuelve a entrar para usarlo sin sudo.{FIN}")
+
+
+def ajustes_vscode(carpeta):
+    return Path.home() / ".config" / carpeta / "User" / "settings.json"
+
+
+def editores():
+    hechos = 0
+    for cmd, carpeta in EDITORES:
+        if not shutil.which(cmd):
+            continue
+        r = subprocess.run([cmd, "--install-extension", str(VSIX), "--force"],
+                           capture_output=True, text=True)
+        if r.returncode:
+            print(f"  {cmd}: no se pudo instalar el tema ({r.stderr.strip()[:120]})")
+            continue
+        f = ajustes_vscode(carpeta)
+        estado = "tema instalado"
+        try:
+            data = json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
+        except ValueError:
+            data = None   # settings.json con comentarios: no lo tocamos
+        if data is not None and "workbench.colorTheme" not in data:
+            data["workbench.colorTheme"] = "AxolOS"
+            f.parent.mkdir(parents=True, exist_ok=True)
+            tmp = f.with_suffix(".axolos-tmp")
+            tmp.write_text(json.dumps(data, indent=4, ensure_ascii=False) + "\n", encoding="utf-8")
+            os.replace(tmp, f)
+            estado = "tema instalado y activado"
+        elif data is None or data.get("workbench.colorTheme") != "AxolOS":
+            estado += " (actívalo en Preferencias → Tema de color → AxolOS)"
+        print(f"  {VERDE}✓{FIN} {cmd}: {estado}")
+        hechos += 1
+    if not hechos:
+        print("No hay ningún editor basado en VS Code instalado.")
+
+
+def main():
+    a = sys.argv[1:]
+    if not a or a[0] in ("perfiles", "lista"):
+        listar()
+    elif a[0] == "instalar":
+        instalar(a[1:])
+    elif a[0] == "editores":
+        editores()
+    else:
+        print(__doc__)
+        sys.exit(0 if a[0] in ("-h", "--help", "ayuda") else 1)
+
+
+if __name__ == "__main__":
+    main()

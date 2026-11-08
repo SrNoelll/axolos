@@ -1,0 +1,35 @@
+---
+# AxolOS · marca del instalador (generada por tools/instalador_marca_axolos.py)
+componentName:  axolos
+welcomeStyleCalamares:   false
+welcomeExpandingLogo:   true
+windowExpanding:    normal
+windowSize: 1100px,600px
+windowPlacement: center
+sidebar: qml,bottom
+navigation: widget
+strings:
+    productName:         AxolOS
+    shortProductName:    AxolOS
+    version:             "1.0.0"
+    shortVersion:        "1.0.0"
+    versionedName:       AxolOS
+    shortVersionedName:  AxolOS
+    bootloaderEntryName: AxolOS
+    productUrl:          https://github.com/SrNoelll/axolos
+    supportUrl:          https://github.com/SrNoelll/axolos/issues
+images:
+    productLogo:         "logo.png"
+    productIcon:         "icon.png"
+    productWelcome:      "welcome.png"
+style:
+   SidebarBackground:        "#131318"
+   SidebarText:              "#a3a3b4"
+   SidebarTextCurrent:       "#17171d"
+   SidebarBackgroundCurrent: "#a69afe"
+slideshow:               "show.qml"
+slideshowAPI: 2
+uploadServer :
+    type :    "http"
+    url :     "https://paste.cachyos.org"
+    sizeLimit : -1

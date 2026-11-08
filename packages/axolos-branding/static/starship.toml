@@ -1,0 +1,33 @@
+# AxolOS · prompt (Starship)
+add_newline = true
+command_timeout = 200
+format = "$directory$git_branch$git_status$conda$cmd_duration$line_break$character"
+
+[character]
+success_symbol = "[❯](bold #a69afe)"
+error_symbol = "[❯](bold #ff7a93)"
+
+[directory]
+style = "bold #cdc6ff"
+truncation_length = 3
+truncation_symbol = "…/"
+repo_root_style = "bold #a69afe"
+repo_root_format = "[$before_root_path]($style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) "
+
+[git_branch]
+format = "[ $branch]($style) "
+style = "italic #8f85f2"
+
+[git_status]
+format = "[$all_status$ahead_behind]($style) "
+style = "#f3cf7a"
+
+[conda]
+format = "[ $environment]($style) "
+style = "#7ddfb4"
+ignore_base = true
+
+[cmd_duration]
+min_time = 2000
+format = "[ $duration]($style) "
+style = "#9b9ba8"

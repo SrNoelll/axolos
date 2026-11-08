@@ -1,0 +1,9 @@
+post_install() {
+  # Docker se arranca solo la primera vez que se usa (socket): no gasta nada mientras tanto
+  systemctl enable docker.socket >/dev/null 2>&1 || true
+  echo ":: AxolOS dev: «axolos-dev» muestra los perfiles de lenguajes; «axolos-dev editores» pone el tema en VS Code."
+}
+
+post_upgrade() {
+  :
+}

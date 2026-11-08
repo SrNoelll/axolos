@@ -1,0 +1,14 @@
+[Unit]
+Description=AxolOS · indexa al momento los archivos nuevos para «ia busco …»
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+ExecStart=/usr/lib/axolos/axolos-indice-vigia
+Restart=on-failure
+RestartSec=30
+Nice=19
+IOSchedulingClass=idle
+
+[Install]
+WantedBy=graphical-session.target

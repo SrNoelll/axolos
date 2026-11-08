@@ -1,0 +1,11 @@
+#!/usr/bin/env python3
+"""AxolOS · actualiza el índice de archivos para la búsqueda con IA (lo lanza axolos-indice.timer)."""
+import os
+import sys
+
+sys.path.insert(0, os.environ.get("AXOLOS_LIB", "/usr/lib/axolos"))
+import axolos_buscar  # noqa: E402
+
+detallado = "-v" in sys.argv
+sys.exit(axolos_buscar.indexar(aviso=lambda m: print(m, flush=True)
+                               if detallado or not m.startswith("   [") else None))

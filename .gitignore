@@ -1,0 +1,9 @@
+build/
+repo/
+out/
+*.pkg.tar.zst
+packages/*/src/
+packages/*/pkg/
+# copia antigua del repositorio público (ahora el repositorio es esta carpeta)
+github/
+__pycache__/

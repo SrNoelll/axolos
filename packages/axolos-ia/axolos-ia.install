@@ -1,0 +1,13 @@
+post_install() {
+  # Servicio de IA local: arranca con el sistema (sin modelo cargado no gasta gráfica)
+  systemctl enable ollama.service >/dev/null 2>&1 || true
+  systemctl try-restart ollama.service >/dev/null 2>&1 || true
+  # Índice de archivos para «ia busco …»: activo para todos los usuarios (corre en su sesión)
+  systemctl --global enable axolos-indice.timer axolos-indice-vigia.service >/dev/null 2>&1 || true
+  echo ":: AxolOS IA: «axolos-ia» muestra el estado; «axolos-ia gpu» activa la gráfica; «axolos-ia descargar» baja los modelos."
+}
+
+post_upgrade() {
+  systemctl try-restart ollama.service >/dev/null 2>&1 || true
+  systemctl --global enable axolos-indice.timer axolos-indice-vigia.service >/dev/null 2>&1 || true
+}

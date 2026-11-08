@@ -1,0 +1,19 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "vinceliuice@hotmail.com",
+                "Name": "Vince Liuice"
+            }
+        ],
+        "Category": "Plasma 6.0 theme",
+        "Description": "MacTahoe-Dark (Vince Liuice) con el morado de AxolOS",
+        "EnabledByDefault": true,
+        "Id": "AxolOS",
+        "License": "GPL-3.0",
+        "Name": "AxolOS",
+        "Version": "6.2.0",
+        "Website": "https://github.com/vinceliuice"
+    },
+    "X-Plasma-API": "5.0"
+}

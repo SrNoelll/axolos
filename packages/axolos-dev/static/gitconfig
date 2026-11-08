@@ -1,0 +1,44 @@
+# AxolOS · valores de git para todo el sistema (paquete axolos-dev)
+# Tu ~/.gitconfig manda sobre esto: cambia ahí lo que quieras.
+[init]
+	defaultBranch = main
+[core]
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	line-numbers = true
+	syntax-theme = ansi
+	file-style = "#a69afe" bold
+	file-decoration-style = "#4b4b57" ul
+	hunk-header-style = file line-number syntax
+	hunk-header-decoration-style = "#4b4b57" box
+	minus-style = syntax "#3a1f2a"
+	minus-emph-style = syntax "#5c2a3c"
+	plus-style = syntax "#1b3329"
+	plus-emph-style = syntax "#24503d"
+	line-numbers-minus-style = "#ff7a93"
+	line-numbers-plus-style = "#7ddfb4"
+	line-numbers-zero-style = "#4b4b57"
+	line-numbers-left-style = "#4b4b57"
+	line-numbers-right-style = "#4b4b57"
+[merge]
+	conflictStyle = zdiff3
+[diff]
+	colorMoved = default
+	algorithm = histogram
+[fetch]
+	prune = true
+[push]
+	autoSetupRemote = true
+[rerere]
+	enabled = true
+[branch]
+	sort = -committerdate
+[tag]
+	sort = version:refname
+[column]
+	ui = auto
+[help]
+	autocorrect = prompt

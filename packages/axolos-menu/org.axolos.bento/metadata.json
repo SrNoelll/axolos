@@ -1,0 +1,15 @@
+{
+    "KPackageStructure": "Plasma/Applet",
+    "KPlugin": {
+        "Authors": [{ "Name": "Noel Alarcón" }],
+        "Category": "Application Launchers",
+        "Description": "Menú de aplicaciones Bento de AxolOS: favoritas, recientes, búsqueda y sistema en mosaicos",
+        "Icon": "axolos",
+        "Id": "org.axolos.bento",
+        "License": "GPL-3.0-or-later",
+        "Name": "Bento (AxolOS)",
+        "Version": "1.0"
+    },
+    "X-Plasma-API-Minimum-Version": "6.0",
+    "X-Plasma-Provides": ["org.kde.plasma.launchermenu"]
+}

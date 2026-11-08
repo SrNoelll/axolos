@@ -1,0 +1,10 @@
+#!/bin/bash
+# AxolOS · instalación sin conexión: copia al disco el sistema de esta ISO (AxolOS completo) en vez de
+# descargarlo. Es la versión de la fecha de la ISO: al conectarte, «sudo pacman -Syu» la pone al día.
+# Equivale a calamares-online.sh de CachyOS, pero con su modo «offline».
+log="/home/liveuser/cachy-install.log"
+sudo bash /usr/share/axolos/instalador/aplicar-axolos.sh >> /home/liveuser/axolos-instalador.log 2>&1
+inxi -F > "$log" 2>/dev/null
+echo "########## AxolOS: instalación sin conexión · ISO $(cat /etc/version-tag 2>/dev/null)" >> "$log"
+sudo cp /usr/share/calamares/settings_offline.conf /etc/calamares/settings.conf
+exec pkexec-wrapper calamares -D6 >> "$log"

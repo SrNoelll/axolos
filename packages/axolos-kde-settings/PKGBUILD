@@ -1,0 +1,36 @@
+# Maintainer: Noel Alarcón
+pkgname=axolos-kde-settings
+pkgver=$(<"${startdir}/../../VERSION")
+pkgrel=8
+pkgdesc="Ajustes de Plasma de AxolOS para usuarios nuevos (panel, dock, Konsole, colores...)"
+arch=('any')
+license=('GPL-3.0-or-later')
+depends=('axolos-themes' 'axolos-branding')
+# Sustituye a la configuración KDE de CachyOS (tocan los mismos ficheros de /etc/skel)
+provides=('cachyos-kde-settings')
+conflicts=('cachyos-kde-settings')
+install=axolos-kde-settings.install
+
+package() {
+  install -d "$pkgdir/etc/skel" "$pkgdir/etc/xdg" "$pkgdir/usr/lib/sddm/sddm.conf.d"
+  cp -r --no-preserve=ownership "$startdir/skel/." "$pkgdir/etc/skel/"
+  cp -r --no-preserve=ownership "$startdir/xdg/."  "$pkgdir/etc/xdg/"
+  cp -r --no-preserve=ownership "$startdir/sddm/." "$pkgdir/usr/lib/sddm/sddm.conf.d/"
+  # Botones de ventana AxolOS en los navegadores Chromium (lo usa el Centro de AxolOS)
+  install -Dm755 "$startdir/axolos-navegadores" "$pkgdir/usr/bin/axolos-navegadores"
+  # Una vez por usuario al iniciar Plasma: widgets que dependen del tamaño de su pantalla
+  install -Dm644 "$startdir/plasma-updates/axolos-reloj-escritorio.js" \
+    "$pkgdir/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/axolos-reloj-escritorio.js"
+  # Firefox: barra de título del sistema (la de KWin, con los botones AxolOS);
+  # "default" = cada usuario puede cambiarlo
+  install -Dm644 "$startdir/firefox/policies.json" "$pkgdir/etc/firefox/policies/policies.json"
+  find "$pkgdir" -type d -exec chmod 755 {} +
+  find "$pkgdir" -type f -exec chmod 644 {} +
+
+  # Fondo para la pantalla de inicio de sesión (SDDM, tema breeze)
+  local wp; wp=$(<"$startdir/../axolos-themes/.wallpaper-file")
+  install -d "$pkgdir/usr/share/axolos"
+  printf '[General]\nbackground=/usr/share/wallpapers/AxolOS/contents/images/%s\ntype=image\n' "$wp" \
+    > "$pkgdir/usr/share/axolos/sddm-breeze-theme.conf.user"
+  chmod 644 "$pkgdir/usr/share/axolos/sddm-breeze-theme.conf.user"
+}

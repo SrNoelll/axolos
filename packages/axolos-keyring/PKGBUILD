@@ -1,0 +1,15 @@
+# Maintainer: Noel Alarcón
+pkgname=axolos-keyring
+pkgver=$(<"${startdir}/../../VERSION")
+pkgrel=1
+pkgdesc="Clave con la que se firman los paquetes del repositorio de AxolOS"
+arch=('any')
+license=('GPL-3.0-or-later')
+depends=('pacman')
+install=axolos-keyring.install
+
+package() {
+  install -Dm644 "$startdir/axolos.gpg"     "$pkgdir/usr/share/pacman/keyrings/axolos.gpg"
+  install -Dm644 "$startdir/axolos-trusted" "$pkgdir/usr/share/pacman/keyrings/axolos-trusted"
+  install -Dm644 "$startdir/axolos-revoked" "$pkgdir/usr/share/pacman/keyrings/axolos-revoked"
+}

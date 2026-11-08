@@ -1,0 +1,21 @@
+# Maintainer: Noel Alarcón
+pkgname=axolos-bienvenida
+pkgver=$(<"${startdir}/../../VERSION")
+pkgrel=2
+pkgdesc="Bienvenida y Centro de AxolOS: perfiles de programación, Git/GitHub, IA local, actualizaciones y apariencia"
+arch=('any')
+license=('GPL-3.0-or-later')
+depends=('axolos-ia' 'axolos-dev' 'python-pyqt6' 'polkit' 'konsole' 'openssh' 'github-cli' 'pacman-contrib')
+
+package() {
+  local s="$startdir/static"
+  install -Dm755 "$startdir/bin/axolos-bienvenida" "$pkgdir/usr/bin/axolos-bienvenida"
+  install -Dm644 "$s/check.svg"                    "$pkgdir/usr/share/axolos/bienvenida/check.svg"
+  install -Dm644 "$s/org.axolos.bienvenida.desktop" "$pkgdir/usr/share/applications/org.axolos.bienvenida.desktop"
+  install -Dm644 "$s/axolos-bienvenida.svg" "$pkgdir/usr/share/icons/hicolor/scalable/apps/axolos-bienvenida.svg"
+  install -Dm755 "$startdir/bin/axolos-centro" "$pkgdir/usr/bin/axolos-centro"
+  install -Dm644 "$s/org.axolos.centro.desktop" "$pkgdir/usr/share/applications/org.axolos.centro.desktop"
+  install -Dm644 "$s/axolos-centro.svg" "$pkgdir/usr/share/icons/hicolor/scalable/apps/axolos-centro.svg"
+  # Se abre sola en el primer inicio de sesión de cada usuario (hasta completarla u omitirla)
+  install -Dm644 "$s/axolos-bienvenida-autostart.desktop" "$pkgdir/etc/xdg/autostart/axolos-bienvenida.desktop"
+}

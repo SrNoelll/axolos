@@ -1,0 +1,67 @@
+# AxolOS · publica los paquetes al subir cambios (o a mano, desde la pestaña Actions).
+# Hace lo mismo que tools/publicar-repo.sh en el equipo de Noel: compila cada paquete, lo compara
+# con el publicado, sube pkgrel si cambió (y lo guarda en git), firma y sube la release x86_64.
+# Necesita el secreto AXOLOS_GPG_KEY: la clave privada de firma de AxolOS (armada, sin frase).
+name: Publicar paquetes
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "packages/**"
+      - "pkglists/**"
+      - "VERSION"
+      - "build-packages.sh"
+      - "tools/publicar-repo.sh"
+      - "tools/comparar_paquetes.py"
+  workflow_dispatch:
+
+# nunca dos publicaciones a la vez (se pisarían los pkgrel y los archivos de la release)
+concurrency:
+  group: publicar-repo
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    container: archlinux:base-devel
+    steps:
+      - name: Herramientas
+        run: pacman -Syu --noconfirm --needed git github-cli python gnupg
+
+      - name: Código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Usuario para compilar (makepkg no compila como root)
+        run: |
+          useradd -m compilador
+          chown -R compilador: "$GITHUB_WORKSPACE"
+
+      - name: Paquetes ya publicados (para compararlos)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p repo
+          gh release download x86_64 -R "$GITHUB_REPOSITORY" -D repo --clobber
+          chown -R compilador: repo
+
+      - name: Compilar, firmar y publicar
+        env:
+          GH_TOKEN: ${{ github.token }}
+          AXOLOS_GPG_KEY: ${{ secrets.AXOLOS_GPG_KEY }}
+        run: |
+          test -n "$AXOLOS_GPG_KEY" || { echo "Falta el secreto AXOLOS_GPG_KEY"; exit 1; }
+          sudo -u compilador --preserve-env=GH_TOKEN,AXOLOS_GPG_KEY,GITHUB_REPOSITORY,GITHUB_WORKSPACE bash -euo pipefail -c '
+            cd "$GITHUB_WORKSPACE"
+            printf "%s\n" "$AXOLOS_GPG_KEY" | gpg --batch --quiet --import
+            git config --global --add safe.directory "$PWD"
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+            AXOLOS_CI=1 tools/publicar-repo.sh
+          '

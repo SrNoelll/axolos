@@ -1,0 +1,27 @@
+[General]
+Name=AxolOS Obsidian
+Opacity=100
+
+[Colors:Window]
+BackgroundNormal=30,30,30
+ForegroundNormal=255,255,255
+
+[Colors:View]
+BackgroundNormal=24,24,24
+ForegroundNormal=255,255,255
+
+[Colors:Button]
+BackgroundNormal=55,55,55
+ForegroundNormal=255,255,255
+
+[Colors:Selection]
+BackgroundNormal=175,82,222
+ForegroundNormal=255,255,255
+
+[Colors:Header]
+BackgroundNormal=45,45,45
+ForegroundNormal=255,255,255
+
+[Colors:Tooltip]
+BackgroundNormal=30,30,30
+ForegroundNormal=255,255,255

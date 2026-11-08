@@ -1,0 +1,11 @@
+[Unit]
+Description=AxolOS · índice de archivos para buscar con la IA local
+# Solo enchufado: describir fotos usa la gráfica
+ConditionACPower=true
+
+[Service]
+Type=oneshot
+ExecStart=/usr/lib/axolos/axolos-indice
+Nice=19
+IOSchedulingClass=idle
+CPUSchedulingPolicy=idle

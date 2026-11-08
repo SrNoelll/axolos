@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Instalar AxolOS
+Comment=Instala AxolOS en este equipo
+Exec=/usr/local/bin/axolos-instalar
+Icon=axolos-instalar
+Terminal=false
+Categories=System;
+Keywords=instalar;install;instalador;calamares;
+X-KDE-autostart-phase=2

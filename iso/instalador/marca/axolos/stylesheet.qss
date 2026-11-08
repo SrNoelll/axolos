@@ -1,0 +1,7 @@
+/* AxolOS · estilo del instalador (Calamares) */
+QWidget { font: 13px; }
+QDialogButtonBox { dialogbuttonbox-buttons-have-icons: 0; }
+#debugButton { background-color: none; font: bold 8px; color: #ffffff; height: 32px; padding: 0px; border: none; }
+#aboutButton { background-color: none; font: 14px; border: none; }
+QProgressBar { border: none; border-radius: 4px; background: #26262f; max-height: 8px; text-align: center; color: transparent; }
+QProgressBar::chunk { border-radius: 4px; background: #a69afe; }

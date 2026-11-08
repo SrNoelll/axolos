@@ -1,0 +1,11 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [{"Name": "Noel Alarcon"}],
+        "Description": "AxolOS: macOS elegance on CachyOS",
+        "Id": "com.noel.axolos",
+        "Name": "AxolOS",
+        "Version": "1.1",
+        "Icon": "axolos"
+    }
+}

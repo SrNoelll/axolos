@@ -1,0 +1,211 @@
+#!/usr/bin/env python3
+"""axolos-ia · IA local de AxolOS
+
+  axolos-ia                     estado: gráfica, servicio, modelos
+  axolos-ia gpu                 activa la gráfica para la IA (CUDA / ROCm / Vulkan)
+  axolos-ia modelos             catálogo y qué conviene a tu equipo
+  axolos-ia descargar [ID...]   descarga modelos (sin ID: los recomendados)
+  axolos-ia vscode              conecta VS Code con la IA local (extensión Continue)
+  axolos-ia web                 interfaz web Open WebUI en http://localhost:3000 (Docker)
+  axolos-ia chat                abre Axo, el chat
+  axolos-ia contexto            lo que Axo sabe de este equipo (datos en vivo + manual)
+  axolos-ia buscar FRASE        busca tus archivos por lo que contienen («foto de la playa»)
+  axolos-ia indexar             actualiza ya el índice de archivos (se hace solo cada 30 min)
+"""
+import json
+import os
+import shutil
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+sys.path.insert(0, os.environ.get("AXOLOS_LIB", "/usr/lib/axolos"))
+import axolos_ia as ia  # noqa: E402
+
+M, G, V, R, B, F = ("\033[38;2;166;154;254m", "\033[38;2;138;138;153m", "\033[38;2;125;223;180m",
+                    "\033[38;2;255;122;147m", "\033[1m", "\033[0m")
+WEBUI_IMG = "ghcr.io/open-webui/open-webui:main"
+
+
+def ok(b):
+    return f"{V}✓{F}" if b else f"{R}✗{F}"
+
+
+def estado():
+    hw = ia.hardware()
+    ver = ia.servidor_ok()
+    print(f"{M}{B}IA local de AxolOS{F}\n")
+    gpu = f"{hw['gpu']} · {hw['vram_gb']} GB de VRAM" if hw["gpu"] else "sin gráfica dedicada"
+    print(f"  Gráfica     {gpu}")
+    print(f"  Aceleración {ok(hw['backend_ok'])} {hw['backend']}"
+          + ("" if hw["backend_ok"] else f"   {G}→ actívala con: axolos-ia gpu{F}"))
+    print(f"  Servicio    {ok(ver)} " + (f"Ollama {ver}" if ver else f"apagado   {G}→ axolos-ia gpu{F}"))
+    if not ver:
+        return
+    ms = ia.modelos()
+    print(f"  Modelos     {', '.join(m['name'] for m in ms) or G + 'ninguno → axolos-ia descargar' + F}")
+    for m in ia.en_memoria():
+        donde = "gráfica" if m["vram_gb"] >= m["size_gb"] * 0.95 else f"{m['vram_gb']} GB en gráfica, resto en RAM"
+        print(f"  En uso      {m['name']} ({m['size_gb']} GB, {donde})")
+    falta = [r for r in ia.recomendados(hw) if r not in {m["name"] for m in ms}
+             and r + ":latest" not in {m["name"] for m in ms}]
+    if falta:
+        print(f"\n  {G}Recomendados para tu equipo: {' '.join(falta)}  →  axolos-ia descargar{F}")
+    try:
+        import axolos_buscar
+        print(f"  Archivos    {axolos_buscar.estado()}")
+    except Exception:  # noqa: BLE001
+        pass
+    print(f"\n  {G}Chat: Axo en el menú · Alt+Espacio y escribe «ia tu pregunta» o «ia busco …»{F}")
+
+
+def modelos():
+    hw = ia.hardware()
+    rec, opc = ia.recomendados(hw), ia.opcionales(hw)
+    inst = {m["name"].removesuffix(":latest") for m in ia.modelos()}
+    print(f"{M}{B}Modelos para la IA local{F}  {G}(tu equipo: {hw['vram_gb']} GB de VRAM, {hw['ram_gb']} GB de RAM){F}\n")
+    for m in ia.CATALOGO:
+        mid = m["id"]
+        marca = (f"{V}instalado{F}" if mid in inst else f"{M}recomendado{F}" if mid in rec
+                 else f"{M}opcional{F}" if mid in opc else "")
+        aviso = "" if ia.cabe(mid, hw) else f" {G}(irá lento en tu equipo){F}"
+        print(f"  {M}{mid:<20}{F}{m['nombre']:<22}{m['gb']:>5.1f} GB  {marca}")
+        print(f"  {'':20}{G}{m['uso']}{F}{aviso}")
+
+
+def barra(pct, ancho=28):
+    llenos = int(ancho * pct / 100)
+    return f"{M}{'━' * llenos}{G}{'━' * (ancho - llenos)}{F} {pct:3d} %"
+
+
+def descargar(ids):
+    for _ in range(30):            # recién (re)arrancado: darle unos segundos
+        if ia.servidor_ok():
+            break
+        time.sleep(1)
+    else:
+        sys.exit("La IA local está apagada: ejecuta  axolos-ia gpu")
+    ids = ids or ia.recomendados()
+    for mid in ids:
+        print(f"{M}==>{F} {ia.nombre_bonito(mid)} ({mid})")
+        ultimo = ""
+        try:
+            for done, total, status in ia.descargar(mid):
+                pct = int(done * 100 / total) if total else 0
+                linea = f"   {barra(pct)}  {G}{status[:30]}{F}" if total else f"   {G}{status}{F}"
+                if linea != ultimo:
+                    print("\r\033[K" + linea, end="", flush=True)
+                    ultimo = linea
+        except RuntimeError as e:
+            print(f"\n   {R}{e}{F}")
+            continue
+        print(f"\r\033[K   {V}✓ listo{F}")
+
+
+def continue_yaml():
+    ms = {m["name"].removesuffix(":latest") for m in ia.modelos()}
+    rec = ia.recomendados()
+    chat = next((r for r in rec if r.startswith("qwen3.5")), rec[0])
+    auto = next((r for r in rec if "coder" in r), "qwen2.5-coder:1.5b")
+    if chat not in ms or auto not in ms:
+        print(f"{G}Aviso: faltan modelos ({chat}, {auto}); descárgalos con  axolos-ia descargar{F}")
+    return f"""# AxolOS · Continue usa la IA local (Ollama); nada sale de tu equipo
+name: AxolOS IA local
+version: 1.0.0
+schema: v1
+models:
+  - name: {ia.nombre_bonito(chat)} (local)
+    provider: ollama
+    model: {chat}
+    roles: [chat, edit, apply]
+  - name: {ia.nombre_bonito(auto)} (autocompletado)
+    provider: ollama
+    model: {auto}
+    roles: [autocomplete]
+  - name: EmbeddingGemma (local)
+    provider: ollama
+    model: embeddinggemma
+    roles: [embed]
+"""
+
+
+def vscode():
+    code = next((c for c in ("code", "codium", "code-oss") if shutil.which(c)), None)
+    if not code:
+        sys.exit("No hay VS Code instalado.")
+    print(f"{M}==>{F} Extensión Continue en {code}")
+    subprocess.run([code, "--install-extension", "Continue.continue"], check=False)
+    cfg = Path.home() / ".continue/config.yaml"
+    if cfg.exists() and "AxolOS" not in cfg.read_text(encoding="utf-8"):
+        bak = cfg.with_name(f"config.yaml.antes-de-axolos-{time.strftime('%Y%m%d-%H%M%S')}")
+        cfg.rename(bak)
+        print(f"   tu configuración anterior está en {bak}")
+    cfg.parent.mkdir(parents=True, exist_ok=True)
+    cfg.write_text(continue_yaml(), encoding="utf-8")
+    print(f"   {V}✓{F} Continue usa la IA local. En VS Code: Ctrl+L para el chat; el autocompletado va solo.")
+
+
+def web():
+    if not shutil.which("docker"):
+        sys.exit("Necesitas Docker (perfil «contenedores»: axolos-dev instalar contenedores).")
+    existe = subprocess.run(["docker", "container", "inspect", "open-webui"], capture_output=True).returncode == 0
+    if existe:
+        subprocess.run(["docker", "start", "open-webui"], check=False, stdout=subprocess.DEVNULL)
+    else:
+        print(f"{M}==>{F} Descargando Open WebUI (solo la primera vez, ~4 GB)")
+        r = subprocess.run(["docker", "run", "-d", "--name", "open-webui", "--restart", "unless-stopped",
+                            "--network", "host", "-e", "HOST=127.0.0.1", "-e", "PORT=3000",
+                            "-e", f"OLLAMA_BASE_URL={ia.URL}", "-e", "WEBUI_AUTH=False",
+                            "-e", "ANONYMIZED_TELEMETRY=False",
+                            "-v", "open-webui:/app/backend/data", WEBUI_IMG])
+        if r.returncode:
+            sys.exit("No se pudo arrancar Open WebUI.")
+    print(f"   {V}✓{F} Abriendo http://localhost:3000 (tarda unos segundos la primera vez)")
+    for _ in range(60):
+        if subprocess.run(["curl", "-sf", "-o", "/dev/null", "http://127.0.0.1:3000"]).returncode == 0:
+            break
+        time.sleep(2)
+    subprocess.Popen(["xdg-open", "http://localhost:3000"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+
+def main():
+    a = sys.argv[1:]
+    cmd = a[0] if a else "estado"
+    if cmd == "estado":
+        estado()
+    elif cmd == "gpu":
+        sys.exit(subprocess.run(["pkexec", ia.ROOT_HELPER, "ia-gpu"]).returncode)
+    elif cmd == "modelos":
+        modelos()
+    elif cmd == "descargar":
+        descargar(a[1:])
+    elif cmd == "vscode":
+        vscode()
+    elif cmd == "web":
+        web()
+    elif cmd == "indexar":
+        import axolos_buscar
+        sys.exit(axolos_buscar.indexar(aviso=lambda m: print(m, flush=True)))
+    elif cmd == "buscar":
+        import axolos_buscar
+        res = axolos_buscar.Buscador().buscar(" ".join(a[1:]), n=10)
+        if not res:
+            print("No encuentro nada parecido.")
+        for r in res:
+            ruta = r["ruta"].replace(str(Path.home()), "~")
+            print(f"{M}{ruta}{F}" + (f"  {G}(parecido){F}" if r["parecido"] else ""))
+            if r["desc"]:
+                print(f"   {G}{r['desc'][:150]}{F}")
+    elif cmd == "contexto":
+        import axolos_contexto
+        print(axolos_contexto.contexto())
+    elif cmd == "chat":
+        os.execvp("axolos-ia-chat", ["axolos-ia-chat", *a[1:]])
+    else:
+        print(__doc__)
+        sys.exit(0 if cmd in ("-h", "--help", "ayuda") else 1)
+
+
+if __name__ == "__main__":
+    main()

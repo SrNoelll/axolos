@@ -1,0 +1,8 @@
+[Sound Theme]
+Name=AxolOS
+Comment=Sonidos de cristal de AxolOS
+Inherits=ocean,freedesktop
+Directories=stereo
+
+[stereo]
+OutputProfile=stereo

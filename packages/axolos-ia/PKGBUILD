@@ -1,0 +1,41 @@
+# Maintainer: Noel Alarcón
+pkgname=axolos-ia
+pkgver=$(<"${startdir}/../../VERSION")
+pkgrel=5
+pkgdesc="IA local de AxolOS: Ollama afinado, chat Axo, búsqueda en KRunner y VS Code conectado"
+arch=('any')
+license=('GPL-3.0-or-later')
+depends=('axolos-branding' 'ollama' 'python' 'python-pyqt6' 'python-markdown' 'python-pygments'
+         'python-dbus' 'python-gobject' 'nvtop' 'pciutils' 'xdg-utils' 'libkscreen'
+         'python-numpy' 'python-pillow' 'poppler' 'ffmpeg' 'xdg-user-dirs')
+optdepends=(
+  'ollama-cuda: aceleración con gráficas NVIDIA («axolos-ia gpu» la instala)'
+  'ollama-rocm: aceleración con gráficas AMD'
+  'ollama-vulkan: aceleración con otras gráficas'
+  'nvidia-container-toolkit: contenedores Docker con acceso a la gráfica NVIDIA'
+  'docker: interfaz web Open WebUI («axolos-ia web»)'
+)
+install=axolos-ia.install
+
+package() {
+  local s="$startdir/static"
+  install -Dm755 "$startdir/bin/axolos-ia"          "$pkgdir/usr/bin/axolos-ia"
+  install -Dm755 "$startdir/bin/axolos-ia-chat"     "$pkgdir/usr/bin/axolos-ia-chat"
+  install -Dm644 "$startdir/lib/axolos_ia.py"       "$pkgdir/usr/lib/axolos/axolos_ia.py"
+  install -Dm644 "$startdir/lib/axolos_contexto.py" "$pkgdir/usr/lib/axolos/axolos_contexto.py"
+  # Búsqueda de archivos con IA: índice local + servicio de usuario que lo mantiene
+  install -Dm644 "$startdir/lib/axolos_buscar.py"   "$pkgdir/usr/lib/axolos/axolos_buscar.py"
+  install -Dm755 "$startdir/lib/axolos-indice"      "$pkgdir/usr/lib/axolos/axolos-indice"
+  install -Dm644 "$s/axolos-indice.service"         "$pkgdir/usr/lib/systemd/user/axolos-indice.service"
+  install -Dm644 "$s/axolos-indice.timer"           "$pkgdir/usr/lib/systemd/user/axolos-indice.timer"
+  install -Dm755 "$startdir/lib/axolos-indice-vigia" "$pkgdir/usr/lib/axolos/axolos-indice-vigia"
+  install -Dm644 "$s/axolos-indice-vigia.service"   "$pkgdir/usr/lib/systemd/user/axolos-indice-vigia.service"
+  # Manual que Axo lee (solo los apartados de lo instalado en cada equipo)
+  install -Dm644 "$s/manual.md"                     "$pkgdir/usr/share/axolos/ia/manual.md"
+  install -Dm755 "$startdir/lib/axolos-ia-krunner"  "$pkgdir/usr/lib/axolos/axolos-ia-krunner"
+  install -Dm644 "$s/ollama-axolos.conf"     "$pkgdir/usr/lib/systemd/system/ollama.service.d/axolos.conf"
+  install -Dm644 "$s/org.axolos.ia.desktop"  "$pkgdir/usr/share/applications/org.axolos.ia.desktop"
+  install -Dm644 "$s/axolos-axo.svg"         "$pkgdir/usr/share/icons/hicolor/scalable/apps/axolos-axo.svg"
+  install -Dm644 "$s/axolos-ia.krunner.desktop"     "$pkgdir/usr/share/krunner/dbusplugins/axolos-ia.desktop"
+  install -Dm644 "$s/org.axolos.ia.krunner.service" "$pkgdir/usr/share/dbus-1/services/org.axolos.ia.krunner.service"
+}

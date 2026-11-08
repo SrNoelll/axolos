@@ -1,0 +1,40 @@
+# Maintainer: Noel Alarcón
+pkgname=axolos-dev
+pkgver=$(<"${startdir}/../../VERSION")
+pkgrel=1
+pkgdesc="AxolOS para desarrolladores: herramientas de terminal, git con delta, temas de editor y perfiles de lenguajes"
+arch=('any')
+license=('GPL-3.0-or-later')
+depends=(
+  'axolos-branding' 'python'
+  # git y GitHub
+  'git' 'git-delta' 'github-cli' 'lazygit'
+  # terminal
+  'fzf' 'zoxide' 'atuin' 'direnv' 'ripgrep' 'fd' 'bat' 'eza' 'tealdeer'
+  # proyectos
+  'mise' 'uv' 'just' 'jq' 'go-yq' 'xh' 'hyperfine' 'tokei'
+  # contenedores (Docker + distrobox para tener Ubuntu/Fedora dentro)
+  'docker' 'docker-compose' 'docker-buildx' 'distrobox'
+)
+optdepends=(
+  'visual-studio-code-bin: VS Code (tema AxolOS con «axolos-dev editores»)'
+  'kate: editor de KDE (tema AxolOS por defecto)'
+  'neovim: :colorscheme axolos'
+)
+backup=('etc/gitconfig')
+install=axolos-dev.install
+
+package() {
+  local s="$startdir/static" e="$startdir/editores"
+  install -Dm755 "$s/axolos-dev"        "$pkgdir/usr/bin/axolos-dev"
+  install -Dm644 "$s/perfiles.json"     "$pkgdir/usr/share/axolos/perfiles.json"
+  install -Dm644 "$s/axolos-dev.fish"   "$pkgdir/usr/share/fish/vendor_conf.d/axolos-dev.fish"
+  install -Dm644 "$s/gitconfig"         "$pkgdir/etc/gitconfig"
+  # Temas de editor (generados por tools/editores_axolos.py)
+  install -Dm644 "$e/kate/axolos.theme" "$pkgdir/usr/share/org.kde.syntax-highlighting/themes/axolos.theme"
+  install -Dm644 "$e/nvim/axolos.lua"   "$pkgdir/usr/share/nvim/site/colors/axolos.lua"
+  install -Dm644 "$e/vscode/axolos-theme.vsix" "$pkgdir/usr/share/axolos/vscode/axolos-theme.vsix"
+  # Kate y KWrite usan el tema AxolOS salvo que el usuario elija otro
+  install -Dm644 "$s/katerc"            "$pkgdir/etc/xdg/katerc"
+  install -Dm644 "$s/katerc"            "$pkgdir/etc/xdg/kwriterc"
+}

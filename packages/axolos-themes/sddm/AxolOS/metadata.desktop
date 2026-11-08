@@ -1,0 +1,13 @@
+[SddmGreeterTheme]
+Name=AxolOS
+Description=Inicio de sesión de AxolOS: reloj, avatar y tu fondo del ajolote
+Author=Noel Alarcón
+License=GPL-3.0-or-later
+Type=sddm-theme
+Version=1.0
+Screenshot=preview.png
+MainScript=Main.qml
+ConfigFile=theme.conf
+Theme-Id=AxolOS
+Theme-API=2.0
+QtVersion=6

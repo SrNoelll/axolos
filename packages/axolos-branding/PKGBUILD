@@ -1,0 +1,39 @@
+# Maintainer: Noel Alarcón
+pkgname=axolos-branding
+pkgver=$(<"${startdir}/../../VERSION")
+pkgrel=6
+pkgdesc="Identidad de AxolOS: os-release, logo, fastfetch y comando axolos-apps"
+arch=('any')
+license=('custom')
+depends=('fastfetch' 'filesystem' 'starship' 'python' 'polkit')
+install=axolos-branding.install
+
+package() {
+  local f="$startdir/files" s="$startdir/static" r="$startdir/../../pkglists"
+
+  install -Dm644 "$s/os-release"            "$pkgdir/usr/share/axolos/os-release"
+  install -Dm644 "$s/lsb-release"           "$pkgdir/usr/share/axolos/lsb-release"
+  install -Dm755 "$s/axolos-branding"       "$pkgdir/usr/share/libalpm/scripts/axolos-branding"
+  install -Dm644 "$s/axolos-branding.hook"  "$pkgdir/usr/share/libalpm/hooks/zz-axolos-branding.hook"
+  install -Dm755 "$s/axolos-apps"           "$pkgdir/usr/bin/axolos-apps"
+  # Acciones de administrador de AxolOS (instalar perfiles, activar la gráfica para la IA):
+  # pkexec + política propia, para que pida la contraseña una sola vez con un mensaje claro
+  install -Dm755 "$s/axolos-root"           "$pkgdir/usr/lib/axolos/axolos-root"
+  install -Dm644 "$s/org.axolos.root.policy" "$pkgdir/usr/share/polkit-1/actions/org.axolos.root.policy"
+  # Prompt de la terminal (Starship con colores AxolOS) para todos los usuarios
+  install -Dm644 "$s/axolos.fish"           "$pkgdir/usr/share/fish/vendor_conf.d/axolos.fish"
+
+  # Logo (icono "axolos" para el menú, Ajustes > Acerca de, etc.)
+  install -Dm644 "$f/axolos-logo.png" "$pkgdir/usr/share/pixmaps/axolos-logo.png"
+  install -Dm644 "$f/avatar-axolos.png" "$pkgdir/usr/share/axolos/avatar.png"
+  install -Dm644 "$f/axolos.svg"      "$pkgdir/usr/share/icons/hicolor/scalable/apps/axolos.svg"
+  install -Dm644 "$f/axolos.svg"      "$pkgdir/usr/share/icons/hicolor/scalable/apps/distributor-logo-axolos.svg"
+
+  # fastfetch: por defecto para todos y como preset "fastfetch --config axolos"
+  install -Dm644 "$f/fastfetch.jsonc" "$pkgdir/etc/xdg/fastfetch/config.jsonc"
+  install -Dm644 "$f/fastfetch.jsonc" "$pkgdir/usr/share/fastfetch/presets/axolos.jsonc"
+
+  # Lista de aplicaciones del sistema original (para axolos-apps)
+  install -Dm644 "$r/native.txt" "$pkgdir/usr/share/axolos/pkglists/native.txt"
+  install -Dm644 "$r/aur.txt"    "$pkgdir/usr/share/axolos/pkglists/aur.txt"
+}

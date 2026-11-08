@@ -1,0 +1,713 @@
+#!/usr/bin/env python3
+"""Bienvenida a AxolOS: deja el equipo listo para programar y usar IA local.
+
+  axolos-bienvenida          abre el asistente
+  axolos-bienvenida --auto   solo si aún no se ha completado (inicio de sesión)
+"""
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+sys.path.insert(0, os.environ.get("AXOLOS_LIB", "/usr/lib/axolos"))
+import axolos_ia as ia  # noqa: E402
+
+from PyQt6.QtCore import QProcess, Qt, QThread, QTimer, pyqtSignal  # noqa: E402
+from PyQt6.QtGui import QColor, QFont, QIcon, QPainter  # noqa: E402
+from PyQt6.QtWidgets import (QApplication, QCheckBox, QFrame, QGridLayout,  # noqa: E402
+                             QHBoxLayout, QLabel, QLineEdit, QPlainTextEdit,
+                             QProgressBar, QPushButton, QScrollArea, QStackedWidget,
+                             QToolButton, QVBoxLayout, QWidget)
+
+HECHO = Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config")) / "axolos/bienvenida.hecha"
+PERFILES = Path(os.environ.get("AXOLOS_PERFILES", "/usr/share/axolos/perfiles.json"))
+SIMULAR = os.environ.get("AXOLOS_SIMULAR") == "1"     # pruebas: enseña los comandos sin ejecutarlos
+CHECK = Path(os.environ.get("AXOLOS_DATA", "/usr/share/axolos")) / "bienvenida/check.svg"
+
+C = dict(bg="#17171d", bg_dark="#0f0f13", side="#131318", surface="#1e1e26", border="#2a2a34",
+         fg="#e6e6ee", muted="#8a8a99", faint="#4b4b57", accent="#a69afe", accent_hi="#cdc6ff",
+         accent_lo="#7662ce", pink="#ff7a93", green="#7ddfb4", yellow="#f3cf7a", cyan="#7fd4e4",
+         lilac="#b4acff", indigo="#8f85f2")
+TITULAR = "New York Medium"
+MONO = "JetBrainsMono Nerd Font"
+# Monograma y color de cada perfil (no dependen del tema de iconos)
+SELLO = {"web": ("JS", C["yellow"]), "python": ("Py", C["cyan"]), "datos": ("ML", C["pink"]),
+         "rust": ("Rs", "#ff9f7a"), "go": ("Go", C["cyan"]), "c": ("C++", C["indigo"]),
+         "java": ("Jv", "#ff9f7a"), "contenedores": ("Dk", C["accent"]), "android": ("An", C["green"]),
+         "bd": ("DB", C["lilac"])}
+
+
+def rgba(css):
+    """#RRGGBBAA → rgba() (Qt leería #AARRGGBB)."""
+    return re.sub(r"#([0-9a-fA-F]{6})([0-9a-fA-F]{2})\b",
+                  lambda m: "rgba({},{},{},{})".format(*(int(m.group(1)[i:i + 2], 16) for i in (0, 2, 4)),
+                                                         int(m.group(2), 16)), css)
+
+
+QSS = rgba(f"""
+QWidget#raiz, QWidget#pagina, QScrollArea, QScrollArea > QWidget > QWidget {{ background: {C['bg']}; border: none; }}
+QWidget {{ color: {C['fg']}; font-size: 10.5pt; }}
+QFrame#derecha {{ background: {C['bg']}; }}
+QFrame#lateral {{ background: {C['side']}; border-right: 1px solid {C['border']}; }}
+QLabel#paso {{ color: {C['faint']}; padding: 7px 10px; border-radius: 9px; font-weight: 600; }}
+QLabel#paso[estado="actual"] {{ color: {C['fg']}; background: {C['accent']}1f; }}
+QLabel#paso[estado="hecho"] {{ color: {C['muted']}; }}
+QLabel#titulo {{ font-family: '{TITULAR}'; font-size: 22pt; }}
+QLabel#sub, QLabel#tenue {{ color: {C['muted']}; }}
+QLabel#seccion {{ color: {C['muted']}; font-size: 9pt; font-weight: 700; letter-spacing: 1px; }}
+QFrame#tarjeta {{ background: {C['surface']}; border: 1px solid {C['border']}; border-radius: 14px; }}
+QFrame#tarjeta:hover {{ border-color: {C['accent']}66; }}
+QFrame#tarjeta[sel="true"] {{ border: 2px solid {C['accent']}; background: {C['accent']}1a; }}
+QFrame#tarjeta[inst="true"] {{ background: {C['bg']}; border-style: dashed; }}
+QFrame#caja {{ background: {C['surface']}; border: 1px solid {C['border']}; border-radius: 14px; }}
+QLabel#chip {{ background: {C['bg_dark']}; border: 1px solid {C['border']}; border-radius: 10px;
+               padding: 6px 12px; }}
+QLabel#ok {{ color: {C['green']}; font-weight: 600; }}
+QLabel#aviso {{ color: {C['yellow']}; }}
+QLineEdit {{ background: {C['bg_dark']}; border: 1px solid {C['border']}; border-radius: 10px;
+             padding: 8px 12px; selection-background-color: {C['accent_lo']}; }}
+QLineEdit:focus {{ border-color: {C['accent']}aa; }}
+QCheckBox {{ spacing: 10px; }}
+QCheckBox::indicator {{ width: 18px; height: 18px; border-radius: 6px; border: 1.5px solid {C['faint']};
+                        background: {C['bg_dark']}; }}
+QCheckBox::indicator:hover {{ border-color: {C['accent']}; }}
+QCheckBox::indicator:checked {{ background: {C['accent']}; border-color: {C['accent']};
+                                image: url({CHECK}); }}
+QCheckBox::indicator:disabled {{ background: {C['accent_lo']}66; border-color: {C['accent_lo']}66; }}
+QPushButton {{ background: {C['surface']}; border: 1px solid {C['border']}; border-radius: 11px;
+               padding: 9px 18px; font-weight: 600; }}
+QPushButton:hover {{ border-color: {C['accent']}88; }}
+QPushButton#principal {{ background: {C['accent']}; color: {C['bg_dark']}; border: none; }}
+QPushButton#principal:hover {{ background: {C['accent_hi']}; }}
+QPushButton#principal:disabled {{ background: {C['faint']}; color: {C['bg']}; }}
+QPushButton#plano {{ background: transparent; border: none; color: {C['muted']}; }}
+QPushButton#plano:hover {{ color: {C['fg']}; }}
+QToolButton {{ background: transparent; border: none; color: {C['muted']}; }}
+QToolButton:hover {{ color: {C['fg']}; }}
+QProgressBar {{ background: {C['bg_dark']}; border: none; border-radius: 4px; height: 8px; }}
+QProgressBar::chunk {{ background: {C['accent']}; border-radius: 4px; }}
+QPlainTextEdit {{ background: {C['bg_dark']}; border: 1px solid {C['border']}; border-radius: 10px;
+                  font-family: '{MONO}'; font-size: 9pt; color: {C['muted']}; padding: 6px; }}
+QScrollBar:vertical {{ background: transparent; width: 10px; margin: 2px; }}
+QScrollBar::handle:vertical {{ background: #ffffff1a; border-radius: 3px; min-height: 30px; }}
+QScrollBar::add-line, QScrollBar::sub-line, QScrollBar::add-page, QScrollBar::sub-page {{ height: 0; background: none; }}
+""")
+
+
+def sh(*cmd):
+    r = subprocess.run(cmd, capture_output=True, text=True)
+    return r.stdout.strip() if r.returncode == 0 else ""
+
+
+def faltan(pkgs):
+    return subprocess.run(["pacman", "-T", *pkgs], capture_output=True, text=True).stdout.split()
+
+
+# --- piezas visuales -----------------------------------------------------------------
+class Sello(QWidget):
+    """Cuadrado redondeado con un monograma (JS, Py…)."""
+
+    def __init__(self, texto, color, lado=40):
+        super().__init__()
+        self.texto, self.color = texto, QColor(color)
+        self.setFixedSize(lado, lado)
+
+    def paintEvent(self, _):
+        p = QPainter(self)
+        p.setRenderHint(QPainter.RenderHint.Antialiasing)
+        fondo = QColor(self.color)
+        fondo.setAlpha(38)
+        p.setBrush(fondo)
+        p.setPen(Qt.PenStyle.NoPen)
+        p.drawRoundedRect(self.rect(), 11, 11)
+        p.setPen(self.color)
+        f = QFont(MONO, max(10, int(self.height() * (0.42 if len(self.texto) == 1 else 0.3 if len(self.texto) == 2 else 0.25))))
+        f.setBold(True)
+        p.setFont(f)
+        p.drawText(self.rect(), Qt.AlignmentFlag.AlignCenter, self.texto)
+
+
+def titulo(texto, sub=None):
+    w = QWidget()
+    v = QVBoxLayout(w)
+    v.setContentsMargins(0, 0, 0, 0)
+    v.setSpacing(6)
+    t = QLabel(texto, objectName="titulo")
+    v.addWidget(t)
+    if sub:
+        s = QLabel(sub, objectName="sub")
+        s.setWordWrap(True)
+        v.addWidget(s)
+    return w
+
+
+class Tarjeta(QFrame):
+    cambiada = pyqtSignal()
+
+    def __init__(self, clave, datos, instalado):
+        super().__init__(objectName="tarjeta")
+        self.clave, self.instalado = clave, instalado
+        self.sel = False
+        self.setCursor(Qt.CursorShape.ArrowCursor if instalado else Qt.CursorShape.PointingHandCursor)
+        self.setProperty("inst", instalado)
+        h = QHBoxLayout(self)
+        h.setContentsMargins(14, 12, 14, 12)
+        h.setSpacing(12)
+        mono, color = SELLO.get(clave, (clave[:2].title(), C["accent"]))
+        h.addWidget(Sello(mono, color), 0, Qt.AlignmentFlag.AlignTop)
+        v = QVBoxLayout()
+        v.setSpacing(2)
+        fila = QHBoxLayout()
+        self.nombre = datos["nombre"]
+        n = QLabel(self.nombre)
+        n.setStyleSheet("font-weight: 700")
+        fila.addWidget(n)
+        fila.addStretch(1)
+        if instalado:
+            ok = QLabel("Instalado", objectName="ok")
+            ok.setStyleSheet("font-size: 9pt")
+            fila.addWidget(ok)
+        v.addLayout(fila)
+        d = QLabel(datos["descripcion"], objectName="tenue")
+        d.setWordWrap(True)
+        d.setStyleSheet("font-size: 9.5pt")
+        v.addWidget(d)
+        h.addLayout(v, 1)
+
+    def mousePressEvent(self, _):
+        if not self.instalado:
+            self.poner(not self.sel)
+            self.cambiada.emit()
+
+    def poner(self, on):
+        self.sel = on
+        self.setProperty("sel", on)
+        self.style().polish(self)
+
+
+# --- páginas -------------------------------------------------------------------------
+def pagina(margen=(48, 40, 48, 24)):
+    w = QWidget(objectName="pagina")
+    v = QVBoxLayout(w)
+    v.setContentsMargins(*margen)
+    v.setSpacing(18)
+    return w, v
+
+
+class Inicio(QWidget):
+    def __init__(self, hw):
+        super().__init__()
+        v = QVBoxLayout(self)
+        v.setContentsMargins(48, 70, 48, 24)
+        v.setSpacing(16)
+        logo = QLabel()
+        logo.setPixmap(QIcon.fromTheme("axolos", QIcon("/usr/share/icons/hicolor/scalable/apps/axolos.svg"))
+                       .pixmap(96, 96))
+        v.addWidget(logo)
+        t = QLabel("Bienvenido a AxolOS", objectName="titulo")
+        t.setStyleSheet("font-size: 30pt")
+        v.addWidget(t)
+        s = QLabel("En un par de minutos dejamos tu equipo listo para programar y para usar inteligencia "
+                   "artificial en local, sin depender de internet. Elige lo que quieras; lo pesado "
+                   "se instala solo al final.", objectName="sub")
+        s.setWordWrap(True)
+        s.setStyleSheet("font-size: 11.5pt")
+        v.addWidget(s)
+        v.addSpacing(12)
+        fila = QHBoxLayout()
+        fila.setSpacing(10)
+        cpu = sh("sh", "-c", "LC_ALL=C lscpu | sed -n 's/^Model name: *//p' | head -1")
+        cpu = re.sub(r"\(R\)|\(TM\)|CPU|Processor|\s+@.*", "", cpu).strip() or "Procesador"
+        gpu = hw["gpu"].replace("NVIDIA GeForce ", "") if hw["gpu"] else "Gráfica integrada"
+        for txt in (cpu, f"{hw['ram_gb']:.0f} GB de RAM", gpu + (f" · {hw['vram_gb']:.0f} GB" if hw["vram_gb"] else "")):
+            c = QLabel(txt, objectName="chip")
+            fila.addWidget(c)
+        fila.addStretch(1)
+        v.addLayout(fila)
+        v.addStretch(1)
+
+
+class Perfiles(QWidget):
+    def __init__(self):
+        super().__init__()
+        datos = json.loads(PERFILES.read_text(encoding="utf-8"))
+        nv = ia.hardware()["vendor"] == "nvidia"
+        v = QVBoxLayout(self)
+        v.setContentsMargins(48, 40, 48, 24)
+        v.setSpacing(18)
+        v.addWidget(titulo("¿Con qué vas a programar?",
+                           "Marca tus lenguajes y herramientas. Git, Docker, la terminal mejorada y el "
+                           "editor ya vienen de serie."))
+        grid = QGridLayout()
+        grid.setHorizontalSpacing(12)
+        grid.setVerticalSpacing(12)
+        self.tarjetas = []
+        for i, (k, d) in enumerate(datos.items()):
+            pk = d["paquetes"] + d.get("paquetes_nvidia" if nv else "paquetes_otros", [])
+            t = Tarjeta(k, d, instalado=not faltan(pk))
+            self.tarjetas.append(t)
+            grid.addWidget(t, i // 2, i % 2)
+        cont = QWidget()
+        cont.setLayout(grid)
+        sc = QScrollArea()
+        sc.setWidgetResizable(True)
+        sc.setWidget(cont)
+        sc.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        v.addWidget(sc, 1)
+        # preselección cuando ya están en la ventana (antes, el estilo no se aplicaba con Kvantum)
+        QTimer.singleShot(0, lambda: [t.poner(True) for t in self.tarjetas
+                                      if not t.instalado and t.clave in ("web", "python")])
+
+    def elegidos(self):
+        return [t.clave for t in self.tarjetas if t.sel and not t.instalado]
+
+    def nombres(self):
+        return [t.nombre for t in self.tarjetas if t.sel and not t.instalado]
+
+
+class Git(QWidget):
+    def __init__(self):
+        super().__init__()
+        v = QVBoxLayout(self)
+        v.setContentsMargins(48, 40, 48, 24)
+        v.setSpacing(18)
+        v.addWidget(titulo("Tu identidad para Git y GitHub",
+                           "Con esto firmas tus commits y subes código a GitHub por SSH, sin contraseñas."))
+        caja = QFrame(objectName="caja")
+        g = QGridLayout(caja)
+        g.setContentsMargins(20, 18, 20, 18)
+        g.setVerticalSpacing(12)
+        g.setHorizontalSpacing(14)
+        self.nombre = QLineEdit(sh("git", "config", "--global", "user.name"))
+        self.nombre.setPlaceholderText("Tu nombre")
+        self.email = QLineEdit(sh("git", "config", "--global", "user.email"))
+        self.email.setPlaceholderText("tu@correo.com")
+        g.addWidget(QLabel("Nombre"), 0, 0)
+        g.addWidget(self.nombre, 0, 1)
+        g.addWidget(QLabel("Correo"), 1, 0)
+        g.addWidget(self.email, 1, 1)
+        v.addWidget(caja)
+
+        self.clave = Path.home() / ".ssh/id_ed25519"
+        self.ssh = QCheckBox("Crear una clave SSH para este equipo")
+        self.ssh.setChecked(not self.clave.exists())
+        if self.clave.exists():
+            self.ssh.setText("Ya tienes una clave SSH (~/.ssh/id_ed25519)")
+            self.ssh.setEnabled(False)
+            self.ssh.setChecked(True)
+        conectado = subprocess.run(["gh", "auth", "status"], capture_output=True).returncode == 0 \
+            if shutil.which("gh") else False
+        self.gh = QCheckBox("Conectar con GitHub al terminar (se abre una terminal y el navegador)")
+        self.gh.setChecked(not conectado)
+        if conectado:
+            self.gh.setText("Ya estás conectado a GitHub")
+            self.gh.setEnabled(False)
+            self.gh.setChecked(False)
+        self.editor = QCheckBox("Poner el tema AxolOS en VS Code")
+        self.editor.setChecked(True)
+        self.editor.setVisible(any(shutil.which(c) for c in ("code", "codium", "antigravity")))
+        self.atuin = QCheckBox("Buscar en tu historial de comandos con Ctrl+R (importa el historial actual)")
+        self.atuin.setChecked(shutil.which("atuin") is not None and
+                              not (Path.home() / ".local/share/atuin/history.db").exists())
+        self.atuin.setVisible(shutil.which("atuin") is not None)
+        for cb in (self.ssh, self.gh, self.editor, self.atuin):
+            v.addWidget(cb)
+        v.addStretch(1)
+
+
+class IA(QWidget):
+    cambiada = pyqtSignal()
+
+    def __init__(self, hw):
+        super().__init__()
+        self.hw = hw
+        v = QVBoxLayout(self)
+        v.setContentsMargins(48, 40, 48, 24)
+        v.setSpacing(16)
+        v.addWidget(titulo("Inteligencia artificial en local",
+                           "Modelos que funcionan en tu equipo: sin internet, sin cuotas y sin que nada "
+                           "salga de aquí. Los he elegido según tu gráfica."))
+        caja = QFrame(objectName="caja")
+        h = QHBoxLayout(caja)
+        h.setContentsMargins(18, 14, 18, 14)
+        gpu = (f"{hw['gpu']} · {hw['vram_gb']:.0f} GB de VRAM" if hw["gpu"] else "Sin gráfica dedicada: irá por procesador")
+        h.addWidget(Sello("AI", C["accent"], 36))
+        col = QVBoxLayout()
+        col.setSpacing(2)
+        col.addWidget(QLabel(gpu))
+        if hw["backend_ok"]:
+            est = QLabel("Aceleración por gráfica activada", objectName="ok")
+        else:
+            est = QLabel(f"Se activará la aceleración por gráfica ({hw['backend']})", objectName="aviso")
+        est.setStyleSheet("font-size: 9.5pt")
+        col.addWidget(est)
+        h.addLayout(col, 1)
+        v.addWidget(caja)
+
+        v.addWidget(QLabel("MODELOS", objectName="seccion"))
+        inst = {m["name"].removesuffix(":latest") for m in ia.modelos()}
+        rec, opc = ia.recomendados(hw), ia.opcionales(hw)
+        self.checks = []
+        for m in ia.CATALOGO:
+            if m["id"] not in rec and m["id"] not in opc and m["id"] not in inst:
+                continue
+            fila = QHBoxLayout()
+            cb = QCheckBox(f"{m['nombre']}")
+            cb.setStyleSheet("font-weight: 600")
+            cb.setChecked(m["id"] in rec or m["id"] in inst)
+            if m["id"] in inst:
+                cb.setEnabled(False)
+            cb.toggled.connect(self.cambiada)
+            fila.addWidget(cb)
+            nota = m["uso"]
+            if m["id"] in opc:
+                nota += " · opcional, va bien en tu equipo"
+            d = QLabel(nota, objectName="tenue")
+            fila.addWidget(d, 1)
+            fila.addWidget(QLabel("instalado" if m["id"] in inst else f"{m['gb']:.1f} GB", objectName="tenue"))
+            v.addLayout(fila)
+            self.checks.append((m, cb))
+        self.total = QLabel(objectName="tenue")
+        v.addWidget(self.total)
+        self.vscode = QCheckBox("Conectar VS Code con la IA local (chat y autocompletado con Continue)")
+        self.vscode.setChecked(True)
+        self.vscode.setVisible(shutil.which("code") is not None)
+        v.addSpacing(6)
+        v.addWidget(self.vscode)
+        v.addStretch(1)
+        self.cambiada.connect(self._total)
+        self._total()
+
+    def elegidos(self):
+        return [m["id"] for m, cb in self.checks if cb.isChecked() and cb.isEnabled()]
+
+    def _total(self):
+        gb = sum(m["gb"] for m, cb in self.checks if cb.isChecked() and cb.isEnabled())
+        self.total.setText(f"Descarga: {gb:.1f} GB" if gb else "No hay nada que descargar")
+
+
+class Aplicar(QWidget):
+    def __init__(self):
+        super().__init__()
+        v = QVBoxLayout(self)
+        v.setContentsMargins(48, 40, 48, 24)
+        v.setSpacing(16)
+        self.cab = titulo("Todo listo para empezar", "Esto es lo que voy a hacer. Te pediré la contraseña una vez.")
+        v.addWidget(self.cab)
+        self.resumen = QLabel()
+        self.resumen.setTextFormat(Qt.TextFormat.RichText)
+        self.resumen.setWordWrap(True)
+        caja = QFrame(objectName="caja")
+        cl = QVBoxLayout(caja)
+        cl.setContentsMargins(20, 16, 20, 16)
+        cl.addWidget(self.resumen)
+        v.addWidget(caja)
+        self.paso = QLabel(objectName="sub")
+        self.barra = QProgressBar()
+        self.barra.setTextVisible(False)
+        self.barra.setFixedHeight(8)
+        self.detalles = QToolButton(text="Ver detalles")
+        self.detalles.setMinimumWidth(110)
+        self.detalles.setCheckable(True)
+        self.log = QPlainTextEdit()
+        self.log.setReadOnly(True)
+        self.log.hide()
+        self.detalles.toggled.connect(self.log.setVisible)
+        for w in (self.paso, self.barra, self.detalles):
+            w.hide()
+            v.addWidget(w)
+        v.addWidget(self.detalles, 0, Qt.AlignmentFlag.AlignLeft)
+        v.addWidget(self.log, 1)
+        v.addStretch(1)
+
+
+class Listo(QWidget):
+    def __init__(self):
+        super().__init__()
+        v = QVBoxLayout(self)
+        v.setContentsMargins(48, 60, 48, 24)
+        v.setSpacing(16)
+        ok = Sello("✓", C["green"], 64)
+        v.addWidget(ok)
+        self.cab = titulo("Tu AxolOS está listo",
+                          "Algunos trucos para empezar:")
+        v.addWidget(self.cab)
+        trucos = [
+            ("Alt+Espacio", "escribe «ia» y tu pregunta para hablar con Axo, la IA local"),
+            ("Axo", "el chat con tu IA, en el menú de aplicaciones"),
+            ("Centro de AxolOS", "en el menú: actualizaciones, lenguajes, modelos de IA y apariencia"),
+            ("Ctrl+R", "en la terminal: busca en todo tu historial de comandos"),
+            ("z carpeta", "salta a tus carpetas más usadas"),
+        ]
+        g = QGridLayout()
+        g.setVerticalSpacing(10)
+        g.setHorizontalSpacing(16)
+        for i, (k, d) in enumerate(trucos):
+            kl = QLabel(k, objectName="chip")
+            kl.setStyleSheet(f"font-family: '{MONO}'; color: {C['accent_hi']}")
+            g.addWidget(kl, i, 0, Qt.AlignmentFlag.AlignLeft)
+            g.addWidget(QLabel(d, objectName="sub"), i, 1)
+        g.setColumnStretch(1, 1)
+        v.addLayout(g)
+        self.nota = QLabel(objectName="aviso")
+        self.nota.setWordWrap(True)
+        v.addWidget(self.nota)
+        v.addStretch(1)
+
+
+# --- ejecución ---------------------------------------------------------------------------
+class Ejecutor(QWidget):
+    """Lanza los pasos uno tras otro con QProcess y va informando."""
+    linea = pyqtSignal(str)
+    paso = pyqtSignal(str, int)       # texto, porcentaje global
+    fin = pyqtSignal(list)            # pasos que fallaron
+
+    def __init__(self, pasos):
+        super().__init__()
+        self.pasos, self.i, self.fallos = pasos, -1, []
+        self.proc = None
+
+    def empezar(self):
+        self._siguiente()
+
+    def _siguiente(self, *_):
+        if self.proc is not None:
+            ok = self.proc.exitStatus() == QProcess.ExitStatus.NormalExit and self.proc.exitCode() == 0
+            if not ok:
+                self.fallos.append(self.pasos[self.i][0])
+        self.i += 1
+        if self.i >= len(self.pasos):
+            self.paso.emit("Terminado", 100)
+            self.fin.emit(self.fallos)
+            return
+        texto, cmd = self.pasos[self.i]
+        self.paso.emit(texto, int(self.i * 100 / len(self.pasos)))
+        self.linea.emit(f"\n$ {' '.join(cmd)}")
+        if SIMULAR:
+            cmd = ["sh", "-c", "sleep 0.6; echo '(simulado)'"]
+        self.proc = QProcess(self)
+        self.proc.setProcessChannelMode(QProcess.ProcessChannelMode.MergedChannels)
+        self.proc.readyReadStandardOutput.connect(self._leer)
+        self.proc.finished.connect(self._siguiente)
+        self.proc.errorOccurred.connect(self._no_arranca)
+        self.proc.start(cmd[0], cmd[1:])
+
+    def _no_arranca(self, err):
+        if err == QProcess.ProcessError.FailedToStart:
+            self.linea.emit("(no se pudo ejecutar)")
+            self.fallos.append(self.pasos[self.i][0])
+            self.proc = None
+            self._siguiente()
+
+    def _leer(self):
+        data = bytes(self.proc.readAllStandardOutput()).decode(errors="replace")
+        for trozo in re.split(r"[\r\n]+", data):
+            trozo = re.sub(r"\x1b\[[0-9;?]*[A-Za-z]", "", trozo).strip()
+            if not trozo:
+                continue
+            m = re.search(r"(\d{1,3}) %", trozo)
+            if m:
+                texto = self.pasos[self.i][0]
+                base = self.i * 100 / len(self.pasos)
+                self.paso.emit(f"{texto} · {m.group(1)} %", int(base + int(m.group(1)) / len(self.pasos)))
+                continue
+            self.linea.emit(trozo)
+
+
+# --- ventana ---------------------------------------------------------------------------
+class Asistente(QWidget):
+    PASOS = ["Bienvenida", "Programación", "Git y GitHub", "IA local", "Aplicar", "Listo"]
+
+    def __init__(self):
+        super().__init__(objectName="raiz")
+        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+        self.setWindowTitle("Bienvenida a AxolOS")
+        self.setWindowIcon(QIcon.fromTheme("axolos-bienvenida", QIcon.fromTheme("axolos")))
+        self.resize(980, 680)
+        self.hw = ia.hardware()
+        h = QHBoxLayout(self)
+        h.setContentsMargins(0, 0, 0, 0)
+        h.setSpacing(0)
+
+        lat = QFrame(objectName="lateral")
+        lat.setFixedWidth(220)
+        lv = QVBoxLayout(lat)
+        lv.setContentsMargins(16, 28, 16, 20)
+        lv.setSpacing(4)
+        marca = QLabel("AxolOS")
+        marca.setStyleSheet(f"font-family: '{TITULAR}'; font-size: 16pt; padding: 0 10px 18px 10px;")
+        lv.addWidget(marca)
+        self.etiquetas = []
+        for i, p in enumerate(self.PASOS):
+            lb = QLabel(f"{i + 1}   {p}", objectName="paso")
+            lv.addWidget(lb)
+            self.etiquetas.append(lb)
+        lv.addStretch(1)
+        priv = QLabel("Nada de esto envía datos a\nninguna parte.", objectName="tenue")
+        priv.setStyleSheet("font-size: 8.5pt; padding: 0 10px")
+        lv.addWidget(priv)
+        h.addWidget(lat)
+
+        derecha = QFrame(objectName="derecha")
+        der = QVBoxLayout(derecha)
+        der.setContentsMargins(0, 0, 0, 0)
+        self.pila = QStackedWidget()
+        self.p_inicio, self.p_perf, self.p_git = Inicio(self.hw), Perfiles(), Git()
+        self.p_ia, self.p_apl, self.p_listo = IA(self.hw), Aplicar(), Listo()
+        for p in (self.p_inicio, self.p_perf, self.p_git, self.p_ia, self.p_apl, self.p_listo):
+            self.pila.addWidget(p)
+        der.addWidget(self.pila, 1)
+        pie = QHBoxLayout()
+        pie.setContentsMargins(48, 12, 48, 24)
+        self.saltar = QPushButton("Ahora no", objectName="plano")
+        self.saltar.clicked.connect(self._ahora_no)
+        self.atras = QPushButton("Atrás")
+        self.atras.clicked.connect(lambda: self.ir(self.pila.currentIndex() - 1))
+        self.sig = QPushButton("Empezar", objectName="principal")
+        self.sig.setMinimumWidth(140)
+        self.sig.clicked.connect(self._siguiente)
+        pie.addWidget(self.saltar)
+        pie.addStretch(1)
+        pie.addWidget(self.atras)
+        pie.addWidget(self.sig)
+        der.addLayout(pie)
+        h.addWidget(derecha, 1)
+        self.ir(int(os.environ.get("AXOLOS_BIENVENIDA_PAGINA", "0")))
+        if SIMULAR and self.pila.currentIndex() == 4:       # pruebas: aplicar solo (simulado)
+            QTimer.singleShot(800, self._aplicar)
+
+    def ir(self, i):
+        i = max(0, min(i, len(self.PASOS) - 1))
+        self.pila.setCurrentIndex(i)
+        for j, lb in enumerate(self.etiquetas):
+            lb.setProperty("estado", "actual" if j == i else "hecho" if j < i else "")
+            lb.style().polish(lb)
+        self.atras.setVisible(0 < i < 5)
+        self.saltar.setVisible(i < 4)
+        self.sig.setText({0: "Empezar", 3: "Revisar", 4: "Aplicar", 5: "Cerrar"}.get(i, "Siguiente"))
+        if i == 4:
+            self._resumen()
+
+    def _siguiente(self):
+        i = self.pila.currentIndex()
+        if i == 4:
+            self._aplicar()
+        elif i == 5:
+            self.close()
+        else:
+            self.ir(i + 1)
+
+    def _ahora_no(self):
+        HECHO.parent.mkdir(parents=True, exist_ok=True)
+        HECHO.write_text("omitida\n")
+        self.close()
+
+    # ---- plan
+    def _plan(self):
+        pasos, root = [], []
+        perf = self.p_perf.elegidos()
+        if perf:
+            root.append(("Instalando " + ", ".join(self.p_perf.nombres()),
+                         ["pkexec", ia.ROOT_HELPER, "perfiles", *perf]))
+        if not self.hw["backend_ok"]:
+            root.append(("Activando la gráfica para la IA", ["pkexec", ia.ROOT_HELPER, "ia-gpu"]))
+        elif not ia.servidor_ok():
+            root.append(("Encendiendo la IA local", ["pkexec", ia.ROOT_HELPER, "ia-servicio"]))
+        pasos += root
+        g = self.p_git
+        nombre, email = g.nombre.text().strip(), g.email.text().strip()
+        if nombre and nombre != sh("git", "config", "--global", "user.name"):
+            pasos.append(("Configurando Git", ["git", "config", "--global", "user.name", nombre]))
+        if email and email != sh("git", "config", "--global", "user.email"):
+            pasos.append(("Configurando Git", ["git", "config", "--global", "user.email", email]))
+        if g.ssh.isEnabled() and g.ssh.isChecked():
+            pasos.append(("Creando tu clave SSH", ["ssh-keygen", "-q", "-t", "ed25519", "-N", "",
+                                                    "-C", email or nombre or os.environ.get("USER", "axolos"),
+                                                    "-f", str(g.clave)]))
+        datos = json.loads(PERFILES.read_text(encoding="utf-8"))
+        for k in perf:
+            for cmd in datos[k].get("usuario", []):
+                pasos.append((f"Preparando {datos[k]['nombre']}", cmd))
+        if g.editor.isVisible() and g.editor.isChecked():
+            pasos.append(("Tema AxolOS en los editores", ["axolos-dev", "editores"]))
+        if g.atuin.isVisible() and g.atuin.isChecked():
+            pasos.append(("Importando tu historial de comandos", ["atuin", "import", "auto"]))
+        mods = self.p_ia.elegidos()
+        for m in mods:
+            pasos.append((f"Descargando {ia.nombre_bonito(m)}", ["axolos-ia", "descargar", m]))
+        if self.p_ia.vscode.isVisible() and self.p_ia.vscode.isChecked():
+            pasos.append(("Conectando VS Code con la IA", ["axolos-ia", "vscode"]))
+        return pasos, perf, mods
+
+    def _resumen(self):
+        pasos, perf, mods = self._plan()
+        items = []
+        if perf:
+            items.append("Instalar <b>" + ", ".join(self.p_perf.nombres()) + "</b>")
+        if not self.hw["backend_ok"]:
+            items.append(f"Activar la aceleración por gráfica (<b>{self.hw['backend']}</b>)")
+        if any(c[0] == "ssh-keygen" for _, c in pasos):
+            items.append("Crear tu clave SSH")
+        if any(c[:3] == ["git", "config", "--global"] for _, c in pasos):
+            items.append("Guardar tu nombre y correo en Git")
+        if mods:
+            gb = sum(ia.POR_ID[m]["gb"] for m in mods if m in ia.POR_ID)
+            items.append("Descargar " + ", ".join(f"<b>{ia.nombre_bonito(m)}</b>" for m in mods) + f" ({gb:.1f} GB)")
+        if any(c == ["axolos-ia", "vscode"] for _, c in pasos):
+            items.append("Conectar VS Code con la IA local")
+        if any(c == ["axolos-dev", "editores"] for _, c in pasos):
+            items.append("Poner el tema AxolOS en VS Code")
+        if self.p_git.gh.isEnabled() and self.p_git.gh.isChecked():
+            items.append("Al final, abrir la conexión con GitHub")
+        if not items:
+            items.append("Nada pendiente: tu equipo ya está al día")
+        punto = f'<span style="color:{C["accent"]}">●</span>&nbsp;&nbsp;'
+        self.p_apl.resumen.setText("<br><br>".join(punto + t for t in items))
+
+    def _aplicar(self):
+        pasos, _, _ = self._plan()
+        a = self.p_apl
+        for w in (a.paso, a.barra, a.detalles):
+            w.show()
+        self.sig.setEnabled(False)
+        self.atras.hide()
+        self.saltar.hide()
+        self.ej = Ejecutor(pasos)
+        self.ej.linea.connect(a.log.appendPlainText)
+        self.ej.paso.connect(lambda t, p: (a.paso.setText(t), a.barra.setValue(p)))
+        self.ej.fin.connect(self._terminado)
+        self.ej.empezar()
+
+    def _terminado(self, fallos):
+        HECHO.parent.mkdir(parents=True, exist_ok=True)
+        HECHO.write_text("hecha\n")
+        if self.p_git.gh.isEnabled() and self.p_git.gh.isChecked() and not SIMULAR:
+            subprocess.Popen(["konsole", "--hold", "-e", "gh", "auth", "login", "-h", "github.com",
+                              "-p", "ssh", "-w"], start_new_session=True)
+        if fallos:
+            self.p_listo.nota.setText("No se pudo completar: " + ", ".join(dict.fromkeys(fallos)) +
+                                      ". Puedes volver a abrir «Bienvenida a AxolOS» desde el menú para reintentarlo.")
+        if any("contenedores" in c for _, c in self.ej.pasos if c[:3] == ["pkexec", ia.ROOT_HELPER, "perfiles"]):
+            self.p_listo.nota.setText((self.p_listo.nota.text() + "\n").lstrip() +
+                                      "Para usar Docker sin sudo, cierra sesión y vuelve a entrar.")
+        self.sig.setEnabled(True)
+        self.ir(5)
+
+
+def main():
+    if "--auto" in sys.argv and HECHO.exists():
+        return
+    app = QApplication([a for a in sys.argv if a != "--auto"])
+    app.setApplicationName("axolos-bienvenida")
+    app.setDesktopFileName("org.axolos.bienvenida")
+    app.setStyleSheet(QSS)
+    w = Asistente()
+    w.show()
+    sys.exit(app.exec())
+
+
+if __name__ == "__main__":
+    main()

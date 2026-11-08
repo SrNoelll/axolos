@@ -1,0 +1,10 @@
+[Desktop Entry]
+DefaultProfile=AxolOS.profile
+
+[General]
+ConfigVersion=1
+
+[Notification Messages]
+CloseAllTabs=true
+
+[UiSettings]

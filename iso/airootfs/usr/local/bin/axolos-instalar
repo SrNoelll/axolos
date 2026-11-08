@@ -1,0 +1,275 @@
+#!/usr/bin/env python3
+"""AxolOS · lanzador del instalador (solo en el sistema live de la ISO).
+
+Sustituye a CachyOS Hello en el live: explica qué va a pasar, comprueba la conexión, lanza el
+instalador de CachyOS con la capa AxolOS (/usr/local/bin/calamares-online.sh) y enseña el progreso
+mientras este se prepara (renueva claves y se descarga actualizado: tarda un poco).
+"""
+import os
+import re
+import subprocess
+import sys
+
+from PyQt6.QtCore import QProcess, QSize, Qt, QTimer
+from PyQt6.QtGui import QIcon
+from PyQt6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel, QPlainTextEdit,
+                             QProgressBar, QPushButton, QSizePolicy, QVBoxLayout)
+
+INSTALADOR = os.environ.get("AXOLOS_INSTALADOR", "/usr/local/bin/calamares-online.sh")
+SIN_RED = os.environ.get("AXOLOS_INSTALADOR_SIN_RED", "/usr/local/bin/axolos-instalar-sin-red")
+LOG_CAPA = "/home/liveuser/axolos-instalador.log"
+C = dict(bg="#17171d", bg_dark="#0f0f13", surface="#1e1e26", border="#2a2a34", fg="#e6e6ee",
+         muted="#8a8a99", faint="#4b4b57", accent="#a69afe", accent_hi="#cdc6ff", accent_lo="#7662ce",
+         green="#7ddfb4", yellow="#f3cf7a", pink="#ff7a93")
+TITULAR = "New York Medium"
+
+
+def rgba(css):
+    """#RRGGBBAA → rgba() (Qt leería #AARRGGBB)."""
+    return re.sub(r"#([0-9a-fA-F]{6})([0-9a-fA-F]{2})\b",
+                  lambda m: "rgba({},{},{},{})".format(*(int(m.group(1)[i:i + 2], 16) for i in (0, 2, 4)),
+                                                         int(m.group(2), 16)), css)
+
+
+QSS = rgba(f"""
+QWidget {{ color: {C['fg']}; font-size: 10.5pt; }}
+QFrame#raiz {{ background: {C['bg']}; }}
+QLabel#titulo {{ font-family: '{TITULAR}'; font-size: 24pt; }}
+QLabel#texto {{ color: {C['muted']}; }}
+QLabel#chip {{ background: {C['bg_dark']}; border: 1px solid {C['border']}; border-radius: 10px;
+               padding: 6px 12px; color: {C['muted']}; }}
+QLabel#estado {{ color: {C['fg']}; font-weight: 600; }}
+QLabel#estado[tipo="ok"] {{ color: {C['green']}; }}
+QLabel#estado[tipo="aviso"] {{ color: {C['yellow']}; }}
+QLabel#estado[tipo="error"] {{ color: {C['pink']}; }}
+QLabel#detalle {{ color: {C['faint']}; font-size: 9pt; }}
+QPushButton {{ background: {C['surface']}; border: 1px solid {C['border']}; border-radius: 11px;
+               padding: 10px 20px; font-weight: 600; }}
+QPushButton:hover {{ border-color: {C['accent']}88; }}
+QPushButton#principal {{ background: {C['accent']}; color: {C['bg_dark']}; border: none; }}
+QPushButton#principal:hover {{ background: {C['accent_hi']}; }}
+QPushButton#principal:disabled {{ background: {C['faint']}; color: {C['bg']}; }}
+QPushButton#plano {{ background: transparent; border: none; color: {C['muted']}; }}
+QPushButton#plano:hover {{ color: {C['fg']}; }}
+QProgressBar {{ background: {C['bg_dark']}; border: none; border-radius: 3px; max-height: 6px; }}
+QProgressBar::chunk {{ background: {C['accent']}; border-radius: 3px; }}
+QPlainTextEdit {{ background: {C['bg_dark']}; border: 1px solid {C['border']}; border-radius: 10px;
+                  font-family: monospace; font-size: 8.5pt; color: {C['muted']}; padding: 6px; }}
+QScrollBar:vertical {{ background: transparent; width: 10px; margin: 2px; }}
+QScrollBar::handle:vertical {{ background: #ffffff1a; border-radius: 3px; min-height: 30px; }}
+QScrollBar::add-line, QScrollBar::sub-line, QScrollBar::add-page, QScrollBar::sub-page {{ height: 0; background: none; }}
+""")
+
+# Lo que imprime calamares-online.sh → qué le contamos a la persona
+FASES = [
+    (re.compile(r"archlinux-keyring|cachyos-keyring|pacman-key|gpg:", re.I),
+     "Renovando las claves de los repositorios"),
+    (re.compile(r"cachyos-calamares", re.I), "Descargando el instalador más reciente"),
+    (re.compile(r"inxi|calamares -D|pkexec", re.I), "Abriendo el instalador"),
+]
+
+
+class Lanzador(QFrame):
+    def __init__(self):
+        super().__init__(objectName="raiz")
+        self.setWindowTitle("Instalar AxolOS")
+        self.setWindowIcon(QIcon.fromTheme("axolos-instalar", QIcon.fromTheme("axolos")))
+        self.setMinimumSize(780, 500)
+        self.proc = None
+        self.salida = []
+        self.calamares_visto = False
+        self.vigia = QTimer(self, interval=1000, timeout=self.mirar_calamares)
+
+        h = QHBoxLayout(self)
+        h.setContentsMargins(44, 40, 44, 32)
+        h.setSpacing(36)
+        logo = QLabel(alignment=Qt.AlignmentFlag.AlignTop)
+        logo.setPixmap(QIcon.fromTheme("axolos", QIcon("/usr/share/pixmaps/axolos-logo.png"))
+                       .pixmap(QSize(132, 132)))
+        h.addWidget(logo)
+
+        v = QVBoxLayout()
+        v.setSpacing(14)
+        v.addWidget(QLabel("Te damos la bienvenida a AxolOS", objectName="titulo", wordWrap=True))
+        texto = QLabel(
+            "Estás usando AxolOS sin instalar: puedes probarlo todo lo que quieras, nada se guarda "
+            "en tu equipo. Cuando quieras quedártelo, instálalo.\n\n"
+            "La instalación descarga la versión más reciente de todo, con lo optimizado para tu "
+            "procesador y los controladores de tu gráfica.", objectName="texto", wordWrap=True)
+        v.addWidget(texto)
+        chips = QHBoxLayout()
+        chips.setSpacing(8)
+        for t in ("Mejor con internet", "Unos 15–20 minutos", "Podrás elegir el disco"):
+            chips.addWidget(QLabel(t, objectName="chip"))
+        chips.addStretch(1)
+        v.addLayout(chips)
+        v.addStretch(1)
+
+        self.estado = QLabel("", objectName="estado", wordWrap=True)
+        self.detalle = QLabel("", objectName="detalle", wordWrap=True)
+        self.barra = QProgressBar(textVisible=False)
+        self.barra.setRange(0, 0)
+        self.registro = QPlainTextEdit(readOnly=True)
+        self.registro.setMaximumBlockCount(400)
+        self.registro.setFixedHeight(120)
+        for w in (self.estado, self.barra, self.detalle, self.registro):
+            w.hide()
+            v.addWidget(w)
+        for w in (texto, self.estado, self.detalle):
+            w.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
+
+        botones = QHBoxLayout()
+        self.b_red = QPushButton("Ajustes de red", objectName="plano")
+        self.b_red.clicked.connect(lambda: QProcess.startDetached("systemsettings", ["kcm_networkmanagement"]))
+        self.b_red.hide()
+        self.b_sinred = QPushButton("Instalar sin conexión", objectName="plano")
+        self.b_sinred.setToolTip("Instala la versión de esta ISO. Al conectarte, se pone al día con una actualización.")
+        self.b_sinred.clicked.connect(lambda: self.lanzar(sin_red=True))
+        self.b_sinred.hide()
+        self.b_probar = QPushButton("Seguir probando", objectName="plano")
+        self.b_probar.clicked.connect(self.close)
+        self.b_instalar = QPushButton("Instalar AxolOS", objectName="principal")
+        self.b_instalar.setDefault(True)
+        self.b_instalar.clicked.connect(self.comprobar_red)
+        botones.addWidget(self.b_red)
+        botones.addStretch(1)
+        botones.addWidget(self.b_sinred)
+        botones.addWidget(self.b_probar)
+        botones.addWidget(self.b_instalar)
+        v.addLayout(botones)
+        h.addLayout(v, 1)
+
+    # ---- estado visible -------------------------------------------------------------------------
+    def poner_estado(self, texto, tipo="", detalle="", ocupado=False):
+        self.estado.setText(texto)
+        self.estado.setProperty("tipo", tipo)
+        self.estado.style().unpolish(self.estado)
+        self.estado.style().polish(self.estado)
+        self.estado.show()
+        self.detalle.setText(detalle)
+        self.detalle.setVisible(bool(detalle))
+        self.barra.setVisible(ocupado)
+        self.ajustar()
+
+    def ajustar(self):
+        def _():
+            self.layout().activate()
+            alto = self.layout().totalHeightForWidth(self.width()) if self.layout().hasHeightForWidth() \
+                else self.sizeHint().height()
+            if alto > self.height():
+                self.resize(self.width(), alto)
+        QTimer.singleShot(0, _)
+
+    # ---- 1. conexión ----------------------------------------------------------------------------
+    def comprobar_red(self):
+        self.b_instalar.setEnabled(False)
+        self.b_red.hide()
+        self.registro.hide()
+        self.poner_estado("Comprobando la conexión a internet…", ocupado=True)
+        self.red = QProcess(self)
+        self.red.finished.connect(self.red_comprobada)
+        # GitHub (repositorio AxolOS) y los repositorios de CachyOS
+        self.red.start("sh", ["-c", "curl -fsI --max-time 8 https://github.com >/dev/null && "
+                                    "curl -fsI --max-time 8 https://cachyos.org >/dev/null"])
+
+    def red_comprobada(self, codigo, _estado):
+        if codigo != 0:
+            hay_sin_red = os.path.exists(SIN_RED)
+            self.poner_estado("No hay conexión a internet", "error",
+                              "Conéctate a una red (icono de red del panel) y vuelve a intentarlo."
+                              + (" También puedes instalar sin conexión la versión de esta ISO y ponerla al día "
+                                 "después." if hay_sin_red else ""))
+            self.b_red.show()
+            self.b_sinred.setVisible(hay_sin_red)
+            self.b_instalar.setText("Reintentar")
+            self.b_instalar.setEnabled(True)
+            return
+        self.lanzar()
+
+    # ---- 2. instalador --------------------------------------------------------------------------
+    def lanzar(self, sin_red=False):
+        self.salida.clear()
+        self.calamares_visto = False
+        self.b_instalar.setEnabled(False)
+        self.b_red.hide()
+        self.b_sinred.hide()
+        self.registro.hide()
+        self.poner_estado("Preparando el instalador", ocupado=True,
+                          detalle="Sin conexión: se instalará la versión de esta ISO." if sin_red else
+                          "Se actualiza antes de abrirse: puede tardar uno o dos minutos.")
+        self.proc = QProcess(self)
+        self.proc.setProcessChannelMode(QProcess.ProcessChannelMode.MergedChannels)
+        self.proc.readyReadStandardOutput.connect(self.leer)
+        self.proc.finished.connect(self.terminado)
+        self.proc.errorOccurred.connect(lambda _e: self.terminado(-1, None))
+        self.proc.start(SIN_RED if sin_red else INSTALADOR, [])
+        self.vigia.start()
+
+    def leer(self):
+        texto = bytes(self.proc.readAllStandardOutput()).decode(errors="replace")
+        for linea in re.split(r"[\r\n]+", texto):
+            linea = linea.strip()
+            if not linea:
+                continue
+            self.salida.append(linea)
+            for patron, fase in FASES:
+                if patron.search(linea):
+                    self.estado.setText(fase)
+            self.detalle.setText(linea if len(linea) <= 90 else linea[:89] + "…")
+            self.detalle.show()
+
+    def mirar_calamares(self):
+        abierto = subprocess.run(["pgrep", "-x", "calamares"], capture_output=True).returncode == 0
+        if abierto and not self.calamares_visto:
+            self.calamares_visto = True
+            self.poner_estado("El instalador está abierto", "ok",
+                              "Sigue los pasos en su ventana. Esta se queda aquí por si la necesitas.")
+            self.showMinimized()
+
+    def terminado(self, codigo, _estado):
+        if self.proc is None:
+            return
+        self.vigia.stop()
+        self.proc = None
+        self.showNormal()
+        self.raise_()
+        self.b_instalar.setEnabled(True)
+        if self.calamares_visto:
+            self.poner_estado("Se ha cerrado el instalador", "ok",
+                              "Si terminó la instalación, reinicia y quita el USB. Si no, puedes volver a abrirlo.")
+            self.b_instalar.setText("Abrir el instalador otra vez")
+        else:
+            self.poner_estado("No se pudo preparar el instalador", "error",
+                              f"Comprueba la conexión y vuelve a intentarlo. Detalles en {LOG_CAPA} "
+                              "y /home/liveuser/cachy-install.log")
+            self.registro.setPlainText("\n".join(self.salida[-200:]) or f"(código {codigo})")
+            barra = self.registro.verticalScrollBar()
+            QTimer.singleShot(0, lambda: barra.setValue(barra.maximum()))   # lo último: lo que falló
+            self.registro.show()
+            self.b_red.show()
+            self.ajustar()
+            self.b_instalar.setText("Reintentar")
+
+    def closeEvent(self, ev):
+        if self.proc is not None and not self.calamares_visto:
+            ev.ignore()          # cerrar a mitad dejaría pacman a medias
+            self.showMinimized()
+            return
+        super().closeEvent(ev)
+
+
+def main():
+    if not os.path.exists(INSTALADOR) and "AXOLOS_INSTALADOR" not in os.environ:
+        print("Esto solo funciona en el sistema live de la ISO de AxolOS.", file=sys.stderr)
+        sys.exit(1)
+    app = QApplication(sys.argv)
+    app.setApplicationName("axolos-instalar")
+    app.setDesktopFileName("axolos-instalar")
+    app.setStyleSheet(QSS)
+    w = Lanzador()
+    w.show()
+    sys.exit(app.exec())
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,104 @@
+# AxolOS · pantalla de arranque (Plymouth, motor script)
+# El ajolote aparece despacio en la oscuridad; debajo, una línea fina morada
+# marca el progreso. Si el disco pide contraseña, sale un campo a juego.
+
+Window.SetBackgroundTopColor(0.020, 0.020, 0.024);
+Window.SetBackgroundBottomColor(0.020, 0.020, 0.024);
+
+sw = Window.GetWidth();
+sh = Window.GetHeight();
+
+# ---- ajolote -------------------------------------------------------------------
+logo.raw = Image("logo.png");
+logo.h = sh * 0.24;
+logo.w = logo.raw.GetWidth() * logo.h / logo.raw.GetHeight();
+logo.image = logo.raw.Scale(logo.w, logo.h);
+logo.sprite = Sprite(logo.image);
+logo.x = sw / 2 - logo.w / 2;
+logo.y = sh * 0.43 - logo.h / 2;
+logo.sprite.SetPosition(logo.x, logo.y, 10);
+logo.sprite.SetOpacity(0);
+
+# ---- línea de progreso ---------------------------------------------------------------
+bar.w = Math.Int(sw * 0.14);
+bar.y = logo.y + logo.h + sh * 0.07;
+bar.x = sw / 2 - bar.w / 2;
+track.sprite = Sprite(Image("track.png").Scale(bar.w, 2));
+track.sprite.SetPosition(bar.x, bar.y, 10);
+track.sprite.SetOpacity(0);
+fill.raw = Image("fill.png");
+fill.sprite = Sprite(fill.raw.Scale(1, 2));
+fill.sprite.SetPosition(bar.x, bar.y, 11);
+fill.sprite.SetOpacity(0);
+
+progress = 0;
+shown = 0;
+t = 0;
+
+fun refresh_cb() {
+    t++;
+    # aparición suave (~1 s a 50 fps) y luego una respiración muy leve
+    a = t / 50;
+    if (a > 1) a = 1;
+    breath = 0.92 + 0.08 * Math.Sin(t / 30);
+    logo.sprite.SetOpacity(a * breath);
+    track.sprite.SetOpacity(a * 0.9);
+    fill.sprite.SetOpacity(a);
+    # la línea avanza con suavidad hacia el progreso real
+    shown = shown + (progress - shown) * 0.12;
+    w = Math.Int(bar.w * shown);
+    if (w < 1) w = 1;
+    fill.sprite.SetImage(fill.raw.Scale(w, 2));
+}
+Plymouth.SetRefreshFunction(refresh_cb);
+
+fun progress_cb(duration, p) {
+    progress = p;
+}
+Plymouth.SetBootProgressFunction(progress_cb);
+
+# ---- contraseña (solo si el disco está cifrado) ---------------------------------------
+entry.image = Image("entry.png");
+entry.sprite = Sprite();
+bullet.image = Image("bullet.png");
+bullets = [];
+prompt.sprite = Sprite();
+
+fun display_normal_cb() {
+    entry.sprite.SetOpacity(0);
+    prompt.sprite.SetOpacity(0);
+    for (i = 0; bullets[i]; i++) bullets[i].SetOpacity(0);
+}
+
+fun display_password_cb(text, nbullets) {
+    ex = sw / 2 - entry.image.GetWidth() / 2;
+    ey = bar.y + sh * 0.05;
+    entry.sprite.SetImage(entry.image);
+    entry.sprite.SetPosition(ex, ey, 20);
+    entry.sprite.SetOpacity(1);
+    prompt.sprite.SetImage(Image.Text(text, 0.82, 0.82, 0.87, 1, "Sans 12"));
+    prompt.sprite.SetPosition(sw / 2 - prompt.sprite.GetImage().GetWidth() / 2, ey - 28, 20);
+    prompt.sprite.SetOpacity(1);
+    for (i = 0; bullets[i]; i++) bullets[i].SetOpacity(0);
+    for (i = 0; i < nbullets && i < 24; i++) {
+        if (!bullets[i]) bullets[i] = Sprite(bullet.image);
+        bullets[i].SetPosition(ex + 20 + i * 14, ey + entry.image.GetHeight() / 2 - 6, 21);
+        bullets[i].SetOpacity(1);
+    }
+}
+Plymouth.SetDisplayNormalFunction(display_normal_cb);
+Plymouth.SetDisplayPasswordFunction(display_password_cb);
+
+# ---- mensajes (p. ej. comprobaciones del disco) ----------------------------------------
+message.sprite = Sprite();
+fun message_cb(text) {
+    message.sprite.SetImage(Image.Text(text, 0.64, 0.64, 0.68, 1, "Sans 11"));
+    message.sprite.SetPosition(sw / 2 - message.sprite.GetImage().GetWidth() / 2, sh * 0.92, 30);
+}
+Plymouth.SetMessageFunction(message_cb);
+
+fun quit_cb() {
+    logo.sprite.SetOpacity(1);
+    fill.sprite.SetImage(fill.raw.Scale(bar.w, 2));
+}
+Plymouth.SetQuitFunction(quit_cb);

@@ -1,0 +1,15 @@
+[Desktops]
+Number=4
+Rows=1
+
+[Effect-cube]
+BackgroundColor=1,1,1
+DistanceFactor=1.35
+SkyBox=/usr/share/axolos/cube.jpg
+
+[Plugins]
+cubeEnabled=true
+
+[org.kde.kdecoration2]
+library=org.kde.kwin.aurorae.v2
+theme=__aurorae__svg__AxolOS

@@ -1,0 +1,66 @@
+{
+  "web": {
+    "nombre": "Web y JavaScript",
+    "descripcion": "Node, npm, pnpm, Bun, Deno y TypeScript",
+    "icono": "text-html",
+    "paquetes": ["nodejs", "npm", "pnpm", "bun", "deno", "typescript"]
+  },
+  "python": {
+    "nombre": "Python",
+    "descripcion": "Python con uv (entornos y versiones por proyecto) y pip",
+    "icono": "text-x-python",
+    "paquetes": ["python", "python-pip", "uv"]
+  },
+  "datos": {
+    "nombre": "Datos y machine learning",
+    "descripcion": "JupyterLab, NumPy, pandas, scikit-learn y PyTorch (con CUDA si hay NVIDIA)",
+    "icono": "office-chart-line",
+    "paquetes": ["jupyterlab", "python-numpy", "python-pandas", "python-matplotlib", "python-scikit-learn"],
+    "paquetes_nvidia": ["python-pytorch-cuda"],
+    "paquetes_otros": ["python-pytorch"]
+  },
+  "rust": {
+    "nombre": "Rust",
+    "descripcion": "rustup con la versión estable, cargo y rust-analyzer",
+    "icono": "application-x-executable",
+    "paquetes": ["rustup"],
+    "usuario": [["rustup", "default", "stable"], ["rustup", "component", "add", "rust-analyzer"]]
+  },
+  "go": {
+    "nombre": "Go",
+    "descripcion": "Go, gopls y el depurador delve",
+    "icono": "application-x-executable",
+    "paquetes": ["go", "gopls", "delve"]
+  },
+  "c": {
+    "nombre": "C y C++",
+    "descripcion": "GCC, Clang, CMake, Meson, Ninja, GDB y LLDB",
+    "icono": "text-x-c++src",
+    "paquetes": ["base-devel", "clang", "cmake", "meson", "ninja", "gdb", "lldb"]
+  },
+  "java": {
+    "nombre": "Java y Kotlin",
+    "descripcion": "OpenJDK, Maven y Gradle",
+    "icono": "application-x-java",
+    "paquetes": ["jdk-openjdk", "maven", "gradle"]
+  },
+  "contenedores": {
+    "nombre": "Contenedores y Kubernetes",
+    "descripcion": "Docker, Compose, lazydocker, kubectl, k9s y Helm",
+    "icono": "virtualbox",
+    "paquetes": ["docker", "docker-compose", "docker-buildx", "lazydocker", "kubectl", "k9s", "helm"],
+    "sistema": ["docker"]
+  },
+  "android": {
+    "nombre": "Android",
+    "descripcion": "adb, fastboot y permisos USB para móviles",
+    "icono": "smartphone",
+    "paquetes": ["android-tools", "android-udev"]
+  },
+  "bd": {
+    "nombre": "Bases de datos",
+    "descripcion": "DBeaver (cualquier base de datos) y DB Browser para SQLite",
+    "icono": "server-database",
+    "paquetes": ["dbeaver", "sqlitebrowser"]
+  }
+}

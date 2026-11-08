@@ -1,0 +1,29 @@
+#!/bin/sh
+# Pone (o quita) la identidad AxolOS en /usr/lib/os-release y /etc/lsb-release.
+# El paquete "filesystem" sobrescribe os-release en cada actualización, por eso
+# un hook de pacman vuelve a ejecutar esto después.
+set -e
+STATE=/var/lib/axolos
+case "$1" in
+  apply)
+    mkdir -p "$STATE"
+    # Guarda los originales la primera vez (o si el original cambió de versión)
+    if ! grep -q '^ID=axolos' /usr/lib/os-release; then cp /usr/lib/os-release "$STATE/os-release.orig"; fi
+    if [ -f /etc/lsb-release ] && ! grep -q AxolOS /etc/lsb-release; then cp /etc/lsb-release "$STATE/lsb-release.orig"; fi
+    install -m644 /usr/share/axolos/os-release /usr/lib/os-release
+    # Algunos instaladores dejan /etc/os-release como fichero suelto (manda sobre el de /usr/lib):
+    # se guarda y se cambia por el enlace estándar
+    if [ -f /etc/os-release ] && [ ! -L /etc/os-release ]; then
+      cp /etc/os-release "$STATE/etc-os-release.orig"
+      ln -sf ../usr/lib/os-release /etc/os-release
+    fi
+    [ -f /etc/lsb-release ] && install -m644 /usr/share/axolos/lsb-release /etc/lsb-release
+    ;;
+  restore)
+    [ -f "$STATE/os-release.orig" ] && install -m644 "$STATE/os-release.orig" /usr/lib/os-release
+    [ -f "$STATE/lsb-release.orig" ] && install -m644 "$STATE/lsb-release.orig" /etc/lsb-release
+    [ -f "$STATE/etc-os-release.orig" ] && { rm -f /etc/os-release; install -m644 "$STATE/etc-os-release.orig" /etc/os-release; }
+    rm -rf "$STATE"
+    ;;
+  *) echo "uso: $0 apply|restore" >&2; exit 1 ;;
+esac

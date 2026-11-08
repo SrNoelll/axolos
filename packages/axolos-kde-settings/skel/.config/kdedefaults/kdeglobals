@@ -1,0 +1,8 @@
+[General]
+ColorScheme=AxolOSObsidian
+
+[Icons]
+Theme=AxolOS
+
+[KDE]
+widgetStyle=kvantum-dark

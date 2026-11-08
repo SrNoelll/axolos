@@ -1,0 +1,518 @@
+#!/usr/bin/env python3
+"""Centro de AxolOS: lo que la Bienvenida prepara una vez, aquí se cambia cuando quieras.
+
+  axolos-centro            abre el centro
+  axolos-centro SECCION    abre una sección: resumen, programacion, ia, busqueda, apariencia
+
+Todo lo que hace lo hacen las herramientas de AxolOS (axolos-dev, axolos-ia, axolos-root):
+el centro solo las reúne, enseña su estado y muestra lo que van haciendo.
+"""
+import importlib.machinery
+import importlib.util
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+import urllib.request
+from pathlib import Path
+
+sys.path.insert(0, os.environ.get("AXOLOS_LIB", "/usr/lib/axolos"))
+import axolos_ia as ia  # noqa: E402
+
+from PyQt6.QtCore import QProcess, Qt, QTimer  # noqa: E402
+from PyQt6.QtGui import QIcon  # noqa: E402
+from PyQt6.QtWidgets import (QApplication, QCheckBox, QFrame, QHBoxLayout, QLabel,  # noqa: E402
+                             QMessageBox, QPlainTextEdit, QPushButton, QScrollArea,
+                             QStackedWidget, QVBoxLayout, QWidget)
+
+# Estilo y piezas de la Bienvenida (mismo paquete): paleta, hoja de estilo y sellos de lenguaje
+_BV = os.environ.get("AXOLOS_BIENVENIDA", "/usr/bin/axolos-bienvenida")
+_l = importlib.machinery.SourceFileLoader("axolos_bienvenida", _BV)
+bv = importlib.util.module_from_spec(importlib.util.spec_from_loader("axolos_bienvenida", _l))
+_l.exec_module(bv)
+C, QSS, TITULAR = bv.C, bv.QSS, bv.TITULAR
+
+SIMULAR = os.environ.get("AXOLOS_SIMULAR") == "1"     # pruebas: enseña los comandos sin ejecutarlos
+ROOT = "/usr/lib/axolos/axolos-root"
+ANSI = re.compile(r"\x1b\[[0-9;?]*[A-Za-z]")
+QSS_CENTRO = bv.rgba(f"""
+QFrame#fila {{ background: {C['surface']}; border: 1px solid {C['border']}; border-radius: 14px; }}
+QLabel#nombre {{ font-weight: 600; }}
+QLabel#estado {{ color: {C['muted']}; font-size: 9.5pt; }}
+QLabel#etiqueta {{ border-radius: 8px; padding: 2px 9px; font-size: 9pt; font-weight: 600; }}
+QLabel#etiqueta[tono="ok"] {{ color: {C['green']}; background: {C['green']}1f; }}
+QLabel#etiqueta[tono="rec"] {{ color: {C['accent']}; background: {C['accent']}1f; }}
+QLabel#etiqueta[tono="aviso"] {{ color: {C['yellow']}; background: {C['yellow']}1a; }}
+QLabel#etiqueta[tono="no"] {{ color: {C['muted']}; background: #ffffff12; }}
+QLabel#nav {{ color: {C['muted']}; padding: 9px 12px; border-radius: 10px; font-weight: 600; }}
+QLabel#nav[actual="true"] {{ color: {C['fg']}; background: {C['accent']}1f; }}
+QLabel#nav:hover {{ color: {C['fg']}; }}
+QFrame#tareas {{ background: {C['bg_dark']}; border-top: 1px solid {C['border']}; }}
+""")
+
+
+def sh(*cmd, timeout=20):
+    try:
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
+    except (OSError, subprocess.TimeoutExpired):
+        return ""
+    return r.stdout.strip() if r.returncode == 0 else ""
+
+
+def instalado(pkg):
+    return subprocess.run(["pacman", "-T", pkg], capture_output=True).returncode == 0
+
+
+def etiqueta(texto, tono):
+    lb = QLabel(texto, objectName="etiqueta")
+    lb.setProperty("tono", tono)
+    return lb
+
+
+def fila(titulo, detalle="", derecha=()):
+    """Fila de ajuste: título, detalle y lo que vaya a la derecha (etiquetas, botones)."""
+    f = QFrame(objectName="fila")
+    h = QHBoxLayout(f)
+    h.setContentsMargins(18, 14, 14, 14)
+    h.setSpacing(12)
+    v = QVBoxLayout()
+    v.setSpacing(3)
+    v.addWidget(QLabel(titulo, objectName="nombre", wordWrap=True))
+    if detalle:
+        d = QLabel(detalle, objectName="estado", wordWrap=True)
+        d.setTextInteractionFlags(Qt.TextInteractionFlag.TextSelectableByMouse)
+        v.addWidget(d)
+    h.addLayout(v, 1)
+    for w in derecha:
+        h.addWidget(w, 0, Qt.AlignmentFlag.AlignVCenter)
+    return f
+
+
+def boton(texto, al_pulsar, principal=False):
+    b = QPushButton(texto)
+    if principal:
+        b.setObjectName("principal")
+    b.setCursor(Qt.CursorShape.PointingHandCursor)
+    b.clicked.connect(al_pulsar)
+    return b
+
+
+# --- secciones ----------------------------------------------------------------------------
+class Seccion(QWidget):
+    titulo = ""
+    sub = ""
+
+    def __init__(self, centro):
+        super().__init__(objectName="pagina")
+        self.centro = centro
+        fuera = QVBoxLayout(self)
+        fuera.setContentsMargins(0, 0, 0, 0)
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll.setFrameShape(QFrame.Shape.NoFrame)
+        dentro = QWidget()
+        self.v = QVBoxLayout(dentro)
+        self.v.setContentsMargins(40, 34, 40, 28)
+        self.v.setSpacing(10)
+        scroll.setWidget(dentro)
+        fuera.addWidget(scroll)
+
+    def vaciar(self):
+        while self.v.count():
+            it = self.v.takeAt(0)
+            if it.widget():
+                it.widget().deleteLater()
+            elif it.layout():
+                QWidget().setLayout(it.layout())
+
+    def cabecera(self):
+        self.v.addWidget(QLabel(self.titulo, objectName="titulo"))
+        if self.sub:
+            self.v.addWidget(QLabel(self.sub, objectName="sub", wordWrap=True))
+        self.v.addSpacing(10)
+
+    def grupo(self, texto):
+        self.v.addSpacing(8)
+        self.v.addWidget(QLabel(texto.upper(), objectName="seccion"))
+
+    def refrescar(self):
+        self.vaciar()
+        self.cabecera()
+        self.construir()
+        self.v.addStretch(1)
+
+    def construir(self):
+        pass
+
+
+class Resumen(Seccion):
+    titulo = "Tu AxolOS"
+    sub = "El estado del sistema de un vistazo."
+
+    def construir(self):
+        ver = sh("pacman", "-Q", "axolos-desktop").split()
+        kernel = os.uname().release
+        hw = self.centro.hw
+        cpu = ""
+        try:
+            cpu = next(ln.split(":", 1)[1].strip() for ln in open("/proc/cpuinfo") if ln.startswith("model name"))
+        except (OSError, StopIteration):
+            pass
+        self.grupo("Sistema")
+        self.v.addWidget(fila(f"AxolOS {ver[1] if len(ver) > 1 else '(sin axolos-desktop)'}",
+                              f"Sobre CachyOS · núcleo {kernel}"))
+        self.v.addWidget(fila("Equipo", " · ".join(x for x in (cpu, hw.get("gpu") or "", f"{hw['ram_gb']:.0f} GB de RAM") if x)))
+        self.grupo("Actualizaciones")
+        self.estado_act = QLabel("Comprobando…", objectName="estado")
+        self.b_act = boton("Actualizar ahora", self.actualizar, principal=True)
+        self.b_act.setEnabled(False)
+        f = fila("Actualizaciones de CachyOS y AxolOS", "", (self.b_act,))
+        f.layout().itemAt(0).layout().addWidget(self.estado_act)
+        self.v.addWidget(f)
+        self.comprobar()
+
+    def comprobar(self, forzar=False):
+        """Una sola comprobación a la vez (checkupdates usa una base temporal compartida). El resultado
+        va siempre a la vista que esté en pantalla y se reutiliza durante un minuto."""
+        import time
+        cache = getattr(self, "cache", None)
+        if cache and not forzar and time.monotonic() - cache[0] < 60:
+            self.mostrar(*cache[1:])
+            return
+        if getattr(self, "en_curso", None) is not None:
+            return                                   # la que está en marcha pintará esta vista
+        self.en_curso = QProcess(self)
+        self.en_curso.finished.connect(self.comprobado)
+        self.en_curso.start("checkupdates", ["--nocolor"])
+
+    def comprobado(self, codigo, _e):
+        import time
+        proc, self.en_curso = self.en_curso, None
+        salida = bytes(proc.readAllStandardOutput()).decode(errors="replace").split("\n")
+        proc.deleteLater()
+        lineas = [ln for ln in salida if ln.strip()]
+        if codigo == 2 or (codigo == 0 and not lineas):
+            res = ("Todo al día.", False)
+        elif codigo == 0:
+            axo = [ln.split()[0] for ln in lineas if ln.startswith("axolos-")]
+            extra = f" (de AxolOS: {', '.join(axo)})" if axo else ""
+            res = (f"{len(lineas)} paquetes por actualizar{extra}.", True)
+        else:
+            res = ("No se pudo comprobar (¿sin conexión?).", True)
+        if codigo in (0, 2):
+            self.cache = (time.monotonic(), *res)
+        self.mostrar(*res)
+
+    def mostrar(self, texto, hay):
+        try:
+            self.estado_act.setText(texto)
+            self.b_act.setEnabled(hay)
+        except RuntimeError:                         # la vista se cerró mientras se comprobaba
+            pass
+
+    def actualizar(self):
+        # pacman pregunta cosas (claves, conflictos): mejor en una terminal a la vista
+        self.cache = None                            # después de actualizar, volver a mirar
+        self.centro.terminal("sudo pacman -Syu", "Actualizar el sistema", al_cerrar=self.refrescar)
+
+
+class Programacion(Seccion):
+    titulo = "Programación"
+    sub = "Lenguajes y herramientas. Marca los que quieras añadir; lo instalado se queda como está."
+
+    def construir(self):
+        try:
+            perfiles = json.loads(Path(os.environ.get("AXOLOS_PERFILES", "/usr/share/axolos/perfiles.json")).read_text())
+        except (OSError, ValueError):
+            self.v.addWidget(QLabel("No encuentro los perfiles de axolos-dev.", objectName="aviso"))
+            return
+        self.marcas = {}
+        self.grupo("Perfiles")
+        for pid, p in perfiles.items():
+            paquetes = p.get("paquetes", [])
+            falta = subprocess.run(["pacman", "-T", *paquetes], capture_output=True, text=True).stdout.split() if paquetes else []
+            texto, color = bv.SELLO.get(pid, (p["nombre"][:2], C["accent"]))
+            derecha = []
+            if falta:
+                c = QCheckBox()
+                c.stateChanged.connect(self.marcado)
+                self.marcas[pid] = c
+                derecha = [etiqueta("Sin instalar", "no"), c]
+            else:
+                derecha = [etiqueta("Instalado", "ok")]
+            f = fila(p["nombre"], p.get("descripcion", ""), derecha)
+            f.layout().insertWidget(0, bv.Sello(texto, color))
+            self.v.addWidget(f)
+        self.b_inst = boton("Instalar los marcados", self.instalar, principal=True)
+        self.b_inst.setEnabled(False)
+        h = QHBoxLayout()
+        h.addStretch(1)
+        h.addWidget(self.b_inst)
+        self.v.addLayout(h)
+        self.grupo("Editores")
+        self.v.addWidget(fila("Tema AxolOS en los editores", "VS Code, VSCodium y Antigravity (Kate y Neovim ya lo traen).",
+                              (boton("Aplicar", lambda: self.centro.tarea(["axolos-dev", "editores"], "Tema en los editores")),)))
+
+    def marcado(self):
+        self.b_inst.setEnabled(any(c.isChecked() for c in self.marcas.values()))
+
+    def instalar(self):
+        ids = [i for i, c in self.marcas.items() if c.isChecked()]
+        self.centro.tarea(["axolos-dev", "instalar", *ids], "Instalar perfiles: " + ", ".join(ids), self.refrescar)
+
+
+class IA(Seccion):
+    titulo = "IA local"
+    sub = "Axo y la búsqueda de archivos usan modelos que corren en tu equipo, sin internet."
+
+    def construir(self):
+        hw = self.centro.hw
+        version = ia.servidor_ok()
+        self.grupo("Servicio")
+        if version:
+            self.v.addWidget(fila("Servicio de IA en marcha", f"Ollama {version}", (etiqueta("Activo", "ok"),)))
+        else:
+            self.v.addWidget(fila("El servicio de IA está parado", "Sin él no funcionan Axo ni la búsqueda por contenido.",
+                                  (boton("Arrancar", lambda: self.centro.tarea(["pkexec", ROOT, "ia-servicio"],
+                                                                               "Arrancar la IA", self.refrescar), True),)))
+        nombre_gpu = hw.get("gpu") or {"nvidia": "NVIDIA", "amd": "AMD"}.get(hw["vendor"], "sin gráfica dedicada")
+        if hw["backend_ok"]:
+            self.v.addWidget(fila("Gráfica", f"{nombre_gpu} · {hw['vram_gb']:.0f} GB · {hw['backend']}",
+                                  (etiqueta("Acelerada", "ok"),)))
+        else:
+            self.v.addWidget(fila("La IA no usa la gráfica", f"{nombre_gpu}: falta {hw['backend']}. Irá mucho más lenta.",
+                                  (boton("Activar la gráfica", lambda: self.centro.tarea(["axolos-ia", "gpu"],
+                                                                                         "Activar la gráfica", self.refrescar), True),)))
+        instalados = {m["name"]: m for m in ia.modelos()}
+        nombres = {n.split(":")[0] if n.endswith(":latest") else n: n for n in instalados}
+        rec = set(ia.recomendados(hw))
+        self.grupo("Modelos")
+        for m in ia.CATALOGO:
+            real = nombres.get(m["id"])
+            if real:
+                derecha = [etiqueta("Instalado", "ok"), boton("Quitar", lambda _=False, r=real: self.quitar(r))]
+            else:
+                tono, texto = ("rec", "Recomendado") if m["id"] in rec else \
+                    (("no", "Opcional") if ia.cabe(m["id"], hw) else ("aviso", "Grande para tu equipo"))
+                derecha = [etiqueta(texto, tono),
+                           boton("Descargar", lambda _=False, i=m["id"]: self.centro.tarea(
+                               ["axolos-ia", "descargar", i], f"Descargar {i}", self.refrescar), m["id"] in rec)]
+            self.v.addWidget(fila(m["nombre"], f"{m['uso']} · {m['gb']:.1f} GB", derecha))
+        del_catalogo = {nombres.get(m["id"]) for m in ia.CATALOGO} - {None}
+        for n in sorted(set(instalados) - del_catalogo):
+            self.v.addWidget(fila(n, f"Instalado aparte · {instalados[n]['size_gb']:.1f} GB",
+                                  (boton("Quitar", lambda _=False, r=n: self.quitar(r)),)))
+
+    def quitar(self, modelo):
+        r = QMessageBox.question(self, "Quitar modelo",
+                                 f"¿Quitar {modelo}? Se borra del disco; puedes volver a descargarlo cuando quieras.")
+        if r != QMessageBox.StandardButton.Yes:
+            return
+        if SIMULAR:
+            self.centro.registro(f"(simulado) quitar {modelo}")
+            return
+        try:
+            req = urllib.request.Request(ia.URL + "/api/delete", json.dumps({"model": modelo}).encode(),
+                                         {"Content-Type": "application/json"}, method="DELETE")
+            urllib.request.urlopen(req, timeout=30).close()
+            self.centro.registro(f"Quitado {modelo}")
+        except OSError as e:
+            self.centro.registro(f"No se pudo quitar {modelo}: {e}")
+        self.refrescar()
+
+
+class Busqueda(Seccion):
+    titulo = "Búsqueda de archivos"
+    sub = "«ia busco …» en el menú o en KRunner encuentra tus archivos por lo que contienen."
+
+    def construir(self):
+        try:
+            import axolos_buscar as b
+            estado = b.estado()
+        except Exception as e:  # noqa: BLE001  el índice puede no existir aún
+            estado = f"no disponible ({e})"
+        self.grupo("Índice")
+        self.v.addWidget(fila("Archivos indexados", estado,
+                              (boton("Actualizar ahora", lambda: self.centro.tarea(["axolos-ia", "indexar"],
+                                                                                   "Actualizar el índice", self.refrescar)),)))
+        activo = subprocess.run(["systemctl", "--user", "is-active", "-q", "axolos-indice-vigia.service"]).returncode == 0
+        c = QCheckBox()
+        c.setChecked(activo)
+        c.toggled.connect(self.vigia)
+        self.v.addWidget(fila("Indexar al momento lo nuevo",
+                              "Las descargas y fotos nuevas se pueden buscar a los pocos segundos. Con batería baja espera.",
+                              (c,)))
+
+    def vigia(self, si):
+        accion = ["enable", "--now"] if si else ["disable", "--now"]
+        self.centro.tarea(["systemctl", "--user", *accion, "axolos-indice-vigia.service"],
+                          "Indexado al momento: " + ("activado" if si else "desactivado"))
+
+
+class Apariencia(Seccion):
+    titulo = "Apariencia y arranque"
+    sub = "Para dejar como AxolOS lo que otras apps o el instalador cambian."
+
+    def construir(self):
+        self.grupo("Ventanas")
+        nav = shutil.which("axolos-navegadores")
+        self.v.addWidget(fila("Botones AxolOS en los navegadores",
+                              "Brave, Chrome y Chromium usan la barra con los botones de AxolOS. Ciérralos antes.",
+                              (boton("Aplicar", lambda: self.centro.tarea([nav], "Botones en los navegadores")),) if nav else ()))
+        self.grupo("Arranque")
+        self.v.addWidget(fila("Menú de arranque de AxolOS",
+                              "Colores y fondo de AxolOS en Limine, y un solo grupo «AxolOS». Guarda una copia antes.",
+                              (boton("Aplicar", lambda: self.centro.tarea(["pkexec", ROOT, "limine"], "Menú de arranque")),)))
+        self.grupo("Primeros pasos")
+        self.v.addWidget(fila("Bienvenida a AxolOS", "El asistente del primer inicio, por si quieres repasarlo.",
+                              (boton("Abrir", lambda: QProcess.startDetached("axolos-bienvenida", [])),)))
+
+
+SECCIONES = [("resumen", "Resumen", Resumen), ("programacion", "Programación", Programacion),
+             ("ia", "IA local", IA), ("busqueda", "Búsqueda", Busqueda), ("apariencia", "Apariencia", Apariencia)]
+
+
+class Nav(QLabel):
+    def __init__(self, texto, al_pulsar):
+        super().__init__(texto, objectName="nav")
+        self.al_pulsar = al_pulsar
+        self.setCursor(Qt.CursorShape.PointingHandCursor)
+
+    def mousePressEvent(self, _e):
+        self.al_pulsar()
+
+
+class Centro(QWidget):
+    def __init__(self, inicial="resumen"):
+        super().__init__(objectName="raiz")
+        self.setWindowTitle("Centro de AxolOS")
+        self.setWindowIcon(QIcon.fromTheme("axolos-centro", QIcon.fromTheme("axolos")))
+        self.resize(1000, 700)
+        self.hw = ia.hardware()
+        self.proc = None
+        h = QHBoxLayout(self)
+        h.setContentsMargins(0, 0, 0, 0)
+        h.setSpacing(0)
+
+        lat = QFrame(objectName="lateral")
+        lat.setFixedWidth(220)
+        lv = QVBoxLayout(lat)
+        lv.setContentsMargins(14, 26, 14, 18)
+        lv.setSpacing(3)
+        marca = QLabel("Centro de AxolOS")
+        marca.setStyleSheet(f"font-family: '{TITULAR}'; font-size: 15pt; padding: 0 8px 16px 8px;")
+        lv.addWidget(marca)
+        self.navs, self.paginas = {}, {}
+        self.pila = QStackedWidget()
+        for clave, texto, cls in SECCIONES:
+            n = Nav(texto, lambda c=clave: self.ir(c))
+            lv.addWidget(n)
+            self.navs[clave] = n
+            pg = cls(self)
+            self.paginas[clave] = pg
+            self.pila.addWidget(pg)
+        lv.addStretch(1)
+        h.addWidget(lat)
+
+        der = QFrame(objectName="derecha")
+        dv = QVBoxLayout(der)
+        dv.setContentsMargins(0, 0, 0, 0)
+        dv.setSpacing(0)
+        dv.addWidget(self.pila, 1)
+        # panel de tareas: lo que va haciendo cada herramienta
+        self.tareas = QFrame(objectName="tareas")
+        tv = QVBoxLayout(self.tareas)
+        tv.setContentsMargins(24, 12, 24, 14)
+        cab = QHBoxLayout()
+        self.t_titulo = QLabel("", objectName="nombre")
+        cab.addWidget(self.t_titulo, 1)
+        self.t_cerrar = boton("Ocultar", lambda: self.tareas.hide())
+        self.t_cerrar.setObjectName("plano")
+        cab.addWidget(self.t_cerrar)
+        tv.addLayout(cab)
+        self.log = QPlainTextEdit(readOnly=True)
+        self.log.setMaximumBlockCount(2000)
+        self.log.setFixedHeight(150)
+        tv.addWidget(self.log)
+        self.tareas.hide()
+        dv.addWidget(self.tareas)
+        h.addWidget(der, 1)
+        self.ir(inicial if inicial in self.paginas else "resumen")
+
+    def ir(self, clave):
+        for c, n in self.navs.items():
+            n.setProperty("actual", "true" if c == clave else "false")
+            n.style().unpolish(n)
+            n.style().polish(n)
+        pg = self.paginas[clave]
+        pg.refrescar()
+        self.pila.setCurrentWidget(pg)
+
+    # --- tareas ---------------------------------------------------------------------------
+    def registro(self, texto):
+        self.tareas.show()
+        self.log.appendPlainText(texto)
+
+    def tarea(self, cmd, titulo, al_terminar=None):
+        if self.proc is not None:
+            QMessageBox.information(self, "Centro de AxolOS", "Espera a que termine la tarea en curso.")
+            return
+        self.tareas.show()
+        self.t_titulo.setText(titulo + "…")
+        self.log.appendPlainText(f"$ {' '.join(cmd)}")
+        if SIMULAR:
+            self.log.appendPlainText("(simulado: no se ejecuta)")
+            self.t_titulo.setText(titulo)
+            return
+        self.proc = QProcess(self)
+        self.proc.setProcessChannelMode(QProcess.ProcessChannelMode.MergedChannels)
+        self.proc.readyReadStandardOutput.connect(self._leer)
+
+        def fin(codigo, _e):
+            self._leer()
+            self.t_titulo.setText(titulo + (" · hecho" if codigo == 0 else f" · terminó con error ({codigo})"))
+            self.proc = None
+            if al_terminar:
+                al_terminar()
+        self.proc.finished.connect(fin)
+        self.proc.errorOccurred.connect(lambda _e: fin(-1, None) if self.proc and
+                                        self.proc.state() == QProcess.ProcessState.NotRunning else None)
+        self.proc.start(cmd[0], cmd[1:])
+
+    def _leer(self):
+        if self.proc is None:
+            return
+        txt = ANSI.sub("", bytes(self.proc.readAllStandardOutput()).decode(errors="replace"))
+        for ln in re.split(r"[\r\n]+", txt):
+            if ln.strip():
+                self.log.appendPlainText(ln)
+
+    def terminal(self, orden, titulo, al_cerrar=None):
+        """Órdenes que preguntan cosas (pacman): en una terminal a la vista."""
+        cmd = ["konsole", "-e", "bash", "-c", f'{orden}; echo; read -rp "Pulsa Intro para cerrar"']
+        self.tarea(cmd, titulo, al_cerrar)
+
+    def closeEvent(self, ev):
+        if self.proc is not None:
+            r = QMessageBox.question(self, "Centro de AxolOS", "Hay una tarea en marcha. ¿Cerrar igualmente?")
+            if r != QMessageBox.StandardButton.Yes:
+                ev.ignore()
+                return
+        super().closeEvent(ev)
+
+
+def main():
+    app = QApplication(sys.argv)
+    app.setApplicationName("axolos-centro")
+    app.setDesktopFileName("org.axolos.centro")
+    app.setStyleSheet(QSS + QSS_CENTRO)
+    seccion = next((a for a in sys.argv[1:] if not a.startswith("-")), "resumen")
+    w = Centro(seccion)
+    w.show()
+    sys.exit(app.exec())
+
+
+if __name__ == "__main__":
+    main()

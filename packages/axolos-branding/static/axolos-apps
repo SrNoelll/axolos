@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+# Instala las aplicaciones que Noel tenía en su sistema original (lista guardada
+# en /usr/share/axolos/pkglists). Solo instala lo que falte.
+set -euo pipefail
+D=/usr/share/axolos/pkglists
+[[ $EUID -eq 0 ]] && { echo "Ejecuta axolos-apps como usuario normal (pedirá sudo)."; exit 1; }
+
+echo ":: Paquetes de los repositorios"
+mapfile -t avail < <(pacman -Slq | sort -u)
+mapfile -t want  < <(sort -u "$D/native.txt")
+mapfile -t todo  < <(comm -12 <(printf '%s\n' "${want[@]}") <(printf '%s\n' "${avail[@]}"))
+missing=$(comm -23 <(printf '%s\n' "${want[@]}") <(printf '%s\n' "${avail[@]}") | tr '\n' ' ')
+[[ -n $missing ]] && echo "   (no están en los repos, se omiten: $missing)"
+sudo pacman -S --needed "${todo[@]}"
+
+if [[ -s $D/aur.txt ]]; then
+  helper=$(command -v paru || command -v yay || true)
+  if [[ -n $helper ]]; then
+    echo ":: Paquetes del AUR con $(basename "$helper")"
+    grep -vxE 'axolos-.*' "$D/aur.txt" | "$helper" -S --needed -
+  else
+    echo ":: No hay paru/yay. Paquetes AUR pendientes:"; sed 's/^/   /' "$D/aur.txt"
+  fi
+fi

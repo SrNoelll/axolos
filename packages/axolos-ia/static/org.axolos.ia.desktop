@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Axo
+GenericName=IA local
+Comment=Chat con la IA de tu equipo: funciona sin internet y nada sale de aquí
+Exec=axolos-ia-chat
+Icon=axolos-axo
+Terminal=false
+Categories=Utility;
+Keywords=ia;ai;chat;llm;ollama;asistente;axo;
+StartupWMClass=axolos-ia-chat

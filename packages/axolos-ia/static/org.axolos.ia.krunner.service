@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.axolos.ia.krunner
+Exec=/usr/lib/axolos/axolos-ia-krunner

@@ -1,0 +1,28 @@
+/* AxolOS · botones de ventana GTK4/libadwaita (iguales que los de KWin) */
+windowcontrols { border-spacing: 2px; }
+windowcontrols > button { min-width: 16px; min-height: 16px; padding: 0; margin: 0 2px; border: none; border-radius: 50%; box-shadow: none; outline: none; background-color: transparent; background-repeat: no-repeat; background-position: center; background-size: 16px 16px; }
+windowcontrols > button > image { background: none; color: transparent; -gtk-icon-source: none; box-shadow: none; padding: 0; margin: 0; min-width: 0; min-height: 0; -gtk-icon-size: 0px; }
+windowcontrols > button.close { background-image: url("/usr/share/axolos/gtk-buttons/close-normal.svg"); }
+windowcontrols > button.close:hover { background-image: url("/usr/share/axolos/gtk-buttons/close-hover.svg"); }
+windowcontrols > button.close:active { background-image: url("/usr/share/axolos/gtk-buttons/close-active.svg"); }
+windowcontrols > button.close:backdrop { background-image: url("/usr/share/axolos/gtk-buttons/close-backdrop-normal.svg"); }
+windowcontrols > button.close:backdrop:hover { background-image: url("/usr/share/axolos/gtk-buttons/close-backdrop-hover.svg"); }
+windowcontrols > button.close:backdrop:active { background-image: url("/usr/share/axolos/gtk-buttons/close-backdrop-active.svg"); }
+windowcontrols > button.minimize { background-image: url("/usr/share/axolos/gtk-buttons/minimize-normal.svg"); }
+windowcontrols > button.minimize:hover { background-image: url("/usr/share/axolos/gtk-buttons/minimize-hover.svg"); }
+windowcontrols > button.minimize:active { background-image: url("/usr/share/axolos/gtk-buttons/minimize-active.svg"); }
+windowcontrols > button.minimize:backdrop { background-image: url("/usr/share/axolos/gtk-buttons/minimize-backdrop-normal.svg"); }
+windowcontrols > button.minimize:backdrop:hover { background-image: url("/usr/share/axolos/gtk-buttons/minimize-backdrop-hover.svg"); }
+windowcontrols > button.minimize:backdrop:active { background-image: url("/usr/share/axolos/gtk-buttons/minimize-backdrop-active.svg"); }
+windowcontrols > button.maximize { background-image: url("/usr/share/axolos/gtk-buttons/maximize-normal.svg"); }
+windowcontrols > button.maximize:hover { background-image: url("/usr/share/axolos/gtk-buttons/maximize-hover.svg"); }
+windowcontrols > button.maximize:active { background-image: url("/usr/share/axolos/gtk-buttons/maximize-active.svg"); }
+windowcontrols > button.maximize:backdrop { background-image: url("/usr/share/axolos/gtk-buttons/maximize-backdrop-normal.svg"); }
+windowcontrols > button.maximize:backdrop:hover { background-image: url("/usr/share/axolos/gtk-buttons/maximize-backdrop-hover.svg"); }
+windowcontrols > button.maximize:backdrop:active { background-image: url("/usr/share/axolos/gtk-buttons/maximize-backdrop-active.svg"); }
+window.maximized windowcontrols > button.maximize { background-image: url("/usr/share/axolos/gtk-buttons/maximized-normal.svg"); }
+window.maximized windowcontrols > button.maximize:hover { background-image: url("/usr/share/axolos/gtk-buttons/maximized-hover.svg"); }
+window.maximized windowcontrols > button.maximize:active { background-image: url("/usr/share/axolos/gtk-buttons/maximized-active.svg"); }
+window.maximized windowcontrols > button.maximize:backdrop { background-image: url("/usr/share/axolos/gtk-buttons/maximized-backdrop-normal.svg"); }
+window.maximized windowcontrols > button.maximize:backdrop:hover { background-image: url("/usr/share/axolos/gtk-buttons/maximized-backdrop-hover.svg"); }
+window.maximized windowcontrols > button.maximize:backdrop:active { background-image: url("/usr/share/axolos/gtk-buttons/maximized-backdrop-active.svg"); }

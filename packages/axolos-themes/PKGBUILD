@@ -1,0 +1,39 @@
+# Maintainer: Noel Alarcón
+pkgname=axolos-themes
+pkgver=$(<"${startdir}/../../VERSION")
+pkgrel=10
+pkgdesc="Aspecto de AxolOS: tema global, MacTahoe-Dark (oscuro), Kvantum, colores AxolOS Obsidian, fondo, splash y perfil de Konsole"
+arch=('any')
+# MacTahoe (vinceliuice) es GPL-3.0; fondo, logo y animación de arranque, de Noel
+license=('GPL-3.0-or-later' 'custom')
+makedepends=('ffmpeg' 'python-numpy')
+depends=('plasma-workspace' 'kvantum' 'konsole' 'qt6-declarative' 'kirigami' 'yaru-icon-theme'
+         'inter-font' 'adobe-source-serif-fonts')
+optdepends=('sddm: pantalla de inicio de sesión AxolOS' 'plymouth: pantalla de arranque AxolOS'
+            'apple-fonts: SF Pro y New York originales (AUR; sin ellas se usan Inter y Source Serif 4)')
+
+package() {
+  local a="$startdir/assets" d="$pkgdir/usr/share"
+  mkdir -p "$d"
+  cp -r --no-preserve=ownership "$a/plasma" "$a/aurorae" "$a/color-schemes" \
+        "$a/Kvantum" "$a/wallpapers" "$a/konsole" "$a/axolos" "$a/icons" "$a/sounds" "$d/"
+  # Animación de inicio de Plasma: los últimos 2,1 s del vídeo del ajolote (50 fotogramas)
+  local sp="$d/plasma/look-and-feel/com.noel.axolos/contents/splash"
+  rm -rf "$sp"; install -d "$sp"
+  cp -r --no-preserve=ownership "$startdir/inicio/splash/." "$sp/"
+
+  # Inicio de sesión (SDDM) y arranque (Plymouth) de AxolOS
+  install -d "$d/sddm/themes" "$d/plymouth/themes"
+  cp -r --no-preserve=ownership "$startdir/sddm/AxolOS" "$d/sddm/themes/"
+  cp -r --no-preserve=ownership "$startdir/plymouth/axolos" "$d/plymouth/themes/"
+  # Fondo del menú de arranque (Limine): lo usa el instalador de la ISO de AxolOS
+  install -Dm644 "$startdir/arranque/limine.png" "$d/axolos/arranque/limine.png"
+
+  find "$d" -type d -exec chmod 755 {} +
+  find "$d" -type f -exec chmod 644 {} +      # (los enlaces de iconos se conservan tal cual)
+  # Respaldo libre de las fuentes de Apple (que no se pueden redistribuir)
+  install -Dm644 "$startdir/fontconfig/60-axolos-fuentes.conf" \
+    "$pkgdir/usr/share/fontconfig/conf.avail/60-axolos-fuentes.conf"
+  install -d "$pkgdir/usr/share/fontconfig/conf.default"
+  ln -s ../conf.avail/60-axolos-fuentes.conf "$pkgdir/usr/share/fontconfig/conf.default/60-axolos-fuentes.conf"
+}

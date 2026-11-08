@@ -1,0 +1,242 @@
+#!/usr/bin/env python3
+"""AxolOS · acciones de administrador (se ejecuta con pkexec; política org.axolos.root).
+
+Solo hace cosas fijas y comprobadas; nunca ejecuta lo que le pasen tal cual:
+  axolos-root perfiles ID...     instala perfiles de /usr/share/axolos/perfiles.json
+  axolos-root ia-gpu             soporte de gráfica para la IA local (CUDA / ROCm / Vulkan)
+  axolos-root ia-servicio        activa el servicio de IA local
+  axolos-root limine [--prueba]  menú de arranque con el aspecto y el nombre de AxolOS
+"""
+import json
+import os
+import pwd
+import subprocess
+import sys
+from pathlib import Path
+
+PERFILES = Path("/usr/share/axolos/perfiles.json")
+
+
+def say(msg):
+    print(f"\033[1;35m==>\033[0m {msg}", flush=True)
+
+
+def usuario():
+    uid = os.environ.get("PKEXEC_UID") or os.environ.get("SUDO_UID")
+    if not uid:
+        sys.exit("Ejecútalo con pkexec o sudo.")
+    return pwd.getpwuid(int(uid)).pw_name
+
+
+def gpu_vendor():
+    vend = {p.read_text().strip() for p in Path("/sys/class/drm").glob("card*/device/vendor")}
+    if "0x10de" in vend:
+        return "nvidia"
+    if "0x1002" in vend:
+        return "amd"
+    return "otra"
+
+
+def faltan(pkgs):
+    r = subprocess.run(["pacman", "-T", *pkgs], capture_output=True, text=True)
+    return r.stdout.split()
+
+
+def pacman(pkgs):
+    pkgs = faltan(pkgs)
+    if not pkgs:
+        say("Ya estaba todo instalado")
+        return
+    say("Instalando: " + " ".join(pkgs))
+    cmd = ["pacman", "-S", "--needed", "--noconfirm", *pkgs]
+    if subprocess.run(cmd).returncode:
+        # índice de paquetes viejo: actualizar el sistema entero (nunca -Sy a medias)
+        say("Actualizando el sistema y reintentando")
+        if subprocess.run(["pacman", "-Syu", "--needed", "--noconfirm", *pkgs]).returncode:
+            sys.exit("pacman falló")
+
+
+def systemctl(*a):
+    subprocess.run(["systemctl", *a], check=False)
+
+
+def perfiles(ids):
+    data = json.loads(PERFILES.read_text(encoding="utf-8"))
+    malos = [i for i in ids if i not in data]
+    if malos or not ids:
+        sys.exit("Perfiles no válidos: " + " ".join(malos))
+    nv = gpu_vendor() == "nvidia"
+    pkgs, sistema = [], set()
+    for i in ids:
+        p = data[i]
+        pkgs += p["paquetes"] + p.get("paquetes_nvidia" if nv else "paquetes_otros", [])
+        sistema.update(p.get("sistema", []))
+    pacman(list(dict.fromkeys(pkgs)))
+    if "docker" in sistema:
+        say("Docker: arranque bajo demanda y permiso para tu usuario")
+        systemctl("enable", "--now", "docker.socket")
+        subprocess.run(["usermod", "-aG", "docker", usuario()], check=False)
+
+
+def ia_gpu():
+    v = gpu_vendor()
+    pkgs = {"nvidia": ["ollama-cuda", "nvidia-container-toolkit"],
+            "amd": ["ollama-rocm"], "otra": ["ollama-vulkan"]}[v]
+    say(f"Gráfica {v}: " + " ".join(pkgs))
+    pacman(["ollama", *pkgs])
+    if v == "nvidia" and Path("/usr/bin/nvidia-ctk").exists() and Path("/usr/bin/docker").exists():
+        say("Docker con acceso a la gráfica (nvidia-container-toolkit)")
+        subprocess.run(["nvidia-ctk", "runtime", "configure", "--runtime=docker"], check=False)
+        if subprocess.run(["systemctl", "is-active", "-q", "docker.service"]).returncode == 0:
+            systemctl("restart", "docker.service")
+    ia_servicio()
+
+
+def ia_servicio():
+    say("Servicio de IA local")
+    systemctl("enable", "ollama.service")
+    systemctl("restart", "ollama.service")
+
+
+# ---- menú de arranque (Limine) -------------------------------------------------------------------
+# Los equipos instalados con el instalador de CachyOS tienen en limine.conf su tema de colores y un
+# grupo «/+CachyOS» escrito a mano (vacío si el sistema ya se llamaba AxolOS al crear los kernels).
+FONDO_LIMINE = Path("/usr/share/axolos/arranque/limine.png")
+SNAPPER_LIMINE = Path("/etc/limine-snapper-sync.conf")
+COLORES_LIMINE = {
+    "term_palette": "17171d;ff7a93;7ddfb4;f3cf7a;a69afe;cdc6ff;7fd4e4;e6e6ee",
+    "term_palette_bright": "5b5b68;ff7a93;7ddfb4;f3cf7a;a69afe;cdc6ff;7fd4e4;ffffff",
+    "term_foreground": "e6e6ee",
+    "term_foreground_bright": "ffffff",
+}
+
+
+def bloques_limine(lineas):
+    """Divide limine.conf en [cabecera global, bloque de cada entrada de primer nivel («/…»)]."""
+    bloques, actual = [], []
+    for ln in lineas:
+        if ln.startswith("/") and not ln.startswith("//"):
+            bloques.append(actual)
+            actual = []
+        actual.append(ln)
+    bloques.append(actual)
+    return bloques
+
+
+def transformar_limine(texto, fondo=None):
+    """limine.conf con el aspecto y el nombre de AxolOS. Devuelve (texto nuevo, cambios, avisos).
+    Solo toca lo que reconoce; lo demás se queda igual."""
+    cambios, avisos = [], []
+    lineas = texto.splitlines(keepends=True)
+    tiene_tema = any(ln.startswith("term_palette:") for ln in lineas)
+    salida = []
+    for ln in lineas:
+        clave = ln.split(":", 1)[0]
+        if tiene_tema and clave in COLORES_LIMINE and not ln.startswith(" ") and ":" in ln:
+            nueva = f"{clave}: {COLORES_LIMINE[clave]}\n"
+            if nueva != ln:
+                cambios.append(f"colores: {clave}")
+            ln = nueva
+        elif ln.strip() == "# CachyOS Limine theme":
+            ln = "# Tema de Limine de AxolOS\n"
+        elif fondo and ln.startswith("wallpaper:") and f"boot():/{fondo}" not in ln:
+            ln = f"wallpaper: boot():/{fondo}\n"
+            cambios.append("fondo de AxolOS")
+        salida.append(ln)
+
+    # Grupos del sistema: «/+CachyOS» y «/+AxolOS»
+    bloques = bloques_limine(salida)
+    cab = lambda b: b[0].rstrip("\n") if b and b[0].startswith("/") else ""   # noqa: E731
+    cachy = [b for b in bloques if cab(b) == "/+CachyOS"]
+    axol = [b for b in bloques if cab(b) == "/+AxolOS"]
+    con_entradas = lambda b: any(ln.startswith("//") for ln in b)              # noqa: E731
+    renombrado = False
+    if len(cachy) == 1 and axol and not con_entradas(cachy[0]):
+        bloques.remove(cachy[0])
+        cambios.append("quitado el grupo vacío «CachyOS»")
+    elif len(cachy) == 1 and not axol:
+        cachy[0][0] = "/+AxolOS\n"
+        renombrado = True
+        cambios.append("grupo «CachyOS» renombrado a «AxolOS»")
+    elif cachy:
+        avisos.append("hay un grupo «CachyOS» con entradas además de «AxolOS»: no lo toco")
+    return "".join(ln for b in bloques for ln in b), cambios, avisos, renombrado
+
+
+def esp_limine():
+    """Partición de arranque: ESP_PATH de /etc/default/limine o las rutas habituales."""
+    rutas = []
+    for conf in ("/etc/default/limine", "/etc/limine-entry-tool.conf"):
+        try:
+            for ln in Path(conf).read_text().splitlines():
+                if ln.startswith("ESP_PATH="):
+                    rutas.append(ln.split("=", 1)[1].strip().strip('"'))
+        except OSError:
+            pass
+    rutas += ["/boot", "/efi", "/boot/efi"]
+    for r in rutas:
+        if (Path(r) / "limine.conf").is_file():
+            return Path(r)
+    sys.exit("No encuentro limine.conf (¿el equipo arranca con Limine?).")
+
+
+def limine(prueba=False):
+    import difflib
+    import shutil
+    import time
+    esp = esp_limine()
+    conf = esp / "limine.conf"
+    viejo = conf.read_text()
+    fondo = "axolos-limine.png" if FONDO_LIMINE.is_file() else None
+    nuevo, cambios, avisos, renombrado = transformar_limine(viejo, fondo)
+    for a in avisos:
+        say("Aviso: " + a)
+    # las instantáneas van al grupo del sistema: solo si «CachyOS» ya no está en el menú
+    sin_cachy = "/+CachyOS" not in [ln.rstrip("\n") for ln in nuevo.splitlines()]
+    snapper = (sin_cachy and SNAPPER_LIMINE.is_file()
+               and 'TARGET_OS_NAME="CachyOS"' in SNAPPER_LIMINE.read_text())
+    if nuevo == viejo and not snapper:
+        say(f"{conf}: ya tiene el aspecto y el nombre de AxolOS")
+        return
+    if prueba:
+        say(f"Cambios que haría en {conf} (no escribo nada):")
+        sys.stdout.writelines(difflib.unified_diff(viejo.splitlines(True), nuevo.splitlines(True), "antes", "después"))
+        if snapper:
+            say(f"{SNAPPER_LIMINE}: TARGET_OS_NAME=\"AxolOS\"")
+        return
+    copia = Path("/var/lib/axolos") / f"limine.conf.{time.strftime('%Y%m%d-%H%M%S')}"
+    copia.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(conf, copia)
+    say(f"Copia de seguridad: {copia}")
+    if fondo and "fondo de AxolOS" in cambios:
+        shutil.copyfile(FONDO_LIMINE, esp / fondo)
+    tmp = conf.with_suffix(".axolos-tmp")
+    tmp.write_text(nuevo)
+    os.replace(tmp, conf)
+    for c in cambios:
+        say(c)
+    if snapper:
+        t = SNAPPER_LIMINE.read_text().replace('TARGET_OS_NAME="CachyOS"', 'TARGET_OS_NAME="AxolOS"')
+        SNAPPER_LIMINE.write_text(t)
+        say("instantáneas: grupo «AxolOS»")
+    say("Listo: se verá en el próximo arranque")
+
+
+def main():
+    if os.geteuid() != 0:
+        sys.exit("axolos-root necesita permisos de administrador (usa pkexec).")
+    a = sys.argv[1:]
+    if a[:1] == ["perfiles"]:
+        perfiles(a[1:])
+    elif a == ["ia-gpu"]:
+        ia_gpu()
+    elif a == ["ia-servicio"]:
+        ia_servicio()
+    elif a in (["limine"], ["limine", "--prueba"]):
+        limine(prueba="--prueba" in a)
+    else:
+        sys.exit(__doc__)
+
+
+if __name__ == "__main__":
+    main()

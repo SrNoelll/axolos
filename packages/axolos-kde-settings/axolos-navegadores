@@ -1,0 +1,67 @@
+#!/usr/bin/env python3
+"""AxolOS · botones de ventana AxolOS en los navegadores Chromium.
+
+  navegadores_axolos.py              ajusta los perfiles de tu usuario (si el navegador está cerrado)
+  navegadores_axolos.py --skel DIR   escribe perfiles iniciales en DIR/.config (para /etc/skel)
+
+Los navegadores Chromium ya no pintan los botones de ventana con el tema GTK: Chromium desde
+la 156 dibuja los suyos y Brave desde la 1.99 (Chromium 157) ni siquiera los dibuja (quedan sin
+botones). Así que todos usan la barra de título del sistema → la de KWin, con los botones AxolOS,
+idénticos a los del resto de apps. El tema GTK se mantiene para los colores de la interfaz.
+"""
+import json
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+AXOLOS = {"extensions": {"theme": {"system_theme": 1}},       # colores del tema GTK
+          "browser": {"custom_chrome_frame": False}}           # barra y botones de KWin
+BROWSERS = [  # carpeta de perfil · proceso · ajustes
+    ("BraveSoftware/Brave-Browser", "brave", AXOLOS),
+    ("google-chrome", "chrome", AXOLOS),
+    ("chromium", "chromium", AXOLOS),
+]
+
+
+def merge(dst, src):
+    for k, v in src.items():
+        if isinstance(v, dict):
+            if not isinstance(dst.get(k), dict):
+                dst[k] = {}
+            merge(dst[k], v)
+        else:
+            dst[k] = v
+
+
+def running(proc):
+    return subprocess.run(["pgrep", "-u", str(os.getuid()), "-x", proc],
+                          capture_output=True).returncode == 0
+
+
+def main():
+    if len(sys.argv) == 3 and sys.argv[1] == "--skel":
+        cfg = Path(sys.argv[2]) / ".config"
+        for d, _, prefs in BROWSERS:
+            p = cfg / d / "Default" / "Preferences"
+            p.parent.mkdir(parents=True, exist_ok=True)
+            p.write_text(json.dumps(prefs), encoding="utf-8")
+        return
+    cfg = Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config"))
+    for d, proc, prefs in BROWSERS:
+        p = cfg / d / "Default" / "Preferences"
+        if not p.is_file():
+            continue
+        if running(proc):
+            print(f"   {d}: está abierto; ciérralo y vuelve a ejecutar esto")
+            continue
+        data = json.loads(p.read_text(encoding="utf-8"))
+        merge(data, prefs)
+        tmp = p.with_suffix(".axolos-tmp")
+        tmp.write_text(json.dumps(data, separators=(",", ":")), encoding="utf-8")
+        os.replace(tmp, p)
+        print(f"   {d}: botones AxolOS")
+
+
+if __name__ == "__main__":
+    main()

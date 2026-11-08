@@ -1,0 +1,27 @@
+# Maintainer: Noel Alarcón
+pkgname=axolos-desktop
+pkgver=$(<"${startdir}/../../VERSION")
+pkgrel=5
+pkgdesc="AxolOS completo: instala de una vez la marca, el tema, los ajustes y sus dependencias"
+arch=('any')
+license=('GPL-3.0-or-later')
+depends=(
+  'axolos-branding' 'axolos-themes' 'axolos-menu' 'axolos-kde-settings'
+  # Para desarrolladores e IA local (asistente de bienvenida, perfiles, Ollama afinado)
+  'axolos-dev' 'axolos-ia' 'axolos-bienvenida'
+  # Iconos, cursor y fuentes del tema (los publica el repositorio de AxolOS). Las fuentes de
+  # Apple (SF Pro, New York) no se pueden redistribuir: son opcionales y tienen respaldo libre
+  'axolos-keyring' 'yaru-icon-theme' 'whitesur-cursor-theme-git'
+  'ttf-jetbrains-mono-nerd'
+  # Tipografía de texto de la animación de arranque (AUR)
+  'ttf-ia-writer'
+  # Terminal
+  'konsole' 'fish' 'starship' 'fastfetch'
+  # Menú global (barra de menús arriba, estilo macOS)
+  'plasma-workspace' 'kvantum'
+)
+optdepends=(
+  'apple-fonts: SF Pro y New York originales de Apple (AUR: paru -S apple-fonts)'
+  'brave-bin: el navegador del dock'
+  'python-pywal: colores dinámicos a partir del fondo'
+)

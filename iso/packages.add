@@ -1,0 +1,20 @@
+# Paquetes que se AÑADEN a la ISO de CachyOS (uno por línea)
+axolos-desktop
+axolos-keyring
+axolos-branding
+axolos-themes
+axolos-menu
+axolos-kde-settings
+axolos-dev
+axolos-ia
+axolos-bienvenida
+yaru-icon-theme
+whitesur-cursor-theme-git
+ttf-ia-writer
+ttf-jetbrains-mono-nerd
+kvantum
+starship
+fish
+fastfetch
+inter-font
+adobe-source-serif-fonts

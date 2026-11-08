@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Centro de AxolOS
+GenericName=Ajustes de AxolOS
+Comment=Actualizaciones, lenguajes de programación, IA local, búsqueda y apariencia
+Exec=axolos-centro
+Icon=axolos-centro
+Terminal=false
+Categories=Settings;System;
+Keywords=axolos;centro;ajustes;actualizar;perfiles;ia;modelos;ollama;búsqueda;limine;arranque;
