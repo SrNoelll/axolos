@@ -6,12 +6,12 @@
                 "Name": "Noel Alarcón"
             }
         ],
-        "Description": "AxolOS: the AxolOS desktop for KDE Plasma on CachyOS",
-        "Description[es]": "AxolOS: el escritorio de AxolOS para KDE Plasma sobre CachyOS",
-        "Description[fr]": "AxolOS : le bureau d'AxolOS pour KDE Plasma sur CachyOS",
-        "Description[ru]": "AxolOS: рабочий стол AxolOS для KDE Plasma на CachyOS",
-        "Description[zh_CN]": "AxolOS：基于 CachyOS 的 KDE Plasma AxolOS 桌面",
-        "Description[ja]": "AxolOS：CachyOS 上の KDE Plasma 用 AxolOS デスクトップ",
+        "Description": "AxolOS: liquid glass desktop for KDE Plasma on CachyOS (dark)",
+        "Description[es]": "AxolOS: escritorio de cristal líquido para KDE Plasma sobre CachyOS (oscuro)",
+        "Description[fr]": "AxolOS : bureau en verre liquide pour KDE Plasma sur CachyOS (sombre)",
+        "Description[ru]": "AxolOS: рабочий стол из жидкого стекла для KDE Plasma на CachyOS (тёмный)",
+        "Description[zh_CN]": "AxolOS：基于 CachyOS 的 KDE Plasma 液态玻璃桌面（深色）",
+        "Description[ja]": "AxolOS：CachyOS 上の KDE Plasma 用リキッドガラス デスクトップ（ダーク）",
         "Id": "com.noel.axolos",
         "Name": "AxolOS",
         "Version": "1.1",

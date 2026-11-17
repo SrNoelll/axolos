@@ -7,6 +7,8 @@ arch=('any')
 license=('GPL-3.0-or-later')
 depends=(
   'axolos-branding' 'axolos-themes' 'axolos-menu' 'axolos-kde-settings'
+  # Cristal líquido real en ventanas, paneles y menús (efecto Glass de KWin)
+  'axolos-glass'
   # Para desarrolladores e IA local (asistente de bienvenida, perfiles, Ollama afinado)
   'axolos-dev' 'axolos-ia' 'axolos-bienvenida'
   # Iconos, cursor y fuentes del tema (los publica el repositorio de AxolOS). Las fuentes de

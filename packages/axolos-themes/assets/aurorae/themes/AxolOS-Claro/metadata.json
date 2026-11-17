@@ -1,0 +1,24 @@
+{
+    "KPackageStructure": "aurorae",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "vinceliuice@hotmail.com",
+                "Name": "Vince Liuice"
+            }
+        ],
+        "Category": "Plasma 6 Window Decorations",
+        "ServiceTypes": [
+            "aurorae"
+        ],
+        "EnabledByDefault": true,
+        "Name": "AxolOS Claro",
+        "Description": "AxolOS liquid glass window decorations (light)",
+        "Id": "AxolOS-Claro",
+        "Version": "1.0",
+        "License": "GPL_V3",
+        "X-KDE-PluginInfo-blur": true,
+        "X-KPackage-Dependencies": []
+    },
+    "X-KDE-PluginInfo-blur": true
+}

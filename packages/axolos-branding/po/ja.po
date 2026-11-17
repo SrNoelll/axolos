@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AxolOS\n"
 "Report-Msgid-Bugs-To: https://github.com/SrNoelll/axolos/issues\n"
-"POT-Creation-Date: 2026-11-17 12:50+0100\n"
+"POT-Creation-Date: 2026-11-17 13:35+0100\n"
 "PO-Revision-Date: 2026-11-08 12:00+0100\n"
 "Last-Translator: Noel Alarcón\n"
 "Language-Team: Japanese\n"
@@ -307,10 +307,10 @@ msgid "el chat con tu IA, en el menú de aplicaciones"
 msgstr "AI とのチャット。アプリケーションメニューにあります"
 
 #: packages/axolos-bienvenida/bin/axolos-bienvenida:453
-#: packages/axolos-bienvenida/bin/axolos-centro:404
-#: packages/axolos-bienvenida/bin/axolos-centro:418
-#: packages/axolos-bienvenida/bin/axolos-centro:474
-#: packages/axolos-bienvenida/bin/axolos-centro:515
+#: packages/axolos-bienvenida/bin/axolos-centro:413
+#: packages/axolos-bienvenida/bin/axolos-centro:427
+#: packages/axolos-bienvenida/bin/axolos-centro:483
+#: packages/axolos-bienvenida/bin/axolos-centro:524
 msgid "Centro de AxolOS"
 msgstr "AxolOS センター"
 
@@ -341,8 +341,8 @@ msgstr "（実行できませんでした）"
 #: packages/axolos-bienvenida/bin/axolos-bienvenida:534
 #: packages/axolos-bienvenida/bin/axolos-bienvenida:602
 #: packages/axolos-bienvenida/bin/axolos-centro:269
-#: packages/axolos-bienvenida/bin/axolos-centro:376
-#: packages/axolos-bienvenida/bin/axolos-centro:380
+#: packages/axolos-bienvenida/bin/axolos-centro:385
+#: packages/axolos-bienvenida/bin/axolos-centro:389
 msgid "Aplicar"
 msgstr "適用"
 
@@ -356,7 +356,7 @@ msgstr "Git と GitHub"
 
 #: packages/axolos-bienvenida/bin/axolos-bienvenida:534
 #: packages/axolos-bienvenida/bin/axolos-centro:280
-#: packages/axolos-bienvenida/bin/axolos-centro:387
+#: packages/axolos-bienvenida/bin/axolos-centro:396
 #: packages/axolos-ia/lib/axolos-ia-krunner:123
 #: packages/axolos-ia/lib/axolos-ia-krunner:126
 msgid "IA local"
@@ -368,12 +368,12 @@ msgstr "完了"
 
 #: packages/axolos-bienvenida/bin/axolos-bienvenida:534
 #: packages/axolos-bienvenida/bin/axolos-centro:235
-#: packages/axolos-bienvenida/bin/axolos-centro:386
+#: packages/axolos-bienvenida/bin/axolos-centro:395
 msgid "Programación"
 msgstr "プログラミング"
 
 #: packages/axolos-bienvenida/bin/axolos-bienvenida:539
-#: packages/axolos-bienvenida/bin/axolos-centro:382
+#: packages/axolos-bienvenida/bin/axolos-centro:391
 msgid "Bienvenida a AxolOS"
 msgstr "AxolOS へようこそ"
 
@@ -731,6 +731,14 @@ msgstr "新しいダウンロードや写真は数秒で検索できるように
 msgid "Indexado al momento: "
 msgstr "即時インデックス化："
 
+#: packages/axolos-bienvenida/bin/axolos-centro:364
+msgid "activado"
+msgstr "オン"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:364
+msgid "desactivado"
+msgstr "オフ"
+
 #: packages/axolos-bienvenida/bin/axolos-centro:368
 msgid "Apariencia y arranque"
 msgstr "外観と起動"
@@ -740,87 +748,111 @@ msgid "Para dejar como AxolOS lo que otras apps o el instalador cambian."
 msgstr "他のアプリやインストーラーが変えた部分を AxolOS の見た目に戻します。"
 
 #: packages/axolos-bienvenida/bin/axolos-centro:372
+msgid "Cristal líquido"
+msgstr "リキッドガラス"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:377
+msgid "Modo del escritorio"
+msgstr "デスクトップのモード"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:378
+msgid "Oscuro (el de AxolOS), claro, o que cambie solo: claro de día y oscuro de noche."
+msgstr "ダーク（AxolOS の既定）、ライト、または自動：昼はライト、夜はダーク。"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:379
+msgid "Claro"
+msgstr "ライト"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:379
+msgid "Oscuro"
+msgstr "ダーク"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:380
+msgid "Automático"
+msgstr "自動"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:381
 msgid "Ventanas"
 msgstr "ウィンドウ"
 
-#: packages/axolos-bienvenida/bin/axolos-centro:374
+#: packages/axolos-bienvenida/bin/axolos-centro:383
 msgid "Botones AxolOS en los navegadores"
 msgstr "ブラウザーの AxolOS ボタン"
 
-#: packages/axolos-bienvenida/bin/axolos-centro:375
+#: packages/axolos-bienvenida/bin/axolos-centro:384
 msgid "Brave, Chrome y Chromium usan la barra con los botones de AxolOS. Ciérralos antes."
 msgstr "Brave、Chrome、Chromium が AxolOS ボタン付きのタイトルバーを使います。先に閉じてください。"
 
-#: packages/axolos-bienvenida/bin/axolos-centro:376
+#: packages/axolos-bienvenida/bin/axolos-centro:385
 msgid "Botones en los navegadores"
 msgstr "ブラウザーのボタン"
 
-#: packages/axolos-bienvenida/bin/axolos-centro:377
+#: packages/axolos-bienvenida/bin/axolos-centro:386
 msgid "Arranque"
 msgstr "起動"
 
-#: packages/axolos-bienvenida/bin/axolos-centro:378
+#: packages/axolos-bienvenida/bin/axolos-centro:387
 msgid "Menú de arranque de AxolOS"
 msgstr "AxolOS の起動メニュー"
 
-#: packages/axolos-bienvenida/bin/axolos-centro:379
+#: packages/axolos-bienvenida/bin/axolos-centro:388
 msgid "Colores y fondo de AxolOS en Limine, y un solo grupo «AxolOS». Guarda una copia antes."
 msgstr "Limine に AxolOS の色と背景を使い、グループを「AxolOS」ひとつにします。先にバックアップします。"
 
-#: packages/axolos-bienvenida/bin/axolos-centro:380
+#: packages/axolos-bienvenida/bin/axolos-centro:389
 msgid "Menú de arranque"
 msgstr "起動メニュー"
 
-#: packages/axolos-bienvenida/bin/axolos-centro:381
+#: packages/axolos-bienvenida/bin/axolos-centro:390
 msgid "Primeros pasos"
 msgstr "はじめに"
 
-#: packages/axolos-bienvenida/bin/axolos-centro:382
+#: packages/axolos-bienvenida/bin/axolos-centro:391
 msgid "El asistente del primer inicio, por si quieres repasarlo."
 msgstr "初回起動時のアシスタントです。もう一度見たいときに。"
 
-#: packages/axolos-bienvenida/bin/axolos-centro:383
+#: packages/axolos-bienvenida/bin/axolos-centro:392
 msgid "Abrir"
 msgstr "開く"
 
-#: packages/axolos-bienvenida/bin/axolos-centro:386
+#: packages/axolos-bienvenida/bin/axolos-centro:395
 msgid "Resumen"
 msgstr "概要"
 
-#: packages/axolos-bienvenida/bin/axolos-centro:387
+#: packages/axolos-bienvenida/bin/axolos-centro:396
 msgid "Búsqueda"
 msgstr "検索"
 
-#: packages/axolos-bienvenida/bin/axolos-centro:388
+#: packages/axolos-bienvenida/bin/axolos-centro:397
 msgid "Apariencia"
 msgstr "外観"
 
-#: packages/axolos-bienvenida/bin/axolos-centro:445
+#: packages/axolos-bienvenida/bin/axolos-centro:454
 msgid "Ocultar"
 msgstr "隠す"
 
-#: packages/axolos-bienvenida/bin/axolos-centro:474
+#: packages/axolos-bienvenida/bin/axolos-centro:483
 msgid "Espera a que termine la tarea en curso."
 msgstr "実行中の作業が終わるまでお待ちください。"
 
-#: packages/axolos-bienvenida/bin/axolos-centro:480
+#: packages/axolos-bienvenida/bin/axolos-centro:489
 msgid "(simulado: no se ejecuta)"
 msgstr "（シミュレーション：実行しません）"
 
-#: packages/axolos-bienvenida/bin/axolos-centro:489
+#: packages/axolos-bienvenida/bin/axolos-centro:498
 msgid " · hecho"
 msgstr " · 完了"
 
-#: packages/axolos-bienvenida/bin/axolos-centro:489
+#: packages/axolos-bienvenida/bin/axolos-centro:498
 #, python-brace-format
 msgid " · terminó con error ({codigo})"
 msgstr " · エラーで終了（{codigo}）"
 
-#: packages/axolos-bienvenida/bin/axolos-centro:509
+#: packages/axolos-bienvenida/bin/axolos-centro:518
 msgid "Pulsa Intro para cerrar"
 msgstr "Enter キーで閉じます"
 
-#: packages/axolos-bienvenida/bin/axolos-centro:515
+#: packages/axolos-bienvenida/bin/axolos-centro:524
 msgid "Hay una tarea en marcha. ¿Cerrar igualmente?"
 msgstr "作業が実行中です。閉じてもよいですか？"
 
@@ -1667,6 +1699,43 @@ msgstr ""
 "回答：{1}\n"
 "\n"
 "この会話のタイトル："
+
+#: packages/axolos-kde-settings/axolos-aspecto:57
+msgid "AxolOS cambiará solo: claro de día y oscuro de noche."
+msgstr "AxolOS は自動で切り替わります：昼はライト、夜はダーク。"
+
+#: packages/axolos-kde-settings/axolos-aspecto:61
+#: packages/axolos-kde-settings/axolos-aspecto:94
+msgid "AxolOS claro"
+msgstr "AxolOS ライト"
+
+#: packages/axolos-kde-settings/axolos-aspecto:61
+#: packages/axolos-kde-settings/axolos-aspecto:94
+msgid "AxolOS oscuro"
+msgstr "AxolOS ダーク"
+
+#: packages/axolos-kde-settings/axolos-aspecto:80
+msgid ""
+"axolos-aspecto · modo del escritorio de cristal líquido de AxolOS.\n"
+"\n"
+"  axolos-aspecto                estado (oscuro, claro o automático)\n"
+"  axolos-aspecto oscuro         AxolOS oscuro (el de por defecto)\n"
+"  axolos-aspecto claro          AxolOS claro\n"
+"  axolos-aspecto auto           cambia solo: claro de día y oscuro de noche (Plasma)\n"
+"  axolos-aspecto --migrar       una vez por versión al iniciar sesión: pone al día una cuenta que ya\n"
+"                                existía (tema global de cristal, sin desenfoque duplicado en KWin)\n"
+msgstr ""
+"axolos-aspecto · AxolOS のリキッドガラス デスクトップのモード。\n"
+"\n"
+"  axolos-aspecto                状態（ダーク、ライト、自動）\n"
+"  axolos-aspecto dark           AxolOS ダーク（既定）\n"
+"  axolos-aspecto light          AxolOS ライト\n"
+"  axolos-aspecto auto           自動で切り替え：昼はライト、夜はダーク（Plasma）\n"
+"  axolos-aspecto --migrar       バージョンごとにログイン時に 1 回：既存のアカウントを更新\n"
+
+#: packages/axolos-kde-settings/axolos-aspecto:95
+msgid "automático: claro de día y oscuro de noche"
+msgstr "自動：昼はライト、夜はダーク"
 
 #: packages/axolos-kde-settings/axolos-navegadores:68
 #, python-brace-format

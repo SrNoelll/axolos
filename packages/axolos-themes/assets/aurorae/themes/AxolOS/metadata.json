@@ -13,13 +13,12 @@
         ],
         "EnabledByDefault": true,
         "Name": "AxolOS",
-        "Description" : "AxolOS window decorations",
+        "Description": "AxolOS liquid glass window decorations (dark)",
         "Id": "AxolOS",
         "Version": "1.0",
         "License": "GPL_V3",
-        "X-KDE-PluginInfo-blur": false,
-        "X-KPackage-Dependencies": [
-        ]
-    }
+        "X-KDE-PluginInfo-blur": true,
+        "X-KPackage-Dependencies": []
+    },
+    "X-KDE-PluginInfo-blur": true
 }
-

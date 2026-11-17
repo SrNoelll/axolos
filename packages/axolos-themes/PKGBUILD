@@ -2,7 +2,7 @@
 pkgname=axolos-themes
 pkgver=$(<"${startdir}/../../VERSION")
 pkgrel=11
-pkgdesc="AxolOS look: global theme, MacTahoe-Dark, Kvantum, AxolOS Obsidian colors, wallpaper, splash and Konsole profile"
+pkgdesc="AxolOS liquid glass look (dark and light): global themes, Plasma theme, Kvantum, window decorations, colors, wallpapers, login and boot"
 arch=('any')
 # MacTahoe (vinceliuice) es GPL-3.0; fondo, logo y animación de arranque, de Noel
 license=('GPL-3.0-or-later' 'custom')
@@ -17,10 +17,15 @@ package() {
   mkdir -p "$d"
   cp -r --no-preserve=ownership "$a/plasma" "$a/aurorae" "$a/color-schemes" \
         "$a/Kvantum" "$a/wallpapers" "$a/konsole" "$a/axolos" "$a/icons" "$a/sounds" "$d/"
-  # Animación de inicio de Plasma: los últimos 2,1 s del vídeo del ajolote (50 fotogramas)
-  local sp="$d/plasma/look-and-feel/com.noel.axolos/contents/splash"
-  rm -rf "$sp"; install -d "$sp"
-  cp -r --no-preserve=ownership "$startdir/inicio/splash/." "$sp/"
+  # Pantalla de inicio de Plasma: el fondo de cada variante (oscuro y claro), igual que el escritorio
+  local lnf sp
+  for lnf in com.noel.axolos com.noel.axolos.claro; do
+    sp="$d/plasma/look-and-feel/$lnf/contents/splash"
+    rm -rf "$sp"; install -d "$sp/images"
+    install -m644 "$startdir/inicio/splash/Splash.qml" "$sp/Splash.qml"
+  done
+  cp "$a/wallpapers/AxolOS/contents/images_dark/3840x2160.jpg" "$d/plasma/look-and-feel/com.noel.axolos/contents/splash/images/fondo.jpg"
+  cp "$a/wallpapers/AxolOS/contents/images/3840x2160.jpg" "$d/plasma/look-and-feel/com.noel.axolos.claro/contents/splash/images/fondo.jpg"
 
   # Inicio de sesión (SDDM) y arranque (Plymouth) de AxolOS
   install -d "$d/sddm/themes" "$d/plymouth/themes"

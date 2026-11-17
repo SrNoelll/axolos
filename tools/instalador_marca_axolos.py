@@ -22,12 +22,12 @@ from PyQt6.QtSvg import QSvgRenderer
 ROOT = Path(__file__).resolve().parent.parent
 SALIDA = ROOT / "iso/instalador/marca"
 MARCA = SALIDA / "axolos"
-FONDO = ROOT / "packages/axolos-themes/assets/wallpapers/AxolOS/contents/images/2730x1536.jpg"
+FONDO = ROOT / "packages/axolos-themes/assets/wallpapers/AxolOS/contents/images_dark/3840x2160.jpg"
 LOGO = ROOT / "packages/axolos-branding/files/axolos-logo.png"
 ICONOS = {
-    "axo": ROOT / "packages/axolos-ia/static/axolos-axo.svg",
-    "bienvenida": ROOT / "packages/axolos-bienvenida/static/axolos-bienvenida.svg",
-    "instalar": ROOT / "iso/airootfs/usr/share/icons/hicolor/scalable/apps/axolos-instalar.svg",
+    "axo": ROOT / "packages/axolos-ia/static/iconos/512x512/apps/axolos-axo.png",
+    "bienvenida": ROOT / "packages/axolos-bienvenida/static/iconos/512x512/apps/axolos-bienvenida.png",
+    "instalar": ROOT / "iso/airootfs/usr/share/icons/hicolor/512x512/apps/axolos-instalar.png",
 }
 C = dict(bg="#17171d", bg_dark="#0f0f13", surface="#1e1e26", border="#2a2a34", fg="#e6e6ee",
          muted="#a3a3b4", faint="#5b5b68", accent="#a69afe", accent_hi="#cdc6ff", accent_lo="#7662ce",
@@ -57,7 +57,11 @@ def lienzo(w, h, transparente=False):
 
 
 def svg(p, ruta, rect):
-    QSvgRenderer(str(ruta)).render(p, rect)
+    """SVG o imagen (los iconos de cristal son PNG)."""
+    if str(ruta).endswith(".svg"):
+        QSvgRenderer(str(ruta)).render(p, rect)
+    else:
+        p.drawImage(rect, QImage(str(ruta)))
 
 
 def ajolote(p, rect, opacidad=1.0):
@@ -410,10 +414,9 @@ def escritorio():
     p.drawEllipse(QPointF(cx, cy), 4, 4)
     # dock
     iconos = [("ajolote", None), ("svg", ICONOS["axo"]), ("svg", ICONOS["bienvenida"])]
-    extra = [Path(f) for f in ("/usr/share/icons/Yaru-purple/256x256/apps/filemanager-app.png",
-                                "/usr/share/icons/hicolor/256x256/apps/firefox.png",
-                                "/usr/share/icons/Yaru/256x256/apps/terminal-app.png",
-                                "/usr/share/icons/Yaru/256x256/actions/configure.png") if Path(f).exists()]
+    tema = ROOT / "packages/axolos-themes/assets/icons/AxolOS/256x256@2x/apps"   # iconos de cristal
+    extra = [f for f in (tema / "system-file-manager.png", Path("/usr/share/icons/hicolor/256x256/apps/firefox.png"),
+                         tema / "utilities-terminal.png", tema / "preferences-system.png") if f.exists()]
     elementos = [iconos[0]] + [("png", f) for f in extra[:2]] + [iconos[1]] + [("png", f) for f in extra[2:]]
     t, pad = 58, 14
     ancho = len(elementos) * (t + pad) + pad

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AxolOS\n"
 "Report-Msgid-Bugs-To: https://github.com/SrNoelll/axolos/issues\n"
-"POT-Creation-Date: 2026-11-17 12:50+0100\n"
+"POT-Creation-Date: 2026-11-17 13:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -305,10 +305,10 @@ msgid "el chat con tu IA, en el menú de aplicaciones"
 msgstr ""
 
 #: packages/axolos-bienvenida/bin/axolos-bienvenida:453
-#: packages/axolos-bienvenida/bin/axolos-centro:404
-#: packages/axolos-bienvenida/bin/axolos-centro:418
-#: packages/axolos-bienvenida/bin/axolos-centro:474
-#: packages/axolos-bienvenida/bin/axolos-centro:515
+#: packages/axolos-bienvenida/bin/axolos-centro:413
+#: packages/axolos-bienvenida/bin/axolos-centro:427
+#: packages/axolos-bienvenida/bin/axolos-centro:483
+#: packages/axolos-bienvenida/bin/axolos-centro:524
 msgid "Centro de AxolOS"
 msgstr ""
 
@@ -339,8 +339,8 @@ msgstr ""
 #: packages/axolos-bienvenida/bin/axolos-bienvenida:534
 #: packages/axolos-bienvenida/bin/axolos-bienvenida:602
 #: packages/axolos-bienvenida/bin/axolos-centro:269
-#: packages/axolos-bienvenida/bin/axolos-centro:376
-#: packages/axolos-bienvenida/bin/axolos-centro:380
+#: packages/axolos-bienvenida/bin/axolos-centro:385
+#: packages/axolos-bienvenida/bin/axolos-centro:389
 msgid "Aplicar"
 msgstr ""
 
@@ -354,7 +354,7 @@ msgstr ""
 
 #: packages/axolos-bienvenida/bin/axolos-bienvenida:534
 #: packages/axolos-bienvenida/bin/axolos-centro:280
-#: packages/axolos-bienvenida/bin/axolos-centro:387
+#: packages/axolos-bienvenida/bin/axolos-centro:396
 #: packages/axolos-ia/lib/axolos-ia-krunner:123
 #: packages/axolos-ia/lib/axolos-ia-krunner:126
 msgid "IA local"
@@ -366,12 +366,12 @@ msgstr ""
 
 #: packages/axolos-bienvenida/bin/axolos-bienvenida:534
 #: packages/axolos-bienvenida/bin/axolos-centro:235
-#: packages/axolos-bienvenida/bin/axolos-centro:386
+#: packages/axolos-bienvenida/bin/axolos-centro:395
 msgid "Programación"
 msgstr ""
 
 #: packages/axolos-bienvenida/bin/axolos-bienvenida:539
-#: packages/axolos-bienvenida/bin/axolos-centro:382
+#: packages/axolos-bienvenida/bin/axolos-centro:391
 msgid "Bienvenida a AxolOS"
 msgstr ""
 
@@ -727,6 +727,14 @@ msgstr ""
 msgid "Indexado al momento: "
 msgstr ""
 
+#: packages/axolos-bienvenida/bin/axolos-centro:364
+msgid "activado"
+msgstr ""
+
+#: packages/axolos-bienvenida/bin/axolos-centro:364
+msgid "desactivado"
+msgstr ""
+
 #: packages/axolos-bienvenida/bin/axolos-centro:368
 msgid "Apariencia y arranque"
 msgstr ""
@@ -736,87 +744,111 @@ msgid "Para dejar como AxolOS lo que otras apps o el instalador cambian."
 msgstr ""
 
 #: packages/axolos-bienvenida/bin/axolos-centro:372
-msgid "Ventanas"
-msgstr ""
-
-#: packages/axolos-bienvenida/bin/axolos-centro:374
-msgid "Botones AxolOS en los navegadores"
-msgstr ""
-
-#: packages/axolos-bienvenida/bin/axolos-centro:375
-msgid "Brave, Chrome y Chromium usan la barra con los botones de AxolOS. Ciérralos antes."
-msgstr ""
-
-#: packages/axolos-bienvenida/bin/axolos-centro:376
-msgid "Botones en los navegadores"
+msgid "Cristal líquido"
 msgstr ""
 
 #: packages/axolos-bienvenida/bin/axolos-centro:377
-msgid "Arranque"
+msgid "Modo del escritorio"
 msgstr ""
 
 #: packages/axolos-bienvenida/bin/axolos-centro:378
-msgid "Menú de arranque de AxolOS"
+msgid "Oscuro (el de AxolOS), claro, o que cambie solo: claro de día y oscuro de noche."
 msgstr ""
 
 #: packages/axolos-bienvenida/bin/axolos-centro:379
-msgid "Colores y fondo de AxolOS en Limine, y un solo grupo «AxolOS». Guarda una copia antes."
+msgid "Claro"
+msgstr ""
+
+#: packages/axolos-bienvenida/bin/axolos-centro:379
+msgid "Oscuro"
 msgstr ""
 
 #: packages/axolos-bienvenida/bin/axolos-centro:380
-msgid "Menú de arranque"
+msgid "Automático"
 msgstr ""
 
 #: packages/axolos-bienvenida/bin/axolos-centro:381
-msgid "Primeros pasos"
-msgstr ""
-
-#: packages/axolos-bienvenida/bin/axolos-centro:382
-msgid "El asistente del primer inicio, por si quieres repasarlo."
+msgid "Ventanas"
 msgstr ""
 
 #: packages/axolos-bienvenida/bin/axolos-centro:383
-msgid "Abrir"
+msgid "Botones AxolOS en los navegadores"
+msgstr ""
+
+#: packages/axolos-bienvenida/bin/axolos-centro:384
+msgid "Brave, Chrome y Chromium usan la barra con los botones de AxolOS. Ciérralos antes."
+msgstr ""
+
+#: packages/axolos-bienvenida/bin/axolos-centro:385
+msgid "Botones en los navegadores"
 msgstr ""
 
 #: packages/axolos-bienvenida/bin/axolos-centro:386
-msgid "Resumen"
+msgid "Arranque"
 msgstr ""
 
 #: packages/axolos-bienvenida/bin/axolos-centro:387
-msgid "Búsqueda"
+msgid "Menú de arranque de AxolOS"
 msgstr ""
 
 #: packages/axolos-bienvenida/bin/axolos-centro:388
+msgid "Colores y fondo de AxolOS en Limine, y un solo grupo «AxolOS». Guarda una copia antes."
+msgstr ""
+
+#: packages/axolos-bienvenida/bin/axolos-centro:389
+msgid "Menú de arranque"
+msgstr ""
+
+#: packages/axolos-bienvenida/bin/axolos-centro:390
+msgid "Primeros pasos"
+msgstr ""
+
+#: packages/axolos-bienvenida/bin/axolos-centro:391
+msgid "El asistente del primer inicio, por si quieres repasarlo."
+msgstr ""
+
+#: packages/axolos-bienvenida/bin/axolos-centro:392
+msgid "Abrir"
+msgstr ""
+
+#: packages/axolos-bienvenida/bin/axolos-centro:395
+msgid "Resumen"
+msgstr ""
+
+#: packages/axolos-bienvenida/bin/axolos-centro:396
+msgid "Búsqueda"
+msgstr ""
+
+#: packages/axolos-bienvenida/bin/axolos-centro:397
 msgid "Apariencia"
 msgstr ""
 
-#: packages/axolos-bienvenida/bin/axolos-centro:445
+#: packages/axolos-bienvenida/bin/axolos-centro:454
 msgid "Ocultar"
 msgstr ""
 
-#: packages/axolos-bienvenida/bin/axolos-centro:474
+#: packages/axolos-bienvenida/bin/axolos-centro:483
 msgid "Espera a que termine la tarea en curso."
 msgstr ""
 
-#: packages/axolos-bienvenida/bin/axolos-centro:480
+#: packages/axolos-bienvenida/bin/axolos-centro:489
 msgid "(simulado: no se ejecuta)"
 msgstr ""
 
-#: packages/axolos-bienvenida/bin/axolos-centro:489
+#: packages/axolos-bienvenida/bin/axolos-centro:498
 msgid " · hecho"
 msgstr ""
 
-#: packages/axolos-bienvenida/bin/axolos-centro:489
+#: packages/axolos-bienvenida/bin/axolos-centro:498
 #, python-brace-format
 msgid " · terminó con error ({codigo})"
 msgstr ""
 
-#: packages/axolos-bienvenida/bin/axolos-centro:509
+#: packages/axolos-bienvenida/bin/axolos-centro:518
 msgid "Pulsa Intro para cerrar"
 msgstr ""
 
-#: packages/axolos-bienvenida/bin/axolos-centro:515
+#: packages/axolos-bienvenida/bin/axolos-centro:524
 msgid "Hay una tarea en marcha. ¿Cerrar igualmente?"
 msgstr ""
 
@@ -1630,6 +1662,36 @@ msgid ""
 "Respuesta: {1}\n"
 "\n"
 "Título de esta conversación:"
+msgstr ""
+
+#: packages/axolos-kde-settings/axolos-aspecto:57
+msgid "AxolOS cambiará solo: claro de día y oscuro de noche."
+msgstr ""
+
+#: packages/axolos-kde-settings/axolos-aspecto:61
+#: packages/axolos-kde-settings/axolos-aspecto:94
+msgid "AxolOS claro"
+msgstr ""
+
+#: packages/axolos-kde-settings/axolos-aspecto:61
+#: packages/axolos-kde-settings/axolos-aspecto:94
+msgid "AxolOS oscuro"
+msgstr ""
+
+#: packages/axolos-kde-settings/axolos-aspecto:80
+msgid ""
+"axolos-aspecto · modo del escritorio de cristal líquido de AxolOS.\n"
+"\n"
+"  axolos-aspecto                estado (oscuro, claro o automático)\n"
+"  axolos-aspecto oscuro         AxolOS oscuro (el de por defecto)\n"
+"  axolos-aspecto claro          AxolOS claro\n"
+"  axolos-aspecto auto           cambia solo: claro de día y oscuro de noche (Plasma)\n"
+"  axolos-aspecto --migrar       una vez por versión al iniciar sesión: pone al día una cuenta que ya\n"
+"                                existía (tema global de cristal, sin desenfoque duplicado en KWin)\n"
+msgstr ""
+
+#: packages/axolos-kde-settings/axolos-aspecto:95
+msgid "automático: claro de día y oscuro de noche"
 msgstr ""
 
 #: packages/axolos-kde-settings/axolos-navegadores:68

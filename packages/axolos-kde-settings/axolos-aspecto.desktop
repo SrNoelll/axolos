@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=AxolOS appearance update
+Name[es]=Actualización del aspecto de AxolOS
+Name[fr]=Mise à jour de l'apparence d'AxolOS
+Name[ru]=Обновление оформления AxolOS
+Name[zh_CN]=AxolOS 外观更新
+Name[ja]=AxolOS の外観の更新
+Exec=/usr/bin/axolos-aspecto --migrar
+OnlyShowIn=KDE;
+NoDisplay=true
+X-KDE-autostart-phase=2

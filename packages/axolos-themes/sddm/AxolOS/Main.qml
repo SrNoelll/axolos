@@ -44,23 +44,39 @@ Rectangle {
 
     Timer { interval: 1000; running: true; repeat: true; onTriggered: root.now = new Date() }
 
-    // ---- fondo -------------------------------------------------------------------
-    Image {
-        id: bg
+    // ---- fondo (la escena que refracta el cristal) -----------------------------------
+    Item {
+        id: escenaFondo
         anchors.fill: parent
-        source: config.background || "/usr/share/wallpapers/AxolOS/contents/images/2730x1536.jpg"
-        fillMode: Image.PreserveAspectCrop
-        asynchronous: false
-    }
-    Rectangle {                       // velo para que el texto se lea siempre
-        anchors.fill: parent
-        gradient: Gradient {
-            orientation: Gradient.Horizontal
-            GradientStop { position: 0.0; color: "#b0050506" }
-            GradientStop { position: 0.55; color: "#40050506" }
-            GradientStop { position: 1.0; color: "#10050506" }
+        Image {
+            id: bg
+            anchors.fill: parent
+            source: config.background || "/usr/share/wallpapers/AxolOS/contents/images_dark/3840x2160.jpg"
+            fillMode: Image.PreserveAspectCrop
+            asynchronous: false
+        }
+        Rectangle {                       // velo para que el texto se lea siempre
+            anchors.fill: parent
+            gradient: Gradient {
+                orientation: Gradient.Horizontal
+                GradientStop { position: 0.0; color: "#a0050506" }
+                GradientStop { position: 0.55; color: "#30050506" }
+                GradientStop { position: 1.0; color: "#08050506" }
+            }
         }
     }
+    // la misma escena desenfocada (solo se usa como textura del cristal)
+    MultiEffect {
+        id: escenaBorrosa
+        anchors.fill: parent
+        source: escenaFondo
+        autoPaddingEnabled: false
+        blurEnabled: true; blur: 1.0; blurMax: 48
+        saturation: 0.15
+    }
+    // texturas compartidas por todos los cristales de la pantalla
+    readonly property var texNitido: ShaderEffectSource { sourceItem: escenaFondo }
+    readonly property var texBorroso: ShaderEffectSource { sourceItem: escenaBorrosa; hideSource: true }
 
     // ---- reloj ---------------------------------------------------------------------
     Column {
@@ -83,28 +99,12 @@ Rectangle {
         width: 400; height: 214
         x: Math.round(root.width * 0.07); y: Math.round(root.height * 0.52)
 
-        // cristal: fondo desenfocado recortado a la tarjeta
-        Item {
+        // cristal líquido real: refracta y separa en colores el fondo de detrás
+        Cristal {
             anchors.fill: parent
-            clip: true
-            layer.enabled: true
-            layer.effect: MultiEffect {
-                maskEnabled: true
-                maskSource: ShaderEffectSource { sourceItem: Rectangle { width: card.width; height: card.height; radius: 26 } }
-            }
-            MultiEffect {
-                x: -card.x; y: -card.y
-                width: root.width; height: root.height
-                source: bg
-                blurEnabled: true; blur: 1.0; blurMax: 64
-                brightness: -0.25
-            }
-        }
-        Rectangle {
-            anchors.fill: parent
-            radius: 26
-            color: "#a6141418"
-            border.color: "#1fffffff"
+            escena: escenaFondo; nitido: root.texNitido; borroso: root.texBorroso
+            radio: 26; bisel: 30; fuerza: 46; dispersion: 0.34
+            tinte: Qt.rgba(0.07, 0.07, 0.09, 0.32)
         }
 
         ColumnLayout {
@@ -271,8 +271,16 @@ Rectangle {
         signal clicked()
         implicitHeight: 38; implicitWidth: row.implicitWidth + 30
         radius: 19
-        color: accent ? (pa.containsMouse ? "#40a69afe" : "#26a69afe") : (pa.containsMouse ? "#24ffffff" : "#14ffffff")
-        border.color: accent ? root.cAccent : "#1fffffff"
+        color: "transparent"
+        border.color: accent ? root.cAccent : "transparent"
+        Cristal {
+            anchors.fill: parent
+            z: -1
+            escena: escenaFondo; nitido: root.texNitido; borroso: root.texBorroso
+            radio: 19; bisel: 16; fuerza: 18; dispersion: 0.36
+            tinte: pill.accent ? Qt.rgba(0.65, 0.6, 1.0, pa.containsMouse ? 0.32 : 0.22)
+                               : Qt.rgba(0.07, 0.07, 0.09, pa.containsMouse ? 0.18 : 0.30)
+        }
         Row {
             id: row
             anchors.centerIn: parent

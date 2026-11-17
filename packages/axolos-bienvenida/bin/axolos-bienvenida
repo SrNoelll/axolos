@@ -43,6 +43,12 @@ C = dict(bg="#17171d", bg_dark="#0f0f13", side="#131318", surface="#1e1e26", bor
          fg="#e6e6ee", muted="#8a8a99", faint="#4b4b57", accent="#a69afe", accent_hi="#cdc6ff",
          accent_lo="#7662ce", pink="#ff7a93", green="#7ddfb4", yellow="#f3cf7a", cyan="#7fd4e4",
          lilac="#b4acff", indigo="#8f85f2")
+
+try:   # cristal líquido: paleta del modo activo (claro u oscuro) y fondos translúcidos con KWin Glass
+    import axolos_cristal  # noqa: E402
+    C.update(axolos_cristal.colores())
+except ImportError:
+    axolos_cristal = None
 TITULAR = "New York Medium"
 MONO = "JetBrainsMono Nerd Font"
 # Monograma y color de cada perfil (no dependen del tema de iconos)
@@ -104,7 +110,7 @@ QProgressBar::chunk {{ background: {C['accent']}; border-radius: 4px; }}
 QPlainTextEdit {{ background: {C['bg_dark']}; border: 1px solid {C['border']}; border-radius: 10px;
                   font-family: '{MONO}'; font-size: 9pt; color: {C['muted']}; padding: 6px; }}
 QScrollBar:vertical {{ background: transparent; width: 10px; margin: 2px; }}
-QScrollBar::handle:vertical {{ background: #ffffff1a; border-radius: 3px; min-height: 30px; }}
+QScrollBar::handle:vertical {{ background: {C['fg']}1a; border-radius: 3px; min-height: 30px; }}
 QScrollBar::add-line, QScrollBar::sub-line, QScrollBar::add-page, QScrollBar::sub-page {{ height: 0; background: none; }}
 """)
 
@@ -715,8 +721,10 @@ def main():
     app = QApplication([a for a in sys.argv if a != "--auto"])
     app.setApplicationName("axolos-bienvenida")
     app.setDesktopFileName("org.axolos.bienvenida")
-    app.setStyleSheet(QSS)
+    app.setStyleSheet(axolos_cristal.translucido(QSS, C) if axolos_cristal else QSS)
     w = Asistente()
+    if axolos_cristal:
+        axolos_cristal.preparar(w)
     w.show()
     sys.exit(app.exec())
 

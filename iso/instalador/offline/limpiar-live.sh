@@ -10,7 +10,7 @@ rm -f "$R/etc/skel/.config/axolos/bienvenida.hecha" \
       "$R/etc/skel/.config/autostart/axolos-instalar.desktop" \
       "$R/usr/local/bin/axolos-instalar" "$R/usr/local/bin/axolos-instalar-sin-red" \
       "$R/usr/share/applications/axolos-instalar.desktop" \
-      "$R/usr/share/icons/hicolor/scalable/apps/axolos-instalar.svg"
+      "$R"/usr/share/icons/hicolor/*/apps/axolos-instalar.png
 # librerías que se añadieron solo para que arranque el instalador (compat-calamares.sh)
 if [ -f "$LIVE/compat-libs.txt" ]; then
   while read -r lib; do [ -n "$lib" ] && rm -f "$R/usr/lib/$lib"; done < "$LIVE/compat-libs.txt"

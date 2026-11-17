@@ -10,7 +10,7 @@ Window {
     id: win
     width: 900; height: 520; visible: true; color: "#141418"
     readonly property string outDir: Qt.application.arguments[Qt.application.arguments.length - 1]
-    Image { anchors.fill: parent; source: "file:///usr/share/wallpapers/AxolOS/contents/images/2730x1536.jpg"; fillMode: Image.PreserveAspectCrop; opacity: 0.35 }
+    Image { anchors.fill: parent; source: "file:///usr/share/wallpapers/AxolOS/contents/images_dark/3840x2160.jpg"; fillMode: Image.PreserveAspectCrop; opacity: 0.35 }
 
     Kicker.RootModel {
         id: rootModel

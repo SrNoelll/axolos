@@ -35,7 +35,11 @@ package() {
   install -Dm755 "$startdir/lib/axolos-ia-krunner"  "$pkgdir/usr/lib/axolos/axolos-ia-krunner"
   install -Dm644 "$s/ollama-axolos.conf"     "$pkgdir/usr/lib/systemd/system/ollama.service.d/axolos.conf"
   install -Dm644 "$s/org.axolos.ia.desktop"  "$pkgdir/usr/share/applications/org.axolos.ia.desktop"
-  install -Dm644 "$s/axolos-axo.svg"         "$pkgdir/usr/share/icons/hicolor/scalable/apps/axolos-axo.svg"
+  # Icono de cristal líquido (tools/iconos_cristal.py), en cada tamaño
+  local png
+  for png in "$s"/iconos/*/apps/axolos-axo.png; do
+    install -Dm644 "$png" "$pkgdir/usr/share/icons/hicolor/${png#"$s"/iconos/}"
+  done
   install -Dm644 "$s/axolos-ia.krunner.desktop"     "$pkgdir/usr/share/krunner/dbusplugins/axolos-ia.desktop"
   install -Dm644 "$s/org.axolos.ia.krunner.service" "$pkgdir/usr/share/dbus-1/services/org.axolos.ia.krunner.service"
 }

@@ -25,6 +25,7 @@ PY=(
     packages/axolos-ia/lib/axolos_buscar.py
     packages/axolos-ia/lib/axolos_ia.py
     packages/axolos-kde-settings/axolos-navegadores
+    packages/axolos-kde-settings/axolos-aspecto
 )
 # Scripts de shell: textos con la función «t» (usa /usr/lib/axolos/axolos-texto)
 SH=(

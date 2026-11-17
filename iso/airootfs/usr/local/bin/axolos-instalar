@@ -33,6 +33,12 @@ LOG_CAPA = "/home/liveuser/axolos-instalador.log"
 C = dict(bg="#17171d", bg_dark="#0f0f13", surface="#1e1e26", border="#2a2a34", fg="#e6e6ee",
          muted="#8a8a99", faint="#4b4b57", accent="#a69afe", accent_hi="#cdc6ff", accent_lo="#7662ce",
          green="#7ddfb4", yellow="#f3cf7a", pink="#ff7a93")
+
+try:   # cristal líquido: paleta del modo activo (claro u oscuro) y fondos translúcidos con KWin Glass
+    import axolos_cristal  # noqa: E402
+    C.update(axolos_cristal.colores())
+except ImportError:
+    axolos_cristal = None
 TITULAR = "New York Medium"
 
 
@@ -68,7 +74,7 @@ QProgressBar::chunk {{ background: {C['accent']}; border-radius: 3px; }}
 QPlainTextEdit {{ background: {C['bg_dark']}; border: 1px solid {C['border']}; border-radius: 10px;
                   font-family: monospace; font-size: 8.5pt; color: {C['muted']}; padding: 6px; }}
 QScrollBar:vertical {{ background: transparent; width: 10px; margin: 2px; }}
-QScrollBar::handle:vertical {{ background: #ffffff1a; border-radius: 3px; min-height: 30px; }}
+QScrollBar::handle:vertical {{ background: {C['fg']}1a; border-radius: 3px; min-height: 30px; }}
 QScrollBar::add-line, QScrollBar::sub-line, QScrollBar::add-page, QScrollBar::sub-page {{ height: 0; background: none; }}
 """)
 
@@ -276,8 +282,10 @@ def main():
     app = QApplication(sys.argv)
     app.setApplicationName("axolos-instalar")
     app.setDesktopFileName("axolos-instalar")
-    app.setStyleSheet(QSS)
+    app.setStyleSheet(axolos_cristal.translucido(QSS, C) if axolos_cristal else QSS)
     w = Lanzador()
+    if axolos_cristal:
+        axolos_cristal.preparar(w)
     w.show()
     sys.exit(app.exec())
 

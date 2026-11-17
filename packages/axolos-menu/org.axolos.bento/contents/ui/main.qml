@@ -110,7 +110,8 @@ PlasmoidItem {
         Kirigami.Icon {
             anchors.fill: parent
             anchors.margins: 0
-            source: Plasmoid.icon
+            // el ajolote de AxolOS va en versión simbólica: toma el color del texto (claro u oscuro)
+            source: Plasmoid.icon === "axolos" ? "axolos-symbolic" : Plasmoid.icon
             active: button.containsMouse || root.expanded
         }
     }

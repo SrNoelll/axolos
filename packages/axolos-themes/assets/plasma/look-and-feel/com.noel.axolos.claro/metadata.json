@@ -1,0 +1,25 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "Noel Alarcón"
+            }
+        ],
+        "Description": "AxolOS: liquid glass desktop for KDE Plasma on CachyOS (light)",
+        "Description[es]": "AxolOS: escritorio de cristal líquido para KDE Plasma sobre CachyOS (claro)",
+        "Description[fr]": "AxolOS : bureau en verre liquide pour KDE Plasma sur CachyOS (clair)",
+        "Description[ru]": "AxolOS: рабочий стол из жидкого стекла для KDE Plasma на CachyOS (светлый)",
+        "Description[zh_CN]": "AxolOS：基于 CachyOS 的 KDE Plasma 液态玻璃桌面（浅色）",
+        "Description[ja]": "AxolOS：CachyOS 上の KDE Plasma 用リキッドガラス デスクトップ（ライト）",
+        "Id": "com.noel.axolos.claro",
+        "Name": "AxolOS Light",
+        "Version": "1.1",
+        "Icon": "axolos",
+        "Name[es]": "AxolOS claro",
+        "Name[fr]": "AxolOS clair",
+        "Name[ru]": "AxolOS светлый",
+        "Name[zh_CN]": "AxolOS 浅色",
+        "Name[ja]": "AxolOS ライト"
+    }
+}

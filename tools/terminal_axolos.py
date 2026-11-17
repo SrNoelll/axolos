@@ -42,8 +42,8 @@ def main():
               f"[Color{i}Faint]", f"Color={faint(n)}", ""]
     L += ["[Foreground]", f"Color={rgb(FG)}", "", "[ForegroundIntense]", f"Color={rgb(FG_INT)}", "",
           "[ForegroundFaint]", f"Color={faint(FG)}", "",
-          "[General]", "Blur=false", "ColorRandomization=false", "Description=AxolOS",
-          "FillStyle=Tile", "Opacity=1", "Wallpaper=", "WallpaperFlipType=NoFlip", "WallpaperOpacity=1", ""]
+          "[General]", "Blur=true", "ColorRandomization=false", "Description=AxolOS",
+          "FillStyle=Tile", "Opacity=0.8", "Wallpaper=", "WallpaperFlipType=NoFlip", "WallpaperOpacity=1", ""]
     (out / "AxolOS.colorscheme").write_text("\n".join(L), encoding="utf-8")
     (out / "AxolOS.profile").write_text("\n".join([
         "[Appearance]", "ColorScheme=AxolOS", "Font=JetBrainsMono Nerd Font,11,-1,5,400,0,0,0,0,0,0,0,0,0,0,1",

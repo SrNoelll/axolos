@@ -37,13 +37,19 @@ FocusScope {
     signal closeRequested()
 
     // ---- estilo AxolOS ---------------------------------------------------------
-    readonly property color cPanel: "#e6141418"
-    readonly property color cTile: "#0fffffff"
-    readonly property color cHover: "#1aa69afe"
-    readonly property color cLine: "#16ffffff"
-    readonly property color cText: "#ececf1"
-    readonly property color cMuted: "#9b9ba8"
-    readonly property color cAccent: "#a69afe"
+    // Cristal líquido: todos los colores salen del esquema activo (AxolOS Cristal oscuro o claro).
+    // El desenfoque, la refracción y el irisado de detrás los pone KWin (efecto Glass).
+    readonly property bool claro: Kirigami.ColorUtils.brightnessForColor(Kirigami.Theme.backgroundColor) === Kirigami.ColorUtils.Light
+    readonly property color cText: Kirigami.Theme.textColor
+    readonly property color cAccent: Kirigami.Theme.focusColor
+    function tinte(c, a) { return Qt.rgba(c.r, c.g, c.b, a) }
+    readonly property color cMuted: tinte(cText, 0.62)
+    readonly property color cTile: tinte(cText, claro ? 0.045 : 0.06)
+    readonly property color cHover: tinte(cAccent, 0.16)
+    readonly property color cLine: tinte(cText, claro ? 0.11 : 0.09)
+    readonly property color cBrillo: Qt.rgba(1, 1, 1, claro ? 0.55 : 0.08)      // brillo del borde superior
+    readonly property color cSobreAcento: Kirigami.ColorUtils.brightnessForColor(cAccent) === Kirigami.ColorUtils.Light ? "#1f1a3d" : "#ffffff"
+    readonly property color cPanel: tinte(Kirigami.Theme.backgroundColor, 0.92)
     readonly property string fDisplay: "New York Extra Large"
     readonly property string fUi: "SF Pro Display"
     readonly property string fMono: "iA Writer Mono S"
@@ -113,7 +119,7 @@ FocusScope {
             spacing: 14
             Rectangle {
                 Layout.preferredWidth: 46; Layout.preferredHeight: 46
-                radius: 23; color: "#1d1b2a"; border.color: bento.cAccent; border.width: 1.5
+                radius: 23; color: bento.tinte(bento.cAccent, 0.15); border.color: bento.cAccent; border.width: 1.5
                 Item {                                   // foto recortada en círculo de verdad
                     anchors.fill: parent; anchors.margins: 2.5
                     Image {
@@ -157,7 +163,7 @@ FocusScope {
             Rectangle {
                 Layout.preferredWidth: 330; Layout.preferredHeight: 42
                 radius: 14
-                color: "#0affffff"
+                color: bento.cTile
                 border.color: search.activeFocus || search.text.length ? bento.cAccent : bento.cLine
                 border.width: search.text.length ? 1.5 : 1
                 RowLayout {
@@ -169,7 +175,7 @@ FocusScope {
                         Layout.fillWidth: true
                         focus: true
                         color: bento.cText
-                        selectionColor: "#7662ce"
+                        selectionColor: Kirigami.Theme.highlightColor
                         font.family: bento.fUi; font.pixelSize: 14
                         clip: true
                         Text {
@@ -323,7 +329,7 @@ FocusScope {
                         readonly property bool current: ListView.isCurrentItem
                         background: Rectangle {
                             radius: 12
-                            color: parent.current ? "#22a69afe" : parent.hovered ? bento.cHover : "transparent"
+                            color: parent.current ? bento.tinte(bento.cAccent, 0.2) : parent.hovered ? bento.cHover : "transparent"
                             border.color: parent.current ? bento.cAccent : "transparent"
                         }
                         contentItem: RowLayout {
@@ -370,12 +376,12 @@ FocusScope {
                     visible: !empty
                     height: 32; width: empty ? -6 : chipTxt.implicitWidth + 26
                     radius: 16
-                    color: on ? bento.cAccent : chipArea.containsMouse ? "#1affffff" : "#0dffffff"
+                    color: on ? bento.cAccent : chipArea.containsMouse ? bento.tinte(bento.cText, 0.10) : bento.tinte(bento.cText, 0.05)
                     Text {
                         id: chipTxt
                         anchors.centerIn: parent
                         text: index === 0 ? bento.tr("Home") : (bento.rootModel ? bento.rootModel.labelForRow(row) : "")
-                        color: parent.on ? "#1f1a3d" : bento.cText
+                        color: parent.on ? bento.cSobreAcento : bento.cText
                         font.family: bento.fUi; font.pixelSize: 13
                         font.weight: parent.on ? Font.Medium : Font.Normal
                     }
@@ -395,7 +401,7 @@ FocusScope {
                     visible: shown
                     Layout.preferredWidth: shown ? 36 : 0; Layout.preferredHeight: 36
                     radius: 18
-                    color: danger ? (pArea.containsMouse ? "#40a69afe" : "#26a69afe") : (pArea.containsMouse ? "#1fffffff" : "#0dffffff")
+                    color: danger ? bento.tinte(bento.cAccent, pArea.containsMouse ? 0.25 : 0.15) : bento.tinte(bento.cText, pArea.containsMouse ? 0.12 : 0.05)
                     border.color: danger ? bento.cAccent : "transparent"
                     Kirigami.Icon {
                         anchors.centerIn: parent; width: 18; height: 18
@@ -420,11 +426,20 @@ FocusScope {
 
     // ---- piezas ----------------------------------------------------------------
     component Tile: Rectangle {
+        id: tile
         property string title: ""
         default property alias content: inner.data
         radius: 18
         color: bento.cTile
         border.color: bento.cLine; border.width: 1
+        Rectangle {                                  // brillo de cristal en el borde superior
+            anchors { left: parent.left; right: parent.right; top: parent.top; margins: 1 }
+            height: tile.radius * 1.6; radius: tile.radius - 1
+            gradient: Gradient {
+                GradientStop { position: 0; color: bento.cBrillo }
+                GradientStop { position: 1; color: "transparent" }
+            }
+        }
         Text {
             visible: parent.title.length > 0
             x: 16; y: 13
@@ -488,7 +503,7 @@ FocusScope {
         Rectangle {
             visible: bar >= 0
             Layout.fillWidth: true; Layout.preferredHeight: 4
-            radius: 2; color: "#14ffffff"
+            radius: 2; color: bento.tinte(bento.cText, 0.08)
             Rectangle { width: parent.width * Math.max(0, bar); height: parent.height; radius: 2; color: bento.cAccent }
         }
     }

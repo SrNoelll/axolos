@@ -89,11 +89,11 @@ Color=255,255,255
 Color=152,152,157
 
 [General]
-Blur=false
+Blur=true
 ColorRandomization=false
 Description=AxolOS
 FillStyle=Tile
-Opacity=1
+Opacity=0.8
 Wallpaper=
 WallpaperFlipType=NoFlip
 WallpaperOpacity=1

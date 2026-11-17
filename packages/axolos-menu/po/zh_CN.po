@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AxolOS\n"
 "Report-Msgid-Bugs-To: https://github.com/SrNoelll/axolos/issues\n"
-"POT-Creation-Date: 2026-11-08 13:56+0100\n"
+"POT-Creation-Date: 2026-11-17 13:30+0100\n"
 "PO-Revision-Date: 2026-11-08 12:00+0100\n"
 "Last-Translator: Noel Alarcón\n"
 "Language-Team: Chinese (simplified)\n"
@@ -16,69 +16,69 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:71
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:77
 msgid "Good afternoon"
 msgstr "下午好"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:71
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:77
 msgid "Good evening"
 msgstr "晚上好"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:71
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:77
 msgid "Good morning"
 msgstr "早上好"
 
 #. TRANSLATORS: %1 is the greeting («Good morning»…), %2 the user's name
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:147
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:153
 msgid "%1, %2"
 msgstr "%1，%2"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:152
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:158
 msgid "%1 application"
 msgid_plural "%1 applications"
 msgstr[0] "%1 个应用"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:178
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:184
 msgid "Search apps, files or settings"
 msgstr "搜索应用、文件或设置"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:205
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:211
 msgid "Favorites"
 msgstr "收藏"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:222
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:228
 msgid "NOW"
 msgstr "现在"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:246
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:252
 msgid "System"
 msgstr "系统"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:250
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:256
 msgid "Offline"
 msgstr "未连接"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:253
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:259
 msgid "Battery"
 msgstr "电池"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:261
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:267
 msgid "Jump back in"
 msgstr "继续"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:283
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:289
 msgid "Your recent files will appear here"
 msgstr "最近的文件会显示在这里"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:337
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:343
 msgid "Enter"
 msgstr "回车"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:349
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:355
 msgid "No results for “%1”"
 msgstr "没有“%1”的结果"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:377
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:383
 msgid "Home"
 msgstr "首页"
 

@@ -1,0 +1,106 @@
+#!/usr/bin/env python3
+"""axolos-aspecto · modo del escritorio de cristal líquido de AxolOS (ayuda: axolos-aspecto --help)."""
+import os
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+sys.path.insert(0, os.environ.get("AXOLOS_LIB", "/usr/lib/axolos"))
+try:
+    from axolos_i18n import _  # noqa: E402  textos en el idioma del sistema
+except ImportError:
+    def _(texto):
+        return texto
+
+OSCURO, CLARO = "com.noel.axolos", "com.noel.axolos.claro"
+VERSION_ASPECTO = "2"     # 2 = cristal líquido (noviembre de 2026)
+MARCA = Path(os.environ.get("XDG_STATE_HOME", Path.home() / ".local/state")) / "axolos/aspecto"
+
+
+def leer(archivo, grupo, clave):
+    r = subprocess.run(["kreadconfig6", "--file", archivo, "--group", grupo, "--key", clave],
+                       capture_output=True, text=True)
+    return r.stdout.strip()
+
+
+def escribir(archivo, grupo, clave, valor=None):
+    orden = ["kwriteconfig6", "--file", archivo, "--group", grupo, "--key", clave]
+    orden += ["--delete"] if valor is None else ["--type", "bool", valor] if valor in ("true", "false") else [valor]
+    subprocess.run(orden, check=False)
+
+
+def aplicar(paquete):
+    """Tema global sin tocar la disposición del escritorio (paneles y widgets se quedan)."""
+    subprocess.run(["plasma-apply-lookandfeel", "--apply", paquete], check=False,
+                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    if shutil.which("qdbus6"):
+        subprocess.run(["qdbus6", "org.kde.KWin", "/KWin", "reconfigure"], check=False,
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+
+
+def parejas():
+    escribir("kdeglobals", "KDE", "DefaultLightLookAndFeel", CLARO)
+    escribir("kdeglobals", "KDE", "DefaultDarkLookAndFeel", OSCURO)
+
+
+def estado():
+    if leer("kdeglobals", "KDE", "AutomaticLookAndFeel") == "true":
+        return "auto"
+    return "claro" if leer("kdeglobals", "KDE", "LookAndFeelPackage") == CLARO else "oscuro"
+
+
+def poner(modo):
+    parejas()
+    if modo == "auto":
+        escribir("kdeglobals", "KDE", "AutomaticLookAndFeel", "true")
+        print(_("AxolOS cambiará solo: claro de día y oscuro de noche."))
+        return
+    escribir("kdeglobals", "KDE", "AutomaticLookAndFeel", "false")
+    aplicar(CLARO if modo == "claro" else OSCURO)
+    print(_("AxolOS claro") if modo == "claro" else _("AxolOS oscuro"))
+
+
+def migrar():
+    if MARCA.exists() and MARCA.read_text().strip() == VERSION_ASPECTO:
+        return
+    # el cristal (Glass) y el desenfoque normal no pueden ir juntos: decide /etc/xdg/kwinrc
+    for clave in ("blurEnabled", "glassEnabled"):
+        if leer("kwinrc", "Plugins", clave):
+            escribir("kwinrc", "Plugins", clave)
+    parejas()
+    paquete = leer("kdeglobals", "KDE", "LookAndFeelPackage")
+    if paquete in ("", OSCURO, CLARO) and leer("kdeglobals", "KDE", "AutomaticLookAndFeel") != "true":
+        aplicar(paquete or OSCURO)
+    MARCA.parent.mkdir(parents=True, exist_ok=True)
+    MARCA.write_text(VERSION_ASPECTO + "\n")
+
+
+def ayuda():
+    return _("""axolos-aspecto · modo del escritorio de cristal líquido de AxolOS.
+
+  axolos-aspecto                estado (oscuro, claro o automático)
+  axolos-aspecto oscuro         AxolOS oscuro (el de por defecto)
+  axolos-aspecto claro          AxolOS claro
+  axolos-aspecto auto           cambia solo: claro de día y oscuro de noche (Plasma)
+  axolos-aspecto --migrar       una vez por versión al iniciar sesión: pone al día una cuenta que ya
+                                existía (tema global de cristal, sin desenfoque duplicado en KWin)
+""")
+
+
+def main():
+    a = sys.argv[1:]
+    if not a:
+        print({"oscuro": _("AxolOS oscuro"), "claro": _("AxolOS claro"),
+               "auto": _("automático: claro de día y oscuro de noche")}[estado()])
+    elif a == ["--migrar"]:
+        migrar()
+    elif a[0] in ("oscuro", "claro", "auto", "dark", "light"):
+        poner({"dark": "oscuro", "light": "claro"}.get(a[0], a[0]))
+    else:
+        print(ayuda())
+        sys.exit(0 if a[0] in ("-h", "--help", "ayuda", "help") else 1)
+
+
+if __name__ == "__main__":
+    main()

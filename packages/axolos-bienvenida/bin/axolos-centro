@@ -58,7 +58,7 @@ QLabel#etiqueta {{ border-radius: 8px; padding: 2px 9px; font-size: 9pt; font-we
 QLabel#etiqueta[tono="ok"] {{ color: {C['green']}; background: {C['green']}1f; }}
 QLabel#etiqueta[tono="rec"] {{ color: {C['accent']}; background: {C['accent']}1f; }}
 QLabel#etiqueta[tono="aviso"] {{ color: {C['yellow']}; background: {C['yellow']}1a; }}
-QLabel#etiqueta[tono="no"] {{ color: {C['muted']}; background: #ffffff12; }}
+QLabel#etiqueta[tono="no"] {{ color: {C['muted']}; background: {C['fg']}12; }}
 QLabel#nav {{ color: {C['muted']}; padding: 9px 12px; border-radius: 10px; font-weight: 600; }}
 QLabel#nav[actual="true"] {{ color: {C['fg']}; background: {C['accent']}1f; }}
 QLabel#nav:hover {{ color: {C['fg']}; }}
@@ -361,7 +361,7 @@ class Busqueda(Seccion):
     def vigia(self, si):
         accion = ["enable", "--now"] if si else ["disable", "--now"]
         self.centro.tarea(["systemctl", "--user", *accion, "axolos-indice-vigia.service"],
-                          _("Indexado al momento: ") + ("activado" if si else "desactivado"))
+                          _("Indexado al momento: ") + (_("activado") if si else _("desactivado")))
 
 
 class Apariencia(Seccion):
@@ -369,6 +369,15 @@ class Apariencia(Seccion):
     sub = _("Para dejar como AxolOS lo que otras apps o el instalador cambian.")
 
     def construir(self):
+        self.grupo(_("Cristal líquido"))
+        aspecto = shutil.which("axolos-aspecto")
+        if aspecto:
+            def modo(m):
+                return lambda: QProcess.startDetached(aspecto, [m])
+            self.v.addWidget(fila(_("Modo del escritorio"),
+                                  _("Oscuro (el de AxolOS), claro, o que cambie solo: claro de día y oscuro de noche."),
+                                  (boton(_("Oscuro"), modo("oscuro")), boton(_("Claro"), modo("claro")),
+                                   boton(_("Automático"), modo("auto")))))
         self.grupo(_("Ventanas"))
         nav = shutil.which("axolos-navegadores")
         self.v.addWidget(fila(_("Botones AxolOS en los navegadores"),
@@ -523,9 +532,12 @@ def main():
     app = QApplication(sys.argv)
     app.setApplicationName("axolos-centro")
     app.setDesktopFileName("org.axolos.centro")
-    app.setStyleSheet(QSS + QSS_CENTRO)
+    cristal = getattr(bv, "axolos_cristal", None)
+    app.setStyleSheet(cristal.translucido(QSS + QSS_CENTRO, C) if cristal else QSS + QSS_CENTRO)
     seccion = next((a for a in sys.argv[1:] if not a.startswith("-")), "resumen")
     w = Centro(seccion)
+    if cristal:
+        cristal.preparar(w)
     w.show()
     sys.exit(app.exec())
 

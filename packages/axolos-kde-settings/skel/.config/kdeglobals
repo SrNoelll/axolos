@@ -105,7 +105,7 @@ font=SF Pro Display,10,-1,5,50,0,0,0,0,0
 menuFont=SF Pro Display,10,-1,5,50,0,0,0,0,0
 toolBarFont=SF Pro Display,10,-1,5,50,0,0,0,0,0
 
-ColorScheme=AxolOSObsidian
+ColorScheme=AxolOSCristalOscuro
 
 [Icons]
 Theme=AxolOS
@@ -113,6 +113,9 @@ Theme=AxolOS
 [KDE]
 AnimationDurationFactor=0.25
 LookAndFeelPackage=com.noel.axolos
+DefaultDarkLookAndFeel=com.noel.axolos
+DefaultLightLookAndFeel=com.noel.axolos.claro
+AutomaticLookAndFeel=false
 contrast=0
 frameContrast=0.2
 widgetStyle=kvantum-dark

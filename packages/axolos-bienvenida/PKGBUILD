@@ -12,10 +12,17 @@ package() {
   install -Dm755 "$startdir/bin/axolos-bienvenida" "$pkgdir/usr/bin/axolos-bienvenida"
   install -Dm644 "$s/check.svg"                    "$pkgdir/usr/share/axolos/bienvenida/check.svg"
   install -Dm644 "$s/org.axolos.bienvenida.desktop" "$pkgdir/usr/share/applications/org.axolos.bienvenida.desktop"
-  install -Dm644 "$s/axolos-bienvenida.svg" "$pkgdir/usr/share/icons/hicolor/scalable/apps/axolos-bienvenida.svg"
+  # Icono de cristal líquido (tools/iconos_cristal.py), en cada tamaño
+  local png
+  for png in "$s"/iconos/*/apps/axolos-bienvenida.png; do
+    install -Dm644 "$png" "$pkgdir/usr/share/icons/hicolor/${png#"$s"/iconos/}"
+  done
   install -Dm755 "$startdir/bin/axolos-centro" "$pkgdir/usr/bin/axolos-centro"
   install -Dm644 "$s/org.axolos.centro.desktop" "$pkgdir/usr/share/applications/org.axolos.centro.desktop"
-  install -Dm644 "$s/axolos-centro.svg" "$pkgdir/usr/share/icons/hicolor/scalable/apps/axolos-centro.svg"
+  # Icono de cristal líquido (tools/iconos_cristal.py), en cada tamaño
+  for png in "$s"/iconos/*/apps/axolos-centro.png; do
+    install -Dm644 "$png" "$pkgdir/usr/share/icons/hicolor/${png#"$s"/iconos/}"
+  done
   # Se abre sola en el primer inicio de sesión de cada usuario (hasta completarla u omitirla)
   install -Dm644 "$s/axolos-bienvenida-autostart.desktop" "$pkgdir/etc/xdg/autostart/axolos-bienvenida.desktop"
 }

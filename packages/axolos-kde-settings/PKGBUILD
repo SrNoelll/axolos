@@ -18,6 +18,9 @@ package() {
   cp -r --no-preserve=ownership "$startdir/sddm/." "$pkgdir/usr/lib/sddm/sddm.conf.d/"
   # Botones de ventana AxolOS en los navegadores Chromium (lo usa el Centro de AxolOS)
   install -Dm755 "$startdir/axolos-navegadores" "$pkgdir/usr/bin/axolos-navegadores"
+  # Modo del escritorio (oscuro, claro o automático) y puesta al día de cuentas que ya existían
+  install -Dm755 "$startdir/axolos-aspecto" "$pkgdir/usr/bin/axolos-aspecto"
+  install -Dm644 "$startdir/axolos-aspecto.desktop" "$pkgdir/etc/xdg/autostart/axolos-aspecto.desktop"
   # Una vez por usuario al iniciar Plasma: widgets que dependen del tamaño de su pantalla
   install -Dm644 "$startdir/plasma-updates/axolos-reloj-escritorio.js" \
     "$pkgdir/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/axolos-reloj-escritorio.js"
@@ -27,10 +30,10 @@ package() {
   find "$pkgdir" -type d -exec chmod 755 {} +
   find "$pkgdir" -type f -exec chmod 644 {} +
 
-  # Fondo para la pantalla de inicio de sesión (SDDM, tema breeze)
+  # Fondo para la pantalla de inicio de sesión (SDDM, tema breeze): el oscuro, el de por defecto
   local wp; wp=$(<"$startdir/../axolos-themes/.wallpaper-file")
   install -d "$pkgdir/usr/share/axolos"
-  printf '[General]\nbackground=/usr/share/wallpapers/AxolOS/contents/images/%s\ntype=image\n' "$wp" \
+  printf '[General]\nbackground=/usr/share/wallpapers/AxolOS/contents/images_dark/%s\ntype=image\n' "$wp" \
     > "$pkgdir/usr/share/axolos/sddm-breeze-theme.conf.user"
   chmod 644 "$pkgdir/usr/share/axolos/sddm-breeze-theme.conf.user"
 }

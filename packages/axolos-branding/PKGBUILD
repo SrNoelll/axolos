@@ -22,6 +22,7 @@ package() {
   install -Dm755 "$s/axolos-root"           "$pkgdir/usr/lib/axolos/axolos-root"
   # Idioma de los programas de AxolOS: el del sistema (es, en, fr, ru, zh, ja; si no, inglés)
   install -Dm644 "$s/axolos_i18n.py"        "$pkgdir/usr/lib/axolos/axolos_i18n.py"
+  install -Dm644 "$s/axolos_cristal.py"      "$pkgdir/usr/lib/axolos/axolos_cristal.py"   # paleta claro/oscuro y cristal de las apps
   install -Dm755 "$s/axolos-texto"          "$pkgdir/usr/lib/axolos/axolos-texto"
   local po
   for po in "$startdir"/po/*.po; do
@@ -37,6 +38,8 @@ package() {
   install -Dm644 "$f/avatar-axolos.png" "$pkgdir/usr/share/axolos/avatar.png"
   install -Dm644 "$f/axolos.svg"      "$pkgdir/usr/share/icons/hicolor/scalable/apps/axolos.svg"
   install -Dm644 "$f/axolos.svg"      "$pkgdir/usr/share/icons/hicolor/scalable/apps/distributor-logo-axolos.svg"
+  # Silueta simbólica: Plasma la colorea con el texto del tema (botón del menú en claro y en oscuro)
+  install -Dm644 "$f/axolos-symbolic.svg" "$pkgdir/usr/share/icons/hicolor/scalable/apps/axolos-symbolic.svg"
 
   # fastfetch: por defecto para todos y como preset "fastfetch --config axolos"
   install -Dm644 "$f/fastfetch.jsonc" "$pkgdir/etc/xdg/fastfetch/config.jsonc"

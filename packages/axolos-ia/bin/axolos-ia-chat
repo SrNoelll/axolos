@@ -61,6 +61,12 @@ C = dict(bg="#17171d", bg_dark="#0f0f13", side="#121217", surface="#1e1e26", bor
          fg="#e6e6ee", muted="#8a8a99", faint="#4b4b57", accent="#a69afe", accent_hi="#cdc6ff",
          accent_lo="#7662ce", pink="#ff7a93", green="#7ddfb4", yellow="#f3cf7a", cyan="#7fd4e4",
          lilac="#b4acff", user="#2a2540", code_head="#18181f")
+
+try:   # cristal líquido: paleta del modo activo (claro u oscuro) y fondos translúcidos con KWin Glass
+    import axolos_cristal  # noqa: E402
+    C.update(axolos_cristal.colores())
+except ImportError:
+    axolos_cristal = None
 MONO = "JetBrainsMono Nerd Font"
 TITULAR = "New York Medium"
 
@@ -83,10 +89,10 @@ SISTEMA = ("Eres Axo, el asistente de IA local de AxolOS. Funcionas sin internet
 class AxolStyle(Style):
     background_color = C["bg_dark"]
     styles = {
-        Text: C["fg"], Comment: "italic #6e6c80", Keyword: C["accent"], Keyword.Type: C["yellow"],
+        Text: C["fg"], Comment: "italic " + C["comentario"], Keyword: C["accent"], Keyword.Type: C["yellow"],
         Name.Function: C["cyan"], Name.Class: C["yellow"], Name.Builtin: C["lilac"],
-        Name.Decorator: "#fbe2a6", Name.Tag: C["accent"], Name.Attribute: C["accent_hi"],
-        String: C["green"], String.Escape: "#fbe2a6", Number: "#ff9fb0", Operator: C["lilac"],
+        Name.Decorator: C["decorador"], Name.Tag: C["accent"], Name.Attribute: C["accent_hi"],
+        String: C["green"], String.Escape: C["decorador"], Number: C["numero"], Operator: C["lilac"],
         Punctuation: C["muted"], Generic.Inserted: C["green"], Generic.Deleted: C["pink"],
         Generic.Heading: "bold " + C["accent"], Error: C["pink"],
     }
@@ -149,7 +155,7 @@ QLabel#tenue {{ color: {C['muted']}; }}
 QLabel#mini {{ color: {C['faint']}; font-size: 8.5pt; }}
 QLabel#pensando {{ color: {C['muted']}; font-size: 9.5pt; }}
 QScrollBar:vertical {{ background: transparent; width: 10px; margin: 2px; }}
-QScrollBar::handle:vertical {{ background: #ffffff1a; border-radius: 3px; min-height: 30px; }}
+QScrollBar::handle:vertical {{ background: {C['fg']}1a; border-radius: 3px; min-height: 30px; }}
 QScrollBar::handle:vertical:hover {{ background: {C['accent']}88; }}
 QScrollBar::add-line, QScrollBar::sub-line, QScrollBar::add-page, QScrollBar::sub-page {{ height: 0; background: none; }}
 QLineEdit#buscar {{ background: {C['bg_dark']}; border: 1px solid {C['border']}; border-radius: 9px;
@@ -157,8 +163,8 @@ QLineEdit#buscar {{ background: {C['bg_dark']}; border: 1px solid {C['border']};
 QLineEdit#buscar:focus {{ border-color: {C['accent']}aa; }}
 QListWidget {{ background: transparent; border: none; outline: none; }}
 QListWidget::item {{ padding: 7px 10px; border-radius: 8px; color: {C['fg']}; margin: 1px 0; }}
-QListWidget::item:hover {{ background: #ffffff0b; }}
-QListWidget::item:selected {{ background: {C['accent']}26; color: #ffffff; }}
+QListWidget::item:hover {{ background: {C['fg']}0b; }}
+QListWidget::item:selected {{ background: {C['accent']}26; color: {C['fg']}; }}
 QListWidget::item:disabled {{ color: {C['faint']}; background: transparent; padding-top: 12px;
                               font-size: 8.5pt; font-weight: 700; }}
 QPushButton#nueva {{ background: {C['surface']}; border: 1px solid {C['border']}; border-radius: 10px;
@@ -172,7 +178,7 @@ QComboBox QAbstractItemView {{ background: {C['surface']}; border: 1px solid {C[
             selection-background-color: {C['accent_lo']}; outline: none; padding: 4px; }}
 QToolButton {{ background: transparent; border: 1px solid transparent; border-radius: 8px;
             padding: 4px 9px; color: {C['muted']}; }}
-QToolButton:hover {{ background: #ffffff0d; color: {C['fg']}; }}
+QToolButton:hover {{ background: {C['fg']}0d; color: {C['fg']}; }}
 QToolButton:checked {{ background: {C['accent']}26; border-color: {C['accent']}66; color: {C['accent_hi']}; }}
 QFrame#burbujaUsuario {{ background: {C['user']}; border-radius: 16px; }}
 QFrame#entrada {{ background: {C['surface']}; border: 1px solid {C['border']}; border-radius: 18px; }}
@@ -1121,8 +1127,10 @@ def main():
     QLocalServer.removeServer(SOCKET)
     servidor = QLocalServer()
     servidor.listen(SOCKET)
-    app.setStyleSheet(QSS)
+    app.setStyleSheet(axolos_cristal.translucido(QSS, C) if axolos_cristal else QSS)
     w = Axo()
+    if axolos_cristal:
+        axolos_cristal.preparar(w)
 
     def nueva_conexion():
         c = servidor.nextPendingConnection()

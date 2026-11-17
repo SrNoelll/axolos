@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AxolOS\n"
 "Report-Msgid-Bugs-To: https://github.com/SrNoelll/axolos/issues\n"
-"POT-Creation-Date: 2026-11-08 13:56+0100\n"
+"POT-Creation-Date: 2026-11-17 13:30+0100\n"
 "PO-Revision-Date: 2026-11-08 12:00+0100\n"
 "Last-Translator: Noel Alarcón\n"
 "Language-Team: Russian\n"
@@ -16,71 +16,71 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:71
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:77
 msgid "Good afternoon"
 msgstr "Добрый день"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:71
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:77
 msgid "Good evening"
 msgstr "Добрый вечер"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:71
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:77
 msgid "Good morning"
 msgstr "Доброе утро"
 
 #. TRANSLATORS: %1 is the greeting («Good morning»…), %2 the user's name
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:147
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:153
 msgid "%1, %2"
 msgstr "%1, %2"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:152
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:158
 msgid "%1 application"
 msgid_plural "%1 applications"
 msgstr[0] "%1 приложение"
 msgstr[1] "%1 приложения"
 msgstr[2] "%1 приложений"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:178
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:184
 msgid "Search apps, files or settings"
 msgstr "Поиск приложений, файлов и настроек"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:205
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:211
 msgid "Favorites"
 msgstr "Избранное"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:222
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:228
 msgid "NOW"
 msgstr "СЕЙЧАС"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:246
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:252
 msgid "System"
 msgstr "Система"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:250
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:256
 msgid "Offline"
 msgstr "Нет сети"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:253
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:259
 msgid "Battery"
 msgstr "Батарея"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:261
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:267
 msgid "Jump back in"
 msgstr "Продолжить"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:283
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:289
 msgid "Your recent files will appear here"
 msgstr "Здесь появятся недавние файлы"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:337
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:343
 msgid "Enter"
 msgstr "Enter"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:349
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:355
 msgid "No results for “%1”"
 msgstr "Ничего не найдено по запросу «%1»"
 
-#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:377
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:383
 msgid "Home"
 msgstr "Главная"
 
