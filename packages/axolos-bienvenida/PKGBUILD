@@ -1,7 +1,7 @@
 # Maintainer: Noel Alarcón
 pkgname=axolos-bienvenida
 pkgver=$(<"${startdir}/../../VERSION")
-pkgrel=3
+pkgrel=4
 pkgdesc="AxolOS Welcome and Center: developer profiles, Git/GitHub, local AI, updates and appearance"
 arch=('any')
 license=('GPL-3.0-or-later')

@@ -1,7 +1,7 @@
 # Maintainer: Noel Alarcón
 pkgname=axolos-desktop
 pkgver=$(<"${startdir}/../../VERSION")
-pkgrel=6
+pkgrel=7
 pkgdesc="Complete AxolOS: installs the branding, theme, settings and their dependencies at once"
 arch=('any')
 license=('GPL-3.0-or-later')
