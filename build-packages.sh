@@ -36,7 +36,7 @@ fi
 mkdir -p "$SRCDEST"
 
 [[ -f $ROOT/packages/axolos-themes/.wallpaper-file ]] || {
-  say "Primero hay que copiar tu escritorio al pack"; "$ROOT/collect.sh"; }
+  echo "Falta el fondo de AxolOS (tools/fondo_cristal.py y packages/axolos-themes/.wallpaper-file)" >&2; exit 1; }
 
 for p in "${AXOLOS_PKGS[@]}"; do
   # axolos-glass es C++ (efecto de KWin): necesita las herramientas de compilación y KWin del sistema

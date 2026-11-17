@@ -1,0 +1,42 @@
+name: Bug / Fallo
+description: Something in AxolOS does not work as it should. / Algo de AxolOS no funciona como debería.
+labels: ["fallo"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks! You can write in English, Español, Français, Русский, 中文 or 日本語.
+  - type: textarea
+    id: que
+    attributes:
+      label: What happened? / ¿Qué pasa?
+      description: What you did, what you expected and what happened instead.
+    validations:
+      required: true
+  - type: dropdown
+    id: parte
+    attributes:
+      label: Where? / ¿Dónde?
+      options:
+        - Desktop, glass, themes / Escritorio, cristal, temas
+        - Bento menu / Menú Bento
+        - Axo (local AI) / Axo (IA local)
+        - Welcome or AxolOS Center / Bienvenida o Centro
+        - Installer or ISO / Instalador o ISO
+        - Packages or updates / Paquetes o actualizaciones
+        - Translations / Traducciones
+        - Other / Otro
+    validations:
+      required: true
+  - type: textarea
+    id: sistema
+    attributes:
+      label: System / Sistema
+      description: Output of `fastfetch` and `pacman -Q kwin axolos-desktop axolos-glass`.
+      render: text
+  - type: textarea
+    id: registro
+    attributes:
+      label: Logs / Registro
+      description: Any error message (for example `journalctl --user -b | tail -50`).
+      render: text

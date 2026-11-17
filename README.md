@@ -1,73 +1,141 @@
-# AxolOS
+<p align="center">
+  <img src="docs/capturas/ajolote.png" width="200" alt="AxolOS">
+</p>
 
-Distribución Linux basada en **CachyOS** (Arch) con **KDE Plasma**, pensada para programar y usar
-**IA en local**. El ajolote es su mascota.
+<h1 align="center">AxolOS</h1>
 
-- Escritorio propio: tema AxolOS, menú **Bento**, botones de ventana finos, animaciones de arranque.
-- **Axo**: chat con IA que funciona sin internet, búsqueda de archivos por su contenido
-  («ia busco una foto de la playa») desde el menú y KRunner.
-- Para desarrolladores: perfiles de lenguajes, Git con delta, terminal fish con fzf, zoxide, atuin…
-- Asistente de bienvenida: lenguajes, Git/GitHub y modelos de IA según tu gráfica.
+<p align="center">
+  <b>A liquid glass desktop on CachyOS and KDE Plasma — made for coding and running AI on your own computer.</b>
+</p>
 
-Este repositorio publica los **paquetes de AxolOS** para pacman, firmados.
+<p align="center">
+  <b>English</b> · <a href="README.es.md">Español</a> · <a href="README.fr.md">Français</a> · <a href="README.ru.md">Русский</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.ja.md">日本語</a>
+</p>
 
-## Repositorio de paquetes
+<p align="center">
+  <a href="https://github.com/SrNoelll/axolos/actions/workflows/comprobar.yml"><img src="https://github.com/SrNoelll/axolos/actions/workflows/comprobar.yml/badge.svg" alt="Checks"></a>
+  <a href="https://github.com/SrNoelll/axolos/actions/workflows/publicar.yml"><img src="https://github.com/SrNoelll/axolos/actions/workflows/publicar.yml/badge.svg" alt="Packages"></a>
+  <a href="https://github.com/SrNoelll/axolos/releases/tag/x86_64"><img src="https://img.shields.io/badge/repository-x86__64-7662ce" alt="Repository"></a>
+  <img src="https://img.shields.io/badge/KDE%20Plasma-6.8-a69afe" alt="KDE Plasma 6.8">
+  <img src="https://img.shields.io/badge/base-CachyOS-6b57d6" alt="CachyOS">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0-cdc6ff" alt="GPL-3.0"></a>
+</p>
 
-Los paquetes están en la release [`x86_64`](https://github.com/SrNoelll/axolos/releases/tag/x86_64).
-Son `any` (sirven en cualquier variante de CachyOS: x86-64-v3, v4 o znver4).
+![AxolOS, dark](docs/capturas/oscuro.jpg)
 
-### Añadirlo a un CachyOS ya instalado
+## Highlights
+
+- **Liquid glass, for real.** Panels, menus and windows refract what is behind them, with chromatic
+  edges and rim light (KWin *Glass* effect), over a 3D-rendered wallpaper: the AxolOS axolotl made
+  of glass. Dark by default, with a light mode — or let it switch by itself, light by day and dark at night.
+- **Axo, your local AI.** Chat, code help and image understanding with Ollama, tuned for your
+  graphics card. Search your files by what they contain: press Alt+Space and type
+  `ai find a photo of the beach`. It works offline and nothing leaves your computer.
+- **Ready for developers.** Language profiles in one step (`axolos-dev install rust python`),
+  git with delta, fish with fzf, zoxide and atuin, and AxolOS themes for VS Code, Kate and Neovim.
+- **In your language.** AxolOS follows the system language: English, Español, Français, Русский,
+  简体中文 and 日本語 (any other language falls back to English).
+- **Updates you can trust.** A signed pacman repository, built and published by GitHub Actions.
+  One `sudo pacman -Syu` updates CachyOS and AxolOS together.
+
+**Light mode:**
+
+![AxolOS, light](docs/capturas/claro.jpg)
+
+**Glass icons** — the AxolOS apps, files, terminal, settings and your folders:
+
+![Icons](docs/capturas/iconos.jpg)
+
+**Installer** — CachyOS's Calamares with the AxolOS brand, in your language:
+
+![Installer](docs/capturas/instalador.en.jpg)
+
+## Install
+
+### On a CachyOS with KDE Plasma
 
 ```bash
-# 1. Confiar en la clave de firma de AxolOS
+bash <(curl -fsSL https://raw.githubusercontent.com/SrNoelll/axolos/main/install.sh)
+```
+
+It checks the fingerprint of the signing key, adds the AxolOS repository and installs
+`axolos-desktop`. Add `--apply` to give your current user the AxolOS look, and `--apps` to install the
+AxolOS selection of applications too.
+
+### By hand
+
+```bash
+# 1. Trust the AxolOS signing key
 curl -fsSL https://raw.githubusercontent.com/SrNoelll/axolos/main/axolos.gpg | sudo pacman-key --add -
 sudo pacman-key --lsign-key 3F7DA47A1271EB49F17F573F992DB143AB099E91
 
-# 2. Añadir el repositorio al final de /etc/pacman.conf
+# 2. Add the repository at the end of /etc/pacman.conf
 printf '\n[axolos]\nServer = https://github.com/SrNoelll/axolos/releases/download/x86_64\n' | sudo tee -a /etc/pacman.conf
 
-# 3. Instalar AxolOS completo (sustituye a cachyos-kde-settings)
+# 3. Install AxolOS (replaces cachyos-kde-settings)
 sudo pacman -Syu axolos-desktop
 ```
 
-A partir de ahí, `sudo pacman -Syu` actualiza AxolOS junto con el resto del sistema.
+### From scratch
 
-Huella de la clave: `3F7D A47A 1271 EB49 F17F  573F 992D B143 AB09 9E91`
+`./build-iso.sh` builds a live ISO with the AxolOS installer. With a connection it installs the
+newest version of everything (CachyOS optimized for your processor and graphics card, plus AxolOS
+from this repository); without one, the version on the ISO, which updates itself once you connect.
 
-### Paquetes
+## Light and dark
 
-| Paquete | Qué trae |
+```bash
+axolos-aspecto dark     # or: light, auto
+```
+
+The same switch is in **AxolOS Center → Appearance**. *Auto* uses Plasma's day and night switching.
+
+## Packages
+
+All packages are `any` except `axolos-glass` (`x86_64`) and work on every CachyOS variant
+(x86-64-v3, v4 or Zen 4).
+
+| Package | What it brings |
 |---|---|
-| `axolos-desktop` | Todo AxolOS de una vez |
-| `axolos-keyring` | La clave de firma del repositorio |
-| `axolos-branding` | Identidad del sistema, logo, fastfetch |
-| `axolos-themes` | Tema global, colores, iconos, sonidos, inicio de sesión y arranque |
-| `axolos-menu` | Bento, el menú de aplicaciones |
-| `axolos-kde-settings` | Ajustes de Plasma para usuarios nuevos |
-| `axolos-dev` | Herramientas de desarrollo y perfiles de lenguajes |
-| `axolos-ia` | IA local: Ollama afinado, chat Axo, búsqueda en KRunner/Bento |
-| `axolos-bienvenida` | Asistente del primer inicio y Centro de AxolOS (ajustes) |
+| `axolos-desktop` | All of AxolOS at once |
+| `axolos-glass` | Real liquid glass in KWin: refraction, chromatic edges and rim light |
+| `axolos-themes` | Global themes (dark and light), Plasma theme, Kvantum, window decorations, colors, wallpapers, icons, login and boot |
+| `axolos-menu` | Bento, the AxolOS app launcher |
+| `axolos-kde-settings` | Plasma defaults for new users and `axolos-aspecto` |
+| `axolos-branding` | System identity, logo, fastfetch and the translations of the AxolOS apps |
+| `axolos-ia` | Local AI: tuned Ollama, the Axo chat, KRunner search and VS Code integration |
+| `axolos-dev` | Developer tools and language profiles |
+| `axolos-bienvenida` | First-run Welcome and the AxolOS Center |
+| `axolos-keyring` | The key that signs the repository |
 
-También se publican `yaru-icon-theme`, `whitesur-cursor-theme-git` y `ttf-ia-writer` (del AUR),
-que usa el tema. Las fuentes de Apple (SF Pro, New York) **no** se publican porque su licencia no
-lo permite: son opcionales (`paru -S apple-fonts`) y, si no están, AxolOS usa Inter y Source Serif 4.
+`yaru-icon-theme`, `whitesur-cursor-theme-git` and `ttf-ia-writer` are also published (from the AUR).
+Apple fonts (SF Pro, New York) are **not** published because their license forbids it: they are
+optional (`paru -S apple-fonts`) and AxolOS falls back to Inter and Source Serif 4.
 
-## Instalar AxolOS desde cero
+## Development
 
-La ISO de AxolOS arranca un sistema de prueba con el lanzador «Instalar AxolOS». Con conexión instala
-la versión más reciente de todo (CachyOS optimizado para tu procesador y tu gráfica, y AxolOS desde
-este repositorio); sin conexión, la versión de la ISO, que se pone al día al conectarte.
+This repository is also the source of AxolOS: the packages (`packages/`), the installer layer and the
+ISO (`iso/`, `build-iso.sh`) and the tools that generate the look (`tools/`): the glass wallpapers
+and icons are rendered with Blender (`fondo_cristal.py`, `iconos_cristal.py`), the Plasma frames,
+Kvantum, colors and window decorations are generated too, and `tools/i18n.sh` keeps the six
+translations in sync. Technical documentation (in Spanish): [`docs/DESARROLLO.md`](docs/DESARROLLO.md).
 
-## Desarrollo
+Every push runs the checks ([`comprobar.yml`](.github/workflows/comprobar.yml)) and publishes the
+packages that changed ([`publicar.yml`](.github/workflows/publicar.yml)): each package is built,
+compared with the published one, signed and uploaded to the [`x86_64`](https://github.com/SrNoelll/axolos/releases/tag/x86_64)
+release. `axolos-glass` is rebuilt automatically whenever CachyOS ships a new KWin.
 
-Este repositorio es también el código de AxolOS: los paquetes (`packages/`), la capa sobre el
-instalador de CachyOS y la ISO (`iso/`, `build-iso.sh`) y las herramientas (`tools/`). La
-documentación técnica está en [`docs/DESARROLLO.md`](docs/DESARROLLO.md).
+Contributions are welcome: see [CONTRIBUTING.md](CONTRIBUTING.md). To report a security problem,
+see [SECURITY.md](SECURITY.md).
 
-Los paquetes se publican solos: al subir cambios a `packages/`, GitHub Actions
-([`.github/workflows/publicar.yml`](.github/workflows/publicar.yml)) compila cada paquete, lo compara
-con el publicado, sube su versión si cambió, lo firma con la clave de AxolOS y actualiza la release
-[`x86_64`](https://github.com/SrNoelll/axolos/releases/tag/x86_64).
+## Credits
 
-El tema parte de MacTahoe de Vince Liuice (GPL-3.0). El fondo, el logo, los iconos y la animación de
-arranque son de AxolOS.
+[CachyOS](https://cachyos.org) and [KDE Plasma](https://kde.org/plasma-desktop) ·
+the [Glass](https://github.com/4v3ngR/kwin-effects-glass) KWin effect by 4v3ngR (GPL) ·
+[MacTahoe](https://github.com/vinceliuice) by Vince Liuice (GPL-3.0), base of the Plasma, Kvantum and
+window themes · [Yaru](https://github.com/ubuntu/yaru) icons · Inter, Source Serif 4 and JetBrains Mono.
+
+## License
+
+Code: [GPL-3.0-or-later](LICENSE). The AxolOS artwork (axolotl, wallpapers, icons, boot and login
+images) is © Noel Alarcón under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).

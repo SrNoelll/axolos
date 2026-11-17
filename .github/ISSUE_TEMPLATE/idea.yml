@@ -1,0 +1,11 @@
+name: Idea
+description: Something AxolOS could do better. / Algo que AxolOS podría hacer mejor.
+labels: ["idea"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: Your idea / Tu idea
+      description: What would you like and why? Screenshots or references help.
+    validations:
+      required: true
