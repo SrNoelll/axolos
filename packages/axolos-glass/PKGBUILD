@@ -18,6 +18,11 @@ install=axolos-glass.install
 source=("glass::git+$url.git#commit=$_commit")
 sha256sums=('SKIP')
 
+prepare() {
+  # AxolOS: ventanas sin filo de luz en el canto (menús, paneles y avisos lo conservan)
+  patch -d glass -Np1 -i "$startdir/ventanas-sin-filo.patch"
+}
+
 build() {
   cmake -S glass -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release \
     -DGLASS_WAYLAND=ON -DGLASS_X11=OFF -DBUILD_TESTING=OFF
@@ -32,7 +37,8 @@ package() {
   kwin=$(pacman -Q kwin | awk '{print $2}'); kwin=${kwin#*:}; kwin=${kwin%%-*}
   qt=$(pacman -Q qt6-base | awk '{print $2}'); qt=${qt#*:}; qt=${qt%%-*}; qt=$(cut -d. -f1,2 <<<"$qt")
   install -d "$pkgdir/usr/share/axolos/cristal"
-  printf 'kwin %s\nqt %s\nglass %s\n' "$kwin" "$qt" "$_commit" > "$pkgdir/usr/share/axolos/cristal/compilado-para"
+  printf 'kwin %s\nqt %s\nglass %s\nparche %s\n' "$kwin" "$qt" "$_commit" \
+    "$(sha256sum "$s/ventanas-sin-filo.patch" | cut -c1-16)" > "$pkgdir/usr/share/axolos/cristal/compilado-para"
   # Ajustes de AxolOS (valores por defecto del sistema; cada usuario puede cambiarlos en Efectos)
   install -Dm644 "$s/kwinrc" "$pkgdir/etc/xdg/kwinrc"
   install -Dm755 "$s/axolos-glass-comprobar" "$pkgdir/usr/lib/axolos/axolos-glass-comprobar"

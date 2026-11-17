@@ -16,6 +16,10 @@ package() {
   cp -r --no-preserve=ownership "$startdir/skel/." "$pkgdir/etc/skel/"
   cp -r --no-preserve=ownership "$startdir/xdg/."  "$pkgdir/etc/xdg/"
   cp -r --no-preserve=ownership "$startdir/sddm/." "$pkgdir/usr/lib/sddm/sddm.conf.d/"
+  # permisos limpios SOLO en la configuración copiada (los programas de /usr/bin van con 755 aparte;
+  # un chmod 644 de todo el paquete los dejaba sin ejecutar y la migración al iniciar sesión no corría)
+  find "$pkgdir/etc" "$pkgdir/usr/lib/sddm" -type d -exec chmod 755 {} +
+  find "$pkgdir/etc" "$pkgdir/usr/lib/sddm" -type f -exec chmod 644 {} +
   # Botones de ventana AxolOS en los navegadores Chromium (lo usa el Centro de AxolOS)
   install -Dm755 "$startdir/axolos-navegadores" "$pkgdir/usr/bin/axolos-navegadores"
   # Modo del escritorio (oscuro, claro o automático) y puesta al día de cuentas que ya existían
@@ -27,8 +31,6 @@ package() {
   # Firefox: barra de título del sistema (la de KWin, con los botones AxolOS);
   # "default" = cada usuario puede cambiarlo
   install -Dm644 "$startdir/firefox/policies.json" "$pkgdir/etc/firefox/policies/policies.json"
-  find "$pkgdir" -type d -exec chmod 755 {} +
-  find "$pkgdir" -type f -exec chmod 644 {} +
 
   # Fondo para la pantalla de inicio de sesión (SDDM, tema breeze): el oscuro, el de por defecto
   local wp; wp=$(<"$startdir/../axolos-themes/.wallpaper-file")

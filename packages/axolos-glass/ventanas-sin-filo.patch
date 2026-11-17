@@ -1,0 +1,32 @@
+diff --git i/src/blur.cpp w/src/blur.cpp
+index 49be32b..9d22478 100644
+--- i/src/blur.cpp
++++ w/src/blur.cpp
+@@ -1579,10 +1579,15 @@ void BlurEffect::blur(const RenderTarget &renderTarget, const RenderViewport &vi
+     m_roundedOnscreenPass.shader->setUniform(m_roundedOnscreenPass.bodyRefractionLocation, m_settings.refraction.bodyRefraction ? 1 : 0);
+     m_roundedOnscreenPass.shader->setUniform(m_roundedOnscreenPass.bodyRefractionReachLocation, m_settings.refraction.bodyRefractionReach);
+     m_roundedOnscreenPass.shader->setUniform(m_roundedOnscreenPass.bodyRefractionStrengthLocation, m_settings.refraction.bodyRefractionStrength);
+-    m_roundedOnscreenPass.shader->setUniform(m_roundedOnscreenPass.rimGlowLocation, m_settings.general.rimGlow ? 1 : 0);
++    // AxolOS: las ventanas (y diálogos) sin filo de luz ni brillo en el canto; menús, paneles, avisos y
++    // descripciones emergentes lo conservan. En una ventana grande el filo parecía un borde de color.
++    const bool axolosVentana = !w->isDock() && !w->isTooltip() && !w->isNotification() &&
++        !w->isOnScreenDisplay() && !w->isMenu() && !w->isDropdownMenu() && !w->isPopupMenu() &&
++        !w->isPopupWindow();
++    m_roundedOnscreenPass.shader->setUniform(m_roundedOnscreenPass.rimGlowLocation, (m_settings.general.rimGlow && !axolosVentana) ? 1 : 0);
+     m_roundedOnscreenPass.shader->setUniform(m_roundedOnscreenPass.glowOffsetLocation, m_settings.general.glowOffset);
+     m_roundedOnscreenPass.shader->setUniform(m_roundedOnscreenPass.rimGlowColorMixLocation, m_settings.general.rimGlowColorMix ? 1 : 0);
+-    m_roundedOnscreenPass.shader->setUniform(m_roundedOnscreenPass.rimSpecularLocation, m_settings.general.rimSpecular ? 1 : 0);
++    m_roundedOnscreenPass.shader->setUniform(m_roundedOnscreenPass.rimSpecularLocation, (m_settings.general.rimSpecular && !axolosVentana) ? 1 : 0);
+     m_roundedOnscreenPass.shader->setUniform(m_roundedOnscreenPass.rimSpecularScaleLocation, m_settings.general.rimSpecularScale);
+     m_roundedOnscreenPass.shader->setUniform(m_roundedOnscreenPass.rimWidthLocation, m_settings.general.rimWidth);
+     m_roundedOnscreenPass.shader->setUniform(m_roundedOnscreenPass.rimSpecularTopLeftLocation, m_settings.general.rimSpecularTopLeft ? 1 : 0);
+@@ -1638,7 +1643,8 @@ void BlurEffect::blur(const RenderTarget &renderTarget, const RenderViewport &vi
+     m_roundedOnscreenPass.shader->setUniform(m_roundedOnscreenPass.glowStrengthLocation, static_cast<float>(glow.alphaF()));
+     const bool edgeLightingExcluded = (isOverRounded && w->isDock()) ||
+         (m_settings.general.edgeLightingDock && w->isDock()) ||
+-        (m_settings.general.edgeLightingTooltip && w->isTooltip());
++        (m_settings.general.edgeLightingTooltip && w->isTooltip()) ||
++        axolosVentana;
+     m_roundedOnscreenPass.shader->setUniform(m_roundedOnscreenPass.edgeLightingLocation, edgeLightingExcluded ? false : m_settings.general.edgeLighting);
+ 
+ 

@@ -41,7 +41,8 @@ guardan en git el generador y su resultado.
 | Marcos de Plasma (paneles, menús, avisos) | `plasma_cristal.py` | 9 piezas con máscara y sombra; color `ColorScheme-Background` (claro u oscuro). Plasma usa `translucent/` cuando hay desenfoque detrás (relleno muy ligero) y la normal cuando no |
 | Esquemas de color | `colores_cristal.py` | AxolOS Cristal oscuro y claro |
 | Kvantum | `kvantum_axolos.py` | desde MacTahoe: `AxolOS` (claro) y `AxolOSDark` |
-| Barras de título | `decoracion_cristal.py` | Aurorae `AxolOS` y `AxolOS-Claro`; los botones son de `botones_axolos.py` |
+| Barras de título | `decoracion_cristal.py` | Aurorae `AxolOS` y `AxolOS-Claro`, dibujadas desde cero: la barra es el mismo cristal que la ventana (color y opacidad de Kvantum), sin contorno, esquinas de 14 px y sombra gaussiana redondeada; los botones son de `botones_axolos.py` |
+| Disposición del escritorio | `diseno_axolos.py` | guion `contents/layouts/` de los dos temas globales a partir de la disposición de skel (barra, dock con Bento, reloj): aplicar el tema con «Diseño del escritorio» deja el escritorio de AxolOS |
 | Menú de arranque (Limine) | `arranque_cristal.py` | a partir del fondo oscuro |
 | Marca del instalador | `instalador_marca_axolos.py` + `instalador_textos.py` | diapositivas en los 6 idiomas |
 | Terminal | `terminal_axolos.py` | Konsole translúcido |
@@ -107,9 +108,11 @@ copia el sistema de la ISO (`iso/instalador/offline/`). Probar: `tools/probar-vm
 ## Probar sin tocar el sistema
 
 - Menú Bento real en varios idiomas: `tools/bento-dev/capturar.sh SALIDA es en fr ru zh_CN ja`.
-- Escritorio completo, SDDM y apps: KWin virtual (`kwin_wayland --virtual`) con un usuario limpio
-  (`XDG_CONFIG_HOME`/`XDG_DATA_HOME` temporales) y los temas del repositorio por encima. El efecto Glass
-  solo carga con la versión exacta de KWin del equipo.
+- Escritorio completo con el cristal: `tools/escritorio-prueba.sh captura.png [oscuro|claro]` (KWin virtual,
+  usuario limpio con skel y temas del repositorio; `DISENO=1` aplica el tema global con su disposición,
+  `MENU=1` abre Bento, `VENTANAS="konsole dolphin"`). El efecto Glass solo carga con la versión exacta de
+  KWin del equipo.
+- `axolos-glass` lleva un parche propio (`ventanas-sin-filo.patch`): sin filo de luz en las ventanas.
 
 ## Avisos
 

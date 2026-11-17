@@ -2,6 +2,17 @@
 
 AxolOS packages are published continuously; each entry groups a visible change.
 
+## 2026-11-18 — Windows and global themes
+
+- Applying the AxolOS global theme with “Desktop and window layout” now sets up the AxolOS desktop (top
+  bar, glass dock with Bento, clock) instead of KDE's default panel.
+- Window title bars redrawn: the same glass as the window in both focused and unfocused windows (the
+  focused one turned solid grey), no outline, 14 px corners and a soft shadow that follows them.
+- Windows no longer get a light rim on their edge (menus, panels and notifications keep it).
+- The Bento icon in the dock follows the light or dark text color.
+- `axolos-aspecto` and `axolos-navegadores` were installed without execute permission, so the update
+  of existing accounts at login never ran.
+
 ## 2026-11-17 — Liquid glass everywhere
 
 - The glass effect now really turns on: the safety hook misread CachyOS package versions

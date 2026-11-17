@@ -18,9 +18,9 @@ Blur=true
 Animation=1
 
 [Layout]
-BorderLeft=1
-BorderRight=1
-BorderBottom=1
+BorderLeft=0
+BorderRight=0
+BorderBottom=0
 TitleEdgeTop=8
 TitleEdgeBottom=8
 TitleEdgeLeft=16
@@ -35,10 +35,10 @@ ButtonMarginTop=2
 ButtonMarginLeft=0
 ButtonMarginRight=0
 ExplicitButtonSpacer=0
-PaddingTop=21
-PaddingBottom=59
-PaddingRight=41
-PaddingLeft=41
+PaddingTop=28
+PaddingBottom=60
+PaddingRight=44
+PaddingLeft=44
 TitleEdgeTopMaximized=8
 TitleEdgeBottomMaximized=8
 TitleEdgeLeftMaximized=16

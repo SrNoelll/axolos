@@ -111,7 +111,12 @@ PlasmoidItem {
             anchors.fill: parent
             anchors.margins: 0
             // el ajolote de AxolOS va en versión simbólica: toma el color del texto (claro u oscuro)
-            source: Plasmoid.icon === "axolos" ? "axolos-symbolic" : Plasmoid.icon
+            readonly property bool simbolico: Plasmoid.icon === "axolos"
+            source: simbolico ? "axolos-symbolic" : Plasmoid.icon
+            // pintado como máscara con el color del texto: en el dock no siempre se recolorea solo
+            // (salía gris oscuro sobre el cristal oscuro)
+            isMask: simbolico
+            color: Kirigami.Theme.textColor
             active: button.containsMouse || root.expanded
         }
     }
