@@ -1,7 +1,7 @@
 # Maintainer: Noel Alarcón
 pkgname=axolos-menu
 pkgver=$(<"${startdir}/../../VERSION")
-pkgrel=5
+pkgrel=6
 pkgdesc="Bento: the AxolOS app launcher (favorites, recent files, search and system tiles)"
 arch=('any')
 license=('GPL-3.0-or-later')
