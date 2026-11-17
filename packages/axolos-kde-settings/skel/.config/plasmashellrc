@@ -1,5 +1,6 @@
 [PlasmaViews][Panel 234]
 floating=1
+panelOpacity=2
 shell=org.kde.plasma.desktop
 
 [PlasmaViews][Panel 234][Defaults]
@@ -9,7 +10,7 @@ thickness=40
 floating=1
 floatingApplets=0
 panelLengthMode=1
-panelOpacity=1
+panelOpacity=2
 panelVisibility=2
 shell=org.kde.plasma.desktop
 

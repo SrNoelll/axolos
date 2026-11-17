@@ -37,7 +37,7 @@ guardan en git el generador y su resultado.
 |---|---|---|
 | Fondos oscuro y claro, logo de arranque | `fondo_cristal.py` (Blender) | `blender -b --factory-startup --python tools/fondo_cristal.py -- --modo oscuro --salida X.png`; `--solo-ajolote` para el logo. El ajolote se infla resolviendo ∇²u = −1 sobre la silueta; dispersión con tres vidrios (R, G, B) |
 | Iconos de cristal | `iconos_cristal.py` + `iconos_cristal_blender.py` | Qt dibuja placa y símbolo; Blender renderiza; escribe el tema `AxolOS` y los iconos de las apps |
-| Marcos de Plasma (paneles, menús, avisos) | `plasma_cristal.py` | 9 piezas con máscara y sombra; color `ColorScheme-Background` (claro u oscuro) |
+| Marcos de Plasma (paneles, menús, avisos) | `plasma_cristal.py` | 9 piezas con máscara y sombra; color `ColorScheme-Background` (claro u oscuro). Plasma usa `translucent/` cuando hay desenfoque detrás (relleno muy ligero) y la normal cuando no |
 | Esquemas de color | `colores_cristal.py` | AxolOS Cristal oscuro y claro |
 | Kvantum | `kvantum_axolos.py` | desde MacTahoe: `AxolOS` (claro) y `AxolOSDark` |
 | Barras de título | `decoracion_cristal.py` | Aurorae `AxolOS` y `AxolOS-Claro`; los botones son de `botones_axolos.py` |
@@ -50,6 +50,10 @@ guardan en git el generador y su resultado.
   carga con la KWin para la que se compiló: KWin lo comprueba («built for a different version») y el
   gancho `zz-axolos-glass.hook` vuelve entonces al desenfoque normal hasta que llega la recompilación.
   La publicación corre en la imagen de CachyOS cada 3 horas para recompilarlo cuando cambia KWin.
+- **Cómo se ve el cristal** (como el Liquid Glass de Apple): poco desenfoque, refracción en el canto,
+  irisado y filo de luz, y tinte adaptable (`UseWindowPaletteTint` + `AutoTintAlpha`: el cristal toma
+  el color del tema y solo se espesa cuando el fondo contrasta). Barra y dock en «translúcido» (un panel
+  opaco hace sólidos también sus menús). Se afina viéndolo en un KWin virtual con el efecto cargado.
 - **Claro y oscuro**: temas globales `com.noel.axolos` (oscuro) y `com.noel.axolos.claro`; Plasma
   puede alternarlos solo (`DefaultLightLookAndFeel`/`DefaultDarkLookAndFeel`). `axolos-aspecto` lo
   hace desde la terminal y desde el Centro; `axolos-aspecto --migrar` pone al día una cuenta que ya

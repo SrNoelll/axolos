@@ -29,8 +29,8 @@ package() {
   local s="$startdir"
   # Con qué se compiló: si cambia KWin o Qt, el contenido cambia y la publicación lo recompila
   local kwin qt
-  kwin=$(pacman -Q kwin | awk '{print $2}'); kwin=${kwin%%-*}
-  qt=$(pacman -Q qt6-base | awk '{print $2}'); qt=${qt%.*}
+  kwin=$(pacman -Q kwin | awk '{print $2}'); kwin=${kwin#*:}; kwin=${kwin%%-*}
+  qt=$(pacman -Q qt6-base | awk '{print $2}'); qt=${qt#*:}; qt=${qt%%-*}; qt=$(cut -d. -f1,2 <<<"$qt")
   install -d "$pkgdir/usr/share/axolos/cristal"
   printf 'kwin %s\nqt %s\nglass %s\n' "$kwin" "$qt" "$_commit" > "$pkgdir/usr/share/axolos/cristal/compilado-para"
   # Ajustes de AxolOS (valores por defecto del sistema; cada usuario puede cambiarlos en Efectos)

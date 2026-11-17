@@ -47,7 +47,7 @@ FocusScope {
     readonly property color cTile: tinte(cText, claro ? 0.045 : 0.06)
     readonly property color cHover: tinte(cAccent, 0.16)
     readonly property color cLine: tinte(cText, claro ? 0.11 : 0.09)
-    readonly property color cBrillo: Qt.rgba(1, 1, 1, claro ? 0.55 : 0.08)      // brillo del borde superior
+    readonly property color cBrillo: Qt.rgba(1, 1, 1, claro ? 0.26 : 0.08)      // brillo del borde superior
     readonly property color cSobreAcento: Kirigami.ColorUtils.brightnessForColor(cAccent) === Kirigami.ColorUtils.Light ? "#1f1a3d" : "#ffffff"
     readonly property color cPanel: tinte(Kirigami.Theme.backgroundColor, 0.92)
     readonly property string fDisplay: "New York Extra Large"

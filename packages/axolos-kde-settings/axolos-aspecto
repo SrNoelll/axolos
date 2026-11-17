@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """axolos-aspecto · modo del escritorio de cristal líquido de AxolOS (ayuda: axolos-aspecto --help)."""
 import os
+import re
 import shutil
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 sys.path.insert(0, os.environ.get("AXOLOS_LIB", "/usr/lib/axolos"))
@@ -14,7 +16,7 @@ except ImportError:
         return texto
 
 OSCURO, CLARO = "com.noel.axolos", "com.noel.axolos.claro"
-VERSION_ASPECTO = "2"     # 2 = cristal líquido (noviembre de 2026)
+VERSION_ASPECTO = "3"     # 2 = cristal líquido · 3 = barra y dock de cristal (noviembre de 2026)
 MARCA = Path(os.environ.get("XDG_STATE_HOME", Path.home() / ".local/state")) / "axolos/aspecto"
 
 
@@ -30,8 +32,17 @@ def escribir(archivo, grupo, clave, valor=None):
     subprocess.run(orden, check=False)
 
 
+MORADOS = ("166,154,254", "118,98,206")   # acento de AxolOS oscuro y claro (los pone cada tema global)
+
+
 def aplicar(paquete):
     """Tema global sin tocar la disposición del escritorio (paneles y widgets se quedan)."""
+    # un acento de AxolOS guardado en la cuenta taparía el del otro modo (lila claro sobre cristal claro)
+    defectos = str(Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config")) / "kdedefaults/kdeglobals")
+    for archivo in ("kdeglobals", defectos):
+        for clave in ("AccentColor", "LastUsedCustomAccentColor"):
+            if leer(archivo, "General", clave) in MORADOS:
+                escribir(archivo, "General", clave)
     subprocess.run(["plasma-apply-lookandfeel", "--apply", paquete], check=False,
                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     if shutil.which("qdbus6"):
@@ -61,9 +72,32 @@ def poner(modo):
     print(_("AxolOS claro") if modo == "claro" else _("AxolOS oscuro"))
 
 
+def paneles_de_cristal():
+    """Barra y dock translúcidos: un panel «opaco» o «adaptable» tapa el cristal, y sus menús (Bento,
+    calendario, red…) salen con el fondo sólido. Con Plasma en marcha, por su API de guiones; si no,
+    en su configuración, que lee al arrancar."""
+    guion = 'panels().forEach(function (p) { p.opacity = "translucent"; })'
+    if shutil.which("qdbus6"):
+        for _intento in range(40):   # al iniciar sesión Plasma puede tardar un poco en aparecer
+            r = subprocess.run(["qdbus6", "org.kde.plasmashell", "/PlasmaShell",
+                                "org.kde.PlasmaShell.evaluateScript", guion],
+                               capture_output=True, text=True)
+            if r.returncode == 0:
+                return
+            time.sleep(1)
+    rc = Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config")) / "plasmashellrc"
+    if rc.exists():
+        for grupo in re.findall(r"^\[PlasmaViews\]\[(Panel \d+)\]$", rc.read_text(encoding="utf-8"), re.M):
+            subprocess.run(["kwriteconfig6", "--file", "plasmashellrc", "--group", "PlasmaViews",
+                            "--group", grupo, "--key", "panelOpacity", "2"], check=False)
+
+
 def migrar():
     if MARCA.exists() and MARCA.read_text().strip() == VERSION_ASPECTO:
         return
+    anterior = MARCA.read_text().strip() if MARCA.exists() else ""
+    if anterior in ("", "1", "2"):
+        paneles_de_cristal()
     # el cristal (Glass) y el desenfoque normal no pueden ir juntos: decide /etc/xdg/kwinrc
     for clave in ("blurEnabled", "glassEnabled"):
         if leer("kwinrc", "Plugins", clave):

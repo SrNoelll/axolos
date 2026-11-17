@@ -2,6 +2,18 @@
 
 AxolOS packages are published continuously; each entry groups a visible change.
 
+## 2026-11-17 — Liquid glass everywhere
+
+- The glass effect now really turns on: the safety hook misread CachyOS package versions
+  (`6.12.0-5.1`) and kept the effect paused even with the right KWin.
+- Glass tuned like Apple's Liquid Glass: clear center with light blur, refraction concentrated on
+  the edge, chromatic fringing, rim light and an adaptive tint that only thickens when what is
+  behind would make text hard to read.
+- Top bar, dock, menus (Bento and every popup), notifications, tooltips, terminal and window
+  sidebars are glass in both modes: Plasma frames were using the near-opaque variant, the dock was
+  set to opaque and new accounts started with old colors.
+- Light mode uses its own purple (the dark one was kept by accounts and was hard to read on light glass).
+
 ## 2026-11-17 — Liquid glass
 
 - Real liquid glass in KWin (`axolos-glass`, the Glass effect by 4v3ngR): refraction, chromatic edges

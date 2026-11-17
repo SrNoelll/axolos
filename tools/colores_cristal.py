@@ -79,12 +79,50 @@ def esquema(clave, e):
     return "\n".join(lin)
 
 
+SKEL = Path(__file__).resolve().parent.parent / "packages/axolos-kde-settings/skel/.config/kdeglobals"
+PREDETERMINADO = "AxolOSCristalOscuro"
+
+
+def grupos(texto):
+    """INI de KDE → [(cabecera, [líneas])], en orden."""
+    res = []
+    for linea in texto.splitlines():
+        if linea.startswith("["):
+            res.append((linea, []))
+        elif res and linea.strip():
+            res[-1][1].append(linea)
+    return res
+
+
+def skel(texto_esquema):
+    """kdeglobals de las cuentas nuevas: lleva los colores del esquema ya aplicados (los de Plasma y los de
+    las apps los leen de aquí desde el primer inicio) y la huella del archivo del esquema."""
+    import hashlib
+    propios = grupos(SKEL.read_text(encoding="utf-8"))
+    color = [(c, l) for c, l in grupos(texto_esquema) if c.startswith(("[ColorEffects:", "[Colors:", "[WM]"))]
+    resto = [(c, l) for c, l in propios if not c.startswith(("[ColorEffects:", "[Colors:", "[WM]"))]
+    huella = hashlib.sha1(texto_esquema.encode("utf-8")).hexdigest()
+    nombre = next(x for c, l in grupos(texto_esquema) if c == "[General]" for x in l if x.startswith("Name="))
+    for c, l in resto:
+        if c == "[General]":
+            # el morado lo pone cada tema global (claro u oscuro) en kdedefaults: uno aquí taparía el del otro modo
+            l[:] = [x for x in l if not x.startswith(("ColorSchemeHash=", "Name=", "AccentColor=", "LastUsedCustomAccentColor="))]
+            l += [f"ColorSchemeHash={huella}", nombre]
+            l.sort()
+    todo = sorted(color + resto, key=lambda g: g[0])
+    SKEL.write_text("\n\n".join("\n".join([c] + l) for c, l in todo) + "\n", encoding="utf-8")
+    print(SKEL)
+
+
 def main():
     salida = Path(sys.argv[1]) if len(sys.argv) > 1 else SALIDA
     salida.mkdir(parents=True, exist_ok=True)
     for clave, e in ESQUEMAS.items():
-        (salida / f"{clave}.colors").write_text(esquema(clave, e), encoding="utf-8")
+        texto = esquema(clave, e)
+        (salida / f"{clave}.colors").write_text(texto, encoding="utf-8")
         print(salida / f"{clave}.colors")
+        if clave == PREDETERMINADO and len(sys.argv) == 1:
+            skel(texto)
 
 
 if __name__ == "__main__":

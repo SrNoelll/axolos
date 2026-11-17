@@ -12,8 +12,10 @@ CONF=/etc/xdg/kwinrc
 [[ -f $RECETA ]] || exit 0
 
 para_kwin=$(sed -n 's/^kwin //p' "$RECETA"); para_qt=$(sed -n 's/^qt //p' "$RECETA")
-hay_kwin=$(pacman -Q kwin 2>/dev/null | awk '{print $2}'); hay_kwin=${hay_kwin%%-*}
-hay_qt=$(pacman -Q qt6-base 2>/dev/null | awk '{print $2}'); hay_qt=${hay_qt%.*}
+# Versión sin época ni pkgrel: «6.12.0-5.1» (CachyOS v3) y «6.12.0-5» (genérico) → 6.12.0
+version() { local v; v=$(pacman -Q "$1" 2>/dev/null | awk '{print $2}'); v=${v#*:}; printf '%s' "${v%%-*}"; }
+hay_kwin=$(version kwin)                      # KWin exige la versión exacta
+hay_qt=$(version qt6-base | cut -d. -f1,2)    # Qt: mayor.menor
 
 plugins() {   # plugins GLASS BLUR: qué efecto usa KWin por defecto ([Plugins] de /etc/xdg/kwinrc)
   [[ -f $CONF ]] || return 0

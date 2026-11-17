@@ -21,8 +21,9 @@ HEX = re.compile(r"#([0-9a-fA-F]{6})\b")
 MORADO_HUE = 250 / 360.0
 
 VARIANTES = {
-    # nombre: (origen, morado de destacado, matiz y saturación de los grises, opacidad reducida %, colores)
-    "AxolOS": ("MacTahoe", "#7662ce", (214 / 360, 0.22), 14, {
+    # nombre: (origen, morado de destacado, matiz y saturación de los grises, transparencia de ventana %
+    #         (deja ver el cristal de KWin detrás; el contenido —listas, texto— sigue opaco), colores)
+    "AxolOS": ("MacTahoe", "#7662ce", (214 / 360, 0.22), 28, {
         "window.color": "#eef2f7", "inactive.window.color": "#eef2f7", "base.color": "#f8fafc",
         "inactive.base.color": "#f8fafc", "alt.base.color": "#f1f4f8", "inactive.alt.base.color": "#f1f4f8",
         "button.color": "#e3e9f1", "light.color": "#ffffff", "mid.light.color": "#e9eef5", "dark.color": "#b8c2d0",
@@ -31,7 +32,7 @@ VARIANTES = {
         "disabled.text.color": "#8a93a6", "tooltip.base.color": "#f6f8fb", "tooltip.text.color": "#1c2230",
         "highlight.text.color": "#ffffff", "inactive.highlight.text.color": "#ffffff",
         "link.color": "#6a55d8", "link.visited.color": "#8b6ad8", "progress.indicator.text.color": "#ffffff"}),
-    "AxolOSDark": ("MacTahoeDark", "#a69afe", (245 / 360, 0.10), 18, {
+    "AxolOSDark": ("MacTahoeDark", "#a69afe", (245 / 360, 0.10), 34, {
         "window.color": "#121218", "inactive.window.color": "#121218", "base.color": "#0e0e13",
         "inactive.base.color": "#0e0e13", "alt.base.color": "#15151c", "inactive.alt.base.color": "#15151c",
         "button.color": "#24242e", "light.color": "#3a3a48", "mid.light.color": "#2e2e3a", "dark.color": "#0a0a0e",

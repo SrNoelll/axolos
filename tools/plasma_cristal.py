@@ -8,7 +8,9 @@ desenfoque, la refracción y el irisado. Aquí va lo que es del tema:
   · un brillo muy suave en el borde superior
   · máscara (mask-*) con la misma forma: es la región que desenfoca y refracta KWin
   · sombra suave con degradados (QtSvg no admite filtros)
-Variantes: normal (con cristal), translucent/ (sin desenfoque) y solid/ (sin composición).
+Variantes (así las elige Plasma): translucent/ cuando hay desenfoque detrás (con el cristal de KWin:
+relleno muy ligero para que se vea la refracción), normal cuando no lo hay (más opaco, para leerse
+sobre lo que haya detrás) y solid/ sin composición.
 
 Uso: tools/plasma_cristal.py [carpeta del tema]   (por defecto, el tema AxolOS del paquete)
 """
@@ -23,13 +25,14 @@ ESTILO = """<style type="text/css" id="current-color-scheme">
 .ColorScheme-Text { color:#e6e6ee; }
 </style>"""
 
-# marco: (archivo, radio, opacidad del relleno [normal, translúcido, sólido], sombra, margen de contenido, prefijos)
+# marco: (archivo, radio, opacidad del relleno [normal = sin desenfoque, translucent = con cristal, sólido],
+#         sombra, margen de contenido, prefijos)
 MARCOS = [
-    ("dialogs/background", 14, (0.46, 0.84, 0.97), 22, 10, ("",)),
-    ("widgets/tooltip", 11, (0.52, 0.86, 0.97), 16, 8, ("",)),
-    ("widgets/panel-background", 18, (0.38, 0.82, 0.97), 18, 6, ("", "north-", "south-", "west-", "east-")),
-    ("widgets/background", 18, (0.34, 0.80, 0.96), 18, 12, ("",)),
-    ("widgets/translucentbackground", 18, (0.22, 0.60, 0.92), 0, 12, ("",)),
+    ("dialogs/background", 14, (0.86, 0.21, 0.97), 22, 10, ("",)),
+    ("widgets/tooltip", 11, (0.88, 0.25, 0.97), 16, 8, ("",)),
+    ("widgets/panel-background", 18, (0.84, 0.17, 0.97), 18, 6, ("", "north-", "south-", "west-", "east-")),
+    ("widgets/background", 18, (0.82, 0.18, 0.96), 18, 12, ("",)),
+    ("widgets/translucentbackground", 18, (0.62, 0.11, 0.92), 0, 12, ("",)),
 ]
 
 
@@ -196,8 +199,9 @@ def generar(tema):
                 ox += 2 * max(radio, sombra) + 40
             destino = tema / carpeta / f"{archivo}.svgz"
             destino.parent.mkdir(parents=True, exist_ok=True)
-            with gzip.open(destino, "wt", encoding="utf-8", compresslevel=9) as z:
-                z.write(L.svg(ox + 10, 520))
+            # mtime=0: el mismo SVG da el mismo .svgz (si no, cada ejecución «cambia» el paquete)
+            with open(destino, "wb") as crudo, gzip.GzipFile(fileobj=crudo, mode="wb", compresslevel=9, mtime=0) as z:
+                z.write(L.svg(ox + 10, 520).encode("utf-8"))
             print(destino.relative_to(tema))
 
 
