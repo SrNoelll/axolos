@@ -6,6 +6,9 @@
 Compara lo que el paquete instala (cada archivo con su suma, permisos y destino de los enlaces), su
 script de instalación y sus metadatos (.PKGINFO: dependencias, descripción…), sin contar lo que
 cambia en cada compilación (fecha, tamaño, quién lo empaqueta, .BUILDINFO y .MTREE).
+Los binarios (ELF) se comparan por nombre y permisos, no byte a byte: dos compilaciones del mismo
+código nunca son idénticas. Los paquetes compilados guardan lo que importa en un archivo de texto
+(axolos-glass: /usr/share/axolos/cristal/compilado-para, con el commit y las versiones de KWin y Qt).
 Lo usa publicar-repo.sh para subir pkgrel solo cuando algo cambió de verdad.
 """
 import hashlib
@@ -28,7 +31,11 @@ def huella(ruta):
                           if ln and not ln.startswith("#") and ln.split(" = ")[0] not in PKGINFO_VARIABLE]
                 datos[m.name] = ("pkginfo", tuple(sorted(lineas)))
             elif m.isfile():
-                datos[m.name] = ("archivo", m.mode & 0o7777, hashlib.sha256(tar.extractfile(m).read()).hexdigest())
+                contenido = tar.extractfile(m).read()
+                if contenido[:4] == b"\x7fELF":
+                    datos[m.name] = ("binario", m.mode & 0o7777)
+                else:
+                    datos[m.name] = ("archivo", m.mode & 0o7777, hashlib.sha256(contenido).hexdigest())
             elif m.issym() or m.islnk():
                 datos[m.name] = ("enlace", m.linkname)
             elif m.isdir():

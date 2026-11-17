@@ -31,6 +31,7 @@ SH=(
     packages/axolos-branding/static/axolos-apps
     packages/axolos-dev/axolos-dev.install
     packages/axolos-ia/axolos-ia.install
+    packages/axolos-glass/axolos-glass-comprobar
 )
 QML=(
     packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml

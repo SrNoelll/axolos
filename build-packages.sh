@@ -12,7 +12,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO="$ROOT/repo"
 BUILD="$ROOT/build"
 
-AXOLOS_PKGS=(axolos-keyring axolos-branding axolos-themes axolos-menu axolos-kde-settings axolos-dev axolos-ia axolos-bienvenida axolos-desktop)
+AXOLOS_PKGS=(axolos-keyring axolos-branding axolos-themes axolos-menu axolos-kde-settings axolos-dev axolos-ia axolos-bienvenida axolos-glass axolos-desktop)
 # Del AUR: los que el tema necesita y no están en los repos de CachyOS/Arch
 # apple-fonts NO se publica: su licencia no permite redistribuirla (opcional, con respaldo libre)
 AUR_PKGS=(yaru-icon-theme whitesur-cursor-theme-git ttf-ia-writer)
@@ -39,6 +39,10 @@ mkdir -p "$SRCDEST"
   say "Primero hay que copiar tu escritorio al pack"; "$ROOT/collect.sh"; }
 
 for p in "${AXOLOS_PKGS[@]}"; do
+  # axolos-glass es C++ (efecto de KWin): necesita las herramientas de compilación y KWin del sistema
+  if [[ $p == axolos-glass ]] && ! command -v cmake >/dev/null; then
+    echo "axolos-glass necesita: sudo pacman -S --needed cmake extra-cmake-modules ninja qt6-tools" >&2; exit 1
+  fi
   say "Compilando $p"
   # -d: no exige tener ya instaladas las dependencias (algunas son del AUR)
   (cd "$ROOT/packages/$p" && makepkg -f -d --noconfirm "${FIRMA[@]}")

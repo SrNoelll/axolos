@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AxolOS\n"
 "Report-Msgid-Bugs-To: https://github.com/SrNoelll/axolos/issues\n"
-"POT-Creation-Date: 2026-11-08 14:20+0100\n"
+"POT-Creation-Date: 2026-11-17 12:50+0100\n"
 "PO-Revision-Date: 2026-11-08 12:00+0100\n"
 "Last-Translator: Noel Alarcón\n"
 "Language-Team: French\n"
@@ -1016,6 +1016,10 @@ msgstr ""
 "  axolos-dev                      profils disponibles et s'ils sont installés\n"
 "  axolos-dev install PROFIL...    installe des profils (web, python, rust…) ; demande le mot de passe une fois\n"
 "  axolos-dev editors              thème AxolOS dans VS Code / VSCodium / Antigravity\n"
+
+#: packages/axolos-glass/axolos-glass-comprobar:30
+msgid "el cristal líquido se pausa hasta que llegue su versión para KWin {0} (mientras, desenfoque normal)."
+msgstr "le verre liquide est en pause jusqu'à l'arrivée de sa version pour KWin {0} (flou normal en attendant)."
 
 #: packages/axolos-ia/axolos-ia.install:9
 msgid "«axolos-ia» muestra el estado; «axolos-ia gpu» activa la gráfica; «axolos-ia descargar» baja los modelos."

@@ -1,0 +1,41 @@
+# Maintainer: Noel Alarcón
+# Cristal líquido de AxolOS: el efecto «Glass» de KWin (4v3ngR, fork del desenfoque de KWin) con
+# refracción, irisado en los bordes y brillos, más los ajustes de AxolOS y una salvaguarda: un
+# efecto de KWin solo es seguro con la versión de KWin para la que se compiló (ver axolos-glass-comprobar).
+pkgname=axolos-glass
+_commit=5e2845fffbe893177c091fe18d603b9095cc2729   # 4v3ngR/kwin-effects-glass, 2026-11-09 (Plasma 6.8)
+pkgver=1.6.4
+pkgrel=1
+pkgdesc="AxolOS liquid glass: KWin Glass effect by 4v3ngR (refraction, chromatic edges, rim light) with AxolOS settings"
+arch=('x86_64')
+url="https://github.com/4v3ngR/kwin-effects-glass"
+license=('GPL-2.0-or-later' 'GPL-3.0-only')
+depends=('kwin' 'qt6-base')
+makedepends=('git' 'cmake' 'extra-cmake-modules' 'ninja' 'qt6-tools')
+provides=('kwin-effects-glass')
+conflicts=('kwin-effects-glass' 'kwin-effects-glass-git')
+install=axolos-glass.install
+source=("glass::git+$url.git#commit=$_commit")
+sha256sums=('SKIP')
+
+build() {
+  cmake -S glass -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release \
+    -DGLASS_WAYLAND=ON -DGLASS_X11=OFF -DBUILD_TESTING=OFF
+  cmake --build build
+}
+
+package() {
+  DESTDIR="$pkgdir" cmake --install build
+  local s="$startdir"
+  # Con qué se compiló: si cambia KWin o Qt, el contenido cambia y la publicación lo recompila
+  local kwin qt
+  kwin=$(pacman -Q kwin | awk '{print $2}'); kwin=${kwin%%-*}
+  qt=$(pacman -Q qt6-base | awk '{print $2}'); qt=${qt%.*}
+  install -d "$pkgdir/usr/share/axolos/cristal"
+  printf 'kwin %s\nqt %s\nglass %s\n' "$kwin" "$qt" "$_commit" > "$pkgdir/usr/share/axolos/cristal/compilado-para"
+  # Ajustes de AxolOS (valores por defecto del sistema; cada usuario puede cambiarlos en Efectos)
+  install -Dm644 "$s/kwinrc" "$pkgdir/etc/xdg/kwinrc"
+  install -Dm755 "$s/axolos-glass-comprobar" "$pkgdir/usr/lib/axolos/axolos-glass-comprobar"
+  install -Dm644 "$s/zz-axolos-glass.hook" "$pkgdir/usr/share/libalpm/hooks/zz-axolos-glass.hook"
+  install -Dm644 glass/LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

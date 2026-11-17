@@ -15,6 +15,9 @@ on:
       - "tools/publicar-repo.sh"
       - "tools/comparar_paquetes.py"
   workflow_dispatch:
+  # Cada 3 horas: si CachyOS publica otra KWin o Qt, axolos-glass (efecto de KWin) se recompila para ella
+  schedule:
+    - cron: "23 */3 * * *"
 
 # nunca dos publicaciones a la vez (se pisarían los pkgrel y los archivos de la release)
 concurrency:
@@ -27,10 +30,14 @@ permissions:
 jobs:
   publicar:
     runs-on: ubuntu-latest
-    container: archlinux:base-devel
+    # CachyOS, no Arch: axolos-glass se compila contra la KWin exacta que reciben los equipos AxolOS
+    container: cachyos/cachyos:latest
     steps:
       - name: Herramientas
-        run: pacman -Syu --noconfirm --needed git github-cli python gnupg
+        run: |
+          pacman -Syu --noconfirm --needed base-devel git github-cli python gnupg \
+            cmake extra-cmake-modules ninja qt6-tools kwin
+          pacman -Q kwin qt6-base
 
       - name: Código
         uses: actions/checkout@v4

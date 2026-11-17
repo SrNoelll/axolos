@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AxolOS\n"
 "Report-Msgid-Bugs-To: https://github.com/SrNoelll/axolos/issues\n"
-"POT-Creation-Date: 2026-11-08 14:20+0100\n"
+"POT-Creation-Date: 2026-11-17 12:50+0100\n"
 "PO-Revision-Date: 2026-11-08 12:00+0100\n"
 "Last-Translator: Noel Alarcón\n"
 "Language-Team: Japanese\n"
@@ -1016,6 +1016,10 @@ msgstr ""
 "  axolos-dev                      利用できるプロファイルとインストール状況\n"
 "  axolos-dev install ID...        プロファイルをインストール（web、python、rust…）。パスワードは 1 回だけ\n"
 "  axolos-dev editors              VS Code / VSCodium / Antigravity に AxolOS テーマ\n"
+
+#: packages/axolos-glass/axolos-glass-comprobar:30
+msgid "el cristal líquido se pausa hasta que llegue su versión para KWin {0} (mientras, desenfoque normal)."
+msgstr "KWin {0} 用の版が届くまでリキッドガラスを一時停止します（その間は通常のぼかし）。"
 
 #: packages/axolos-ia/axolos-ia.install:9
 msgid "«axolos-ia» muestra el estado; «axolos-ia gpu» activa la gráfica; «axolos-ia descargar» baja los modelos."

@@ -1,0 +1,13 @@
+# AxolOS · el cristal líquido solo se activa con la versión de KWin y Qt para la que se compiló
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = kwin
+Target = qt6-base
+Target = axolos-glass
+
+[Action]
+Description = AxolOS: comprobando el cristal líquido…
+When = PostTransaction
+Exec = /usr/lib/axolos/axolos-glass-comprobar

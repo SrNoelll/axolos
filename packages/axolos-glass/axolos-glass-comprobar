@@ -1,0 +1,32 @@
+#!/bin/bash
+# AxolOS · salvaguarda del cristal líquido (gancho de pacman, como root).
+# Un efecto de KWin compilado para otra versión de KWin o Qt puede tumbar la sesión gráfica. Si no
+# coinciden, se aparta el efecto y se vuelve al desenfoque normal de KDE hasta que llegue la versión
+# recompilada de axolos-glass (la publicación de AxolOS la recompila sola cuando cambia KWin).
+t() { /usr/lib/axolos/axolos-texto "$@" 2>/dev/null || printf '%s\n' "$1"; }   # texto en el idioma del sistema
+
+RECETA=/usr/share/axolos/cristal/compilado-para
+SO=/usr/lib/qt6/plugins/kwin/effects/plugins/glass.so
+APARTE=/usr/lib/axolos/cristal/glass.so.otra-version
+CONF=/etc/xdg/kwinrc
+[[ -f $RECETA ]] || exit 0
+
+para_kwin=$(sed -n 's/^kwin //p' "$RECETA"); para_qt=$(sed -n 's/^qt //p' "$RECETA")
+hay_kwin=$(pacman -Q kwin 2>/dev/null | awk '{print $2}'); hay_kwin=${hay_kwin%%-*}
+hay_qt=$(pacman -Q qt6-base 2>/dev/null | awk '{print $2}'); hay_qt=${hay_qt%.*}
+
+plugins() {   # plugins GLASS BLUR: qué efecto usa KWin por defecto ([Plugins] de /etc/xdg/kwinrc)
+  [[ -f $CONF ]] || return 0
+  sed -i -e "s/^glassEnabled=.*/glassEnabled=$1/" -e "s/^blurEnabled=.*/blurEnabled=$2/" "$CONF"
+}
+
+if [[ $para_kwin == "$hay_kwin" && $para_qt == "$hay_qt" ]]; then
+  [[ ! -f $SO && -f $APARTE ]] && mv -f "$APARTE" "$SO"
+  rm -f "$APARTE"
+  plugins true false
+else
+  if [[ -f $SO ]]; then mkdir -p "${APARTE%/*}"; mv -f "$SO" "$APARTE"; fi
+  plugins false true
+  echo ":: AxolOS: $(t "el cristal líquido se pausa hasta que llegue su versión para KWin {0} (mientras, desenfoque normal)." "$hay_kwin")"
+fi
+exit 0
