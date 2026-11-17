@@ -2,7 +2,7 @@
 pkgname=axolos-keyring
 pkgver=$(<"${startdir}/../../VERSION")
 pkgrel=1
-pkgdesc="Clave con la que se firman los paquetes del repositorio de AxolOS"
+pkgdesc="Key that signs the packages of the AxolOS repository"
 arch=('any')
 license=('GPL-3.0-or-later')
 depends=('pacman')

@@ -5,10 +5,12 @@ Genera iso/instalador/marca/:
   axolos/                   componente de marca de Calamares (textos, logos, colores, diapositivas)
   escritorio-axolos.png     vista previa del escritorio para la página «Escritorio»
 
-Se dibuja con Qt (fuentes libres: Source Serif 4, Inter, JetBrains Mono) para que la ISO pueda
-redistribuirlo. Uso:  QT_QPA_PLATFORM=offscreen tools/instalador_marca_axolos.py
+Se dibuja con Qt (fuentes libres: Source Serif 4, Inter, JetBrains Mono y Noto CJK para chino y
+japonés) para que la ISO pueda redistribuirlo. Las diapositivas salen en cada idioma de IDIOMAS y
+show.qml elige la del idioma del instalador con las traducciones de la marca (lang/*.qm).
+Uso:  QT_QPA_PLATFORM=offscreen tools/instalador_marca_axolos.py
 """
-import os
+import subprocess
 import sys
 from pathlib import Path
 
@@ -33,8 +35,12 @@ C = dict(bg="#17171d", bg_dark="#0f0f13", surface="#1e1e26", border="#2a2a34", f
 SERIF, SANS, MONO = "Source Serif 4", "Inter", "JetBrainsMono Nerd Font"
 
 
+CJK = []   # familias de respaldo para el idioma que se está dibujando (chino o japonés)
+
+
 def fuente(familia, px, peso=QFont.Weight.Normal):
     f = QFont(familia)
+    f.setFamilies([familia, *CJK])
     f.setPixelSize(int(px))
     f.setWeight(peso)
     f.setHintingPreference(QFont.HintingPreference.PreferNoHinting)
@@ -111,45 +117,44 @@ W, H = 1920, 1080
 X0, ANCHO_TXT = 170, 820
 
 
-def diapositiva(etiqueta, titulo, cuerpo, dibujo):
+def diapositiva(etiqueta, titulo, cuerpo, dibujo, t):
     img, p = lienzo(W, H)
     fondo_axolos(p, W, H)
     y = 300
     texto(p, QRectF(X0, y, ANCHO_TXT, 40), etiqueta.upper(), fuente(SANS, 24, QFont.Weight.DemiBold), C["accent"])
     r = texto(p, QRectF(X0, y + 52, ANCHO_TXT, 300), titulo, fuente(SERIF, 82, QFont.Weight.DemiBold), C["fg"])
     texto(p, QRectF(X0, r.bottom() + 28, ANCHO_TXT - 40, 360), cuerpo, fuente(SANS, 33), C["muted"])
-    dibujo(p)
+    dibujo(p, t)
     p.end()
     return img
 
 
-def d_bienvenida(p):
+def d_bienvenida(p, t):
     c = QPointF(1420, 540)
     resplandor(p, c, 330, C["accent"], 90)
     ajolote(p, QRectF(c.x() - 300, c.y() - 300, 600, 600))
 
 
-def d_axo(p):
+def d_axo(p, t):
     resplandor(p, QPointF(1430, 540), 360, C["accent_lo"], 80)
     svg(p, ICONOS["axo"], QRectF(1130, 250, 200, 200))
     burbujas = [
-        (QRectF(1260, 450, 520, 92), C["accent"], C["bg_dark"], "¿Cómo libero espacio en el disco?"),
-        (QRectF(1060, 568, 640, 150), "#26262f", C["fg"],
-         "Mira primero la caché de pacman: «paccache -rk1» deja una versión de cada paquete…"),
+        (QRectF(1260, 450, 520, 92), C["accent"], C["bg_dark"], t["pregunta"]),
+        (QRectF(1060, 568, 640, 150), "#26262f", C["fg"], t["respuesta"]),
     ]
-    for rect, fondo, color, t in burbujas:
+    for rect, fondo, color, frase in burbujas:
         caja(p, rect, 30, fondo)
-        texto(p, rect.adjusted(30, 22, -30, -18), t, fuente(SANS, 27), color)
-    texto(p, QRectF(1060, 740, 640, 40), "Sin internet · nada sale de tu equipo", fuente(SANS, 24), C["faint"])
+        texto(p, rect.adjusted(30, 22, -30, -18), frase, fuente(SANS, 27), color)
+    texto(p, QRectF(1060, 740, 640, 40), t["privado"], fuente(SANS, 24), C["faint"])
 
 
-def d_buscar(p):
+def d_buscar(p, t):
     resplandor(p, QPointF(1420, 540), 360, C["accent_lo"], 70)
     caja(p, QRectF(1020, 300, 780, 84), 42, C["surface"], C["accent"], 3)
-    texto(p, QRectF(1080, 322, 680, 44), "ia busco una foto de la playa", fuente(SANS, 31), C["fg"])
-    filas = [("#f3b27a", "#7fd4e4", "playa-agosto.jpg", "Imágenes · hace 2 meses"),
-             ("#7fd4e4", "#a69afe", "atardecer-cadiz.heic", "Descargas · el año pasado"),
-             ("#7ddfb4", "#f3cf7a", "IMG_2041.jpg", "Cámara · hace 3 años")]
+    texto(p, QRectF(1080, 322, 680, 44), t["consulta"], fuente(SANS, 31), C["fg"])
+    filas = [("#f3b27a", "#7fd4e4", t["archivos"][0], t["donde"][0]),
+             ("#7fd4e4", "#a69afe", t["archivos"][1], t["donde"][1]),
+             ("#7ddfb4", "#f3cf7a", "IMG_2041.jpg", t["donde"][2])]
     y = 420
     for a, b, nombre, sub in filas:
         caja(p, QRectF(1020, y, 780, 108), 22, "#20202a")
@@ -164,7 +169,7 @@ def d_buscar(p):
         y += 124
 
 
-def d_programar(p):
+def d_programar(p, t):
     resplandor(p, QPointF(1420, 540), 360, C["accent_lo"], 70)
     marco = QRectF(1000, 260, 820, 560)
     caja(p, marco, 26, "#121217", C["border"], 2)
@@ -173,12 +178,12 @@ def d_programar(p):
         p.setPen(Qt.PenStyle.NoPen)
         p.drawEllipse(QPointF(marco.right() - 108 + i * 34, marco.top() + 34), 9, 9)
     lineas = [
-        [("~/proyectos/axo ", C["cyan"]), ("main ", C["accent"]), ("❯", C["green"])],
-        [("$ axolos-dev instalar rust python", C["fg"])],
+        [(t["carpeta"] + " ", C["cyan"]), ("main ", C["accent"]), ("❯", C["green"])],
+        [(t["orden"], C["fg"])],
         [("✓ ", C["green"]), ("Rust · rustup, cargo, rust-analyzer", C["muted"])],
-        [("✓ ", C["green"]), ("Python · uv y pip", C["muted"])],
+        [("✓ ", C["green"]), (t["python"], C["muted"])],
         [("$ git log --oneline", C["fg"])],
-        [("a1f3c2e ", C["yellow"]), ("Primer commit en AxolOS", C["muted"])],
+        [("a1f3c2e ", C["yellow"]), (t["commit"], C["muted"])],
     ]
     f = fuente(MONO, 27)
     fm = QFontMetricsF(f)
@@ -191,39 +196,23 @@ def d_programar(p):
         y += 66
 
 
-def d_aldia(p):
+def d_aldia(p, t):
     resplandor(p, QPointF(1420, 540), 360, C["accent_lo"], 70)
     caja(p, QRectF(1040, 300, 740, 92), 46, C["surface"], C["border"], 2)
     texto(p, QRectF(1040, 322, 740, 48), "sudo pacman -Syu", fuente(MONO, 34), C["fg"], Qt.AlignmentFlag.AlignHCenter)
-    puntos = [("CachyOS", "sistema y controladores al día"), ("AxolOS", "tema, Bento, Axo y herramientas"),
-              ("Btrfs", "instantánea antes de cada cambio")]
+    puntos = list(zip(("CachyOS", "AxolOS", "Btrfs"), t["puntos"]))
     y = 440
-    for t, sub in puntos:
+    for nombre, sub in puntos:
         p.setPen(Qt.PenStyle.NoPen)
         p.setBrush(QColor(C["accent"]))
         p.drawEllipse(QPointF(1080, y + 26), 14, 14)
-        texto(p, QRectF(1114, y, 660, 44), t, fuente(SANS, 31, QFont.Weight.DemiBold), C["fg"])
+        texto(p, QRectF(1114, y, 660, 44), nombre, fuente(SANS, 31, QFont.Weight.DemiBold), C["fg"])
         texto(p, QRectF(1114, y + 42, 660, 40), sub, fuente(SANS, 26), C["muted"])
         y += 110
 
 
-DIAPOSITIVAS = [
-    ("AxolOS", "Te damos la bienvenida",
-     "CachyOS por debajo, optimizado para tu procesador y tu gráfica. KDE Plasma por encima, "
-     "con el diseño de AxolOS.", d_bienvenida),
-    ("IA local", "Axo, tu IA en el equipo",
-     "Pregúntale en su chat o escribe «ia» y tu pregunta en el buscador (Alt+Espacio). "
-     "Funciona sin conexión y conoce tu sistema.", d_axo),
-    ("Búsqueda", "Encuentra cualquier archivo",
-     "Busca por lo que contienen tus fotos, PDF y documentos, no solo por el nombre. "
-     "Lo nuevo se indexa al momento.", d_buscar),
-    ("Para programar", "Listo para tu código",
-     "Elige tus lenguajes en la Bienvenida y quedan instalados con sus herramientas. Git, terminal "
-     "y editores ya vienen preparados.", d_programar),
-    ("Actualizaciones", "Siempre al día",
-     "Una sola orden actualiza CachyOS y AxolOS. Con Btrfs puedes volver a una instantánea "
-     "anterior desde el menú de arranque.", d_aldia),
-]
+DIBUJOS = [d_bienvenida, d_axo, d_buscar, d_programar, d_aldia]
+from instalador_textos import IDIOMAS, TEXTOS, QM_CJK  # noqa: E402  textos por idioma
 
 SHOW_QML = '''/* AxolOS · presentación durante la instalación (generada por tools/instalador_marca_axolos.py) */
 import QtQuick 2.15
@@ -231,6 +220,9 @@ import calamares.slideshow 1.0
 
 Presentation {
     id: presentation
+    // Idioma de las diapositivas: lo traduce lang/calamares-axolos_<idioma>.qm según el idioma elegido
+    // en el instalador (es, fr, ru, zh_CN, ja); con cualquier otro, inglés.
+    readonly property string idioma: qsTr("en", "slides language code")
     Rectangle { anchors.fill: parent; color: "#0f0f13"; z: -1 }
     Timer {
         interval: 12000
@@ -245,7 +237,7 @@ SLIDE_QML = '''    Slide {
         anchors.fill: parent
         Image {
             anchors.fill: parent
-            source: "%s"
+            source: "%s." + presentation.idioma + ".jpg"
             fillMode: Image.PreserveAspectCrop
             smooth: true; mipmap: true
         }
@@ -356,12 +348,20 @@ method: netinstall-select
 labels:
     step: "Desktop"
     step[es]: "Escritorio"
+    step[fr]: "Bureau"
+    step[ru]: "Рабочий стол"
+    step[zh_CN]: "桌面"
+    step[ja]: "デスクトップ"
 default: KDE-Desktop
 items:
     - id: KDE-Desktop
       name: "AxolOS · KDE Plasma"
       description: "AxolOS on KDE Plasma: its own theme and Bento menu, Axo (local AI) and tools for developers. This is the AxolOS desktop."
       description[es]: "AxolOS sobre KDE Plasma: tema y menú Bento propios, Axo (IA local) y herramientas para programar. Es el escritorio de AxolOS."
+      description[fr]: "AxolOS sur KDE Plasma : thème et menu Bento propres, Axo (IA locale) et outils pour développer. C'est le bureau d'AxolOS."
+      description[ru]: "AxolOS на KDE Plasma: собственная тема и меню Bento, Axo (локальный ИИ) и инструменты для разработки. Это рабочий стол AxolOS."
+      description[zh_CN]: "基于 KDE Plasma 的 AxolOS：自有主题和 Bento 菜单、Axo（本地 AI）以及开发工具。这就是 AxolOS 桌面。"
+      description[ja]: "KDE Plasma ベースの AxolOS：独自のテーマと Bento メニュー、Axo（ローカル AI）、開発ツール。これが AxolOS のデスクトップです。"
       screenshot: "/usr/share/axolos/instalador/marca/escritorio-axolos.jpg"
 '''
 
@@ -433,6 +433,35 @@ def escritorio():
     return img
 
 
+def traducciones_marca():
+    """lang/calamares-axolos_<idioma>.qm: Calamares las carga al elegir idioma; traducen qsTr("en")."""
+    lang = MARCA / "lang"
+    lang.mkdir(exist_ok=True)
+    lrelease = next((x for x in ("/usr/lib/qt6/bin/lrelease", "lrelease6", "lrelease") if Path(x).exists()
+                     or subprocess.run(["which", x], capture_output=True).returncode == 0), None)
+    for idioma in IDIOMAS:
+        if idioma == "en":
+            continue
+        ts = lang / f"calamares-axolos_{idioma}.ts"
+        ts.write_text(f'''<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="{idioma}">
+<context>
+    <name>show</name>
+    <message>
+        <source>en</source>
+        <comment>slides language code</comment>
+        <translation>{idioma}</translation>
+    </message>
+</context>
+</TS>
+''', encoding="utf-8")
+        if lrelease:
+            subprocess.run([lrelease, "-silent", str(ts), "-qm", str(ts.with_suffix(".qm"))], check=True)
+    if not lrelease:
+        print("Aviso: sin lrelease (qt6-tools) no se regeneran los .qm de lang/", file=sys.stderr)
+
+
 def main():
     app = QGuiApplication(sys.argv)  # noqa: F841
     MARCA.mkdir(parents=True, exist_ok=True)
@@ -457,13 +486,17 @@ def main():
     p.end()
     img.save(str(MARCA / "welcome.png"))
 
-    slides = []
-    for i, (etq, tit, cuerpo, dib) in enumerate(DIAPOSITIVAS, 1):
-        nombre = f"diapositiva{i}.jpg"
-        img = diapositiva(etq, tit, cuerpo, dib)
-        img.convertToFormat(QImage.Format.Format_RGB32).save(str(MARCA / nombre), "JPG", 90)
-        slides.append(SLIDE_QML % nombre)
+    for viejo in MARCA.glob("diapositiva*.jpg"):
+        viejo.unlink()
+    for idioma in IDIOMAS:
+        CJK[:] = QM_CJK.get(idioma, [])
+        for i, (t, dib) in enumerate(zip(TEXTOS[idioma], DIBUJOS), 1):
+            img = diapositiva(t["etiqueta"], t["titulo"], t["cuerpo"], dib, t)
+            img.convertToFormat(QImage.Format.Format_RGB32).save(str(MARCA / f"diapositiva{i}.{idioma}.jpg"), "JPG", 88)
+    CJK[:] = []
+    slides = [SLIDE_QML % f"diapositiva{i}" for i in range(1, len(DIBUJOS) + 1)]
     (MARCA / "show.qml").write_text(SHOW_QML % "\n".join(slides), encoding="utf-8")
+    traducciones_marca()
     escritorio().convertToFormat(QImage.Format.Format_RGB32).save(str(SALIDA / "escritorio-axolos.jpg"), "JPG", 90)
     for f in sorted(SALIDA.rglob("*")):
         if f.is_file():

@@ -1,0 +1,1675 @@
+# AxolOS · Japanese translation.
+# Copyright (C) 2026 Noel Alarcón
+# This file is distributed under the same license as the AxolOS package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AxolOS\n"
+"Report-Msgid-Bugs-To: https://github.com/SrNoelll/axolos/issues\n"
+"POT-Creation-Date: 2026-11-08 14:20+0100\n"
+"PO-Revision-Date: 2026-11-08 12:00+0100\n"
+"Last-Translator: Noel Alarcón\n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:78
+msgid "Renovando las claves de los repositorios"
+msgstr "リポジトリの鍵を更新しています"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:79
+msgid "Descargando el instalador más reciente"
+msgstr "最新のインストーラーをダウンロードしています"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:80
+msgid "Abriendo el instalador"
+msgstr "インストーラーを開いています"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:87
+#: iso/airootfs/usr/local/bin/axolos-instalar:143
+msgid "Instalar AxolOS"
+msgstr "AxolOS をインストール"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:105
+msgid "Te damos la bienvenida a AxolOS"
+msgstr "AxolOS へようこそ"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:107
+msgid ""
+"Estás usando AxolOS sin instalar: puedes probarlo todo lo que quieras, nada se guarda en tu equipo. Cuando quieras quedártelo, instálalo.\n"
+"\n"
+"La instalación descarga la versión más reciente de todo, con lo optimizado para tu procesador y los controladores de tu gráfica."
+msgstr ""
+"AxolOS をインストールせずに使っています。自由に試せて、パソコンには何も保存されません。気に入ったらインストールしてください。\n"
+"\n"
+"インストールではすべての最新版をダウンロードし、プロセッサーに最適化され、グラフィックスのドライバーも入ります。"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:114
+msgid "Mejor con internet"
+msgstr "インターネット推奨"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:114
+msgid "Podrás elegir el disco"
+msgstr "ディスクを選べます"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:134
+msgid "Ajustes de red"
+msgstr "ネットワーク設定"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:137
+msgid "Instalar sin conexión"
+msgstr "オフラインでインストール"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:138
+msgid "Instala la versión de esta ISO. Al conectarte, se pone al día con una actualización."
+msgstr "この ISO のバージョンをインストールします。接続後、アップデートで最新になります。"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:141
+msgid "Seguir probando"
+msgstr "試用を続ける"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:180
+msgid "Comprobando la conexión a internet…"
+msgstr "インターネット接続を確認しています…"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:190
+msgid "No hay conexión a internet"
+msgstr "インターネットに接続されていません"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:191
+msgid "Conéctate a una red (icono de red del panel) y vuelve a intentarlo."
+msgstr "ネットワーク（パネルのネットワークアイコン）に接続して、もう一度お試しください。"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:192
+msgid " También puedes instalar sin conexión la versión de esta ISO y ponerla al día después."
+msgstr " この ISO のバージョンをオフラインでインストールし、後で更新することもできます。"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:196
+#: iso/airootfs/usr/local/bin/axolos-instalar:262
+msgid "Reintentar"
+msgstr "再試行"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:209
+msgid "Preparando el instalador"
+msgstr "インストーラーを準備しています"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:210
+msgid "Sin conexión: se instalará la versión de esta ISO."
+msgstr "オフライン：この ISO のバージョンがインストールされます。"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:211
+msgid "Se actualiza antes de abrirse: puede tardar uno o dos minutos."
+msgstr "開く前に自動で更新されます。1〜2 分かかることがあります。"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:237
+msgid "El instalador está abierto"
+msgstr "インストーラーが開きました"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:238
+msgid "Sigue los pasos en su ventana. Esta se queda aquí por si la necesitas."
+msgstr "インストーラーの画面で手順に従ってください。このウィンドウは念のため残しておきます。"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:250
+msgid "Se ha cerrado el instalador"
+msgstr "インストーラーが閉じました"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:251
+msgid "Si terminó la instalación, reinicia y quita el USB. Si no, puedes volver a abrirlo."
+msgstr "インストールが終わったら、再起動して USB を抜いてください。終わっていなければ、もう一度開けます。"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:252
+msgid "Abrir el instalador otra vez"
+msgstr "インストーラーをもう一度開く"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:254
+msgid "No se pudo preparar el instalador"
+msgstr "インストーラーを準備できませんでした"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:255
+#, python-brace-format
+msgid "Comprueba la conexión y vuelve a intentarlo. Detalles en {LOG_CAPA} y /home/liveuser/cachy-install.log"
+msgstr "接続を確認して、もう一度お試しください。詳細は {LOG_CAPA} と /home/liveuser/cachy-install.log にあります"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:256
+#, python-brace-format
+msgid "(código {codigo})"
+msgstr "（コード {codigo}）"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:274
+msgid "Esto solo funciona en el sistema live de la ISO de AxolOS."
+msgstr "これは AxolOS ISO のライブシステムでのみ動作します。"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:182
+#: packages/axolos-bienvenida/bin/axolos-centro:257
+#: packages/axolos-bienvenida/bin/axolos-centro:308
+msgid "Instalado"
+msgstr "インストール済み"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:222
+msgid "Bienvenido a AxolOS"
+msgstr "AxolOS へようこそ"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:225
+msgid "En un par de minutos dejamos tu equipo listo para programar y para usar inteligencia artificial en local, sin depender de internet. Elige lo que quieras; lo pesado se instala solo al final."
+msgstr "数分で、プログラミングとローカルでの AI 利用ができるようにパソコンを準備します。インターネットに頼る必要はありません。好きなものを選んでください。重いものは最後にだけインストールします。"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:235
+msgid "Procesador"
+msgstr "プロセッサー"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:236
+msgid "Gráfica integrada"
+msgstr "内蔵グラフィックス"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:237
+#: packages/axolos-bienvenida/bin/axolos-centro:179
+#, python-brace-format
+msgid "{0:.0f} GB de RAM"
+msgstr "メモリ {0:.0f} GB"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:253
+msgid "¿Con qué vas a programar?"
+msgstr "何でプログラミングしますか？"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:254
+msgid "Marca tus lenguajes y herramientas. Git, Docker, la terminal mejorada y el editor ya vienen de serie."
+msgstr "使う言語とツールにチェックを入れてください。Git、Docker、強化されたターミナル、エディターは標準で入っています。"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:289
+msgid "Tu identidad para Git y GitHub"
+msgstr "Git と GitHub のための情報"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:290
+msgid "Con esto firmas tus commits y subes código a GitHub por SSH, sin contraseñas."
+msgstr "これでコミットに署名し、パスワードなしで SSH 経由で GitHub にコードをプッシュできます。"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:297
+msgid "Tu nombre"
+msgstr "名前"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:299
+msgid "tu@correo.com"
+msgstr "you@example.com"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:300
+msgid "Nombre"
+msgstr "名前"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:302
+msgid "Correo"
+msgstr "メール"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:307
+msgid "Crear una clave SSH para este equipo"
+msgstr "このパソコン用の SSH 鍵を作成"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:310
+msgid "Ya tienes una clave SSH (~/.ssh/id_ed25519)"
+msgstr "SSH 鍵はすでにあります（~/.ssh/id_ed25519）"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:315
+msgid "Conectar con GitHub al terminar (se abre una terminal y el navegador)"
+msgstr "最後に GitHub に接続する（ターミナルとブラウザーが開きます）"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:318
+msgid "Ya estás conectado a GitHub"
+msgstr "GitHub にはすでに接続済みです"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:321
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:674
+msgid "Poner el tema AxolOS en VS Code"
+msgstr "VS Code に AxolOS テーマを適用"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:324
+msgid "Buscar en tu historial de comandos con Ctrl+R (importa el historial actual)"
+msgstr "Ctrl+R でコマンド履歴を検索（現在の履歴を取り込みます）"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:342
+msgid "Inteligencia artificial en local"
+msgstr "ローカル AI"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:343
+msgid "Modelos que funcionan en tu equipo: sin internet, sin cuotas y sin que nada salga de aquí. Los he elegido según tu gráfica."
+msgstr "パソコン上で動くモデルです。インターネット不要、利用制限なし、データは外に出ません。グラフィックスに合わせて選びました。"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:348
+msgid "Sin gráfica dedicada: irá por procesador"
+msgstr "専用グラフィックスなし：プロセッサーで動作します"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:348
+#, python-brace-format
+msgid "{0} · {1:.0f} GB de VRAM"
+msgstr "{0} · VRAM {1:.0f} GB"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:354
+msgid "Aceleración por gráfica activada"
+msgstr "グラフィックス アクセラレーションが有効です"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:356
+#, python-brace-format
+msgid "Se activará la aceleración por gráfica ({0})"
+msgstr "グラフィックス アクセラレーションを有効にします（{0}）"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:362
+msgid "MODELOS"
+msgstr "モデル"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:379
+msgid " · opcional, va bien en tu equipo"
+msgstr " · 任意、このパソコンで快適に動きます"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:382
+msgid "instalado"
+msgstr "インストール済み"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:387
+msgid "Conectar VS Code con la IA local (chat y autocompletado con Continue)"
+msgstr "VS Code をローカル AI に接続（Continue でチャットと補完）"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:401
+#, python-brace-format
+msgid "Descarga: {gb:.1f} GB"
+msgstr "ダウンロード：{gb:.1f} GB"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:401
+msgid "No hay nada que descargar"
+msgstr "ダウンロードするものはありません"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:410
+msgid "Esto es lo que voy a hacer. Te pediré la contraseña una vez."
+msgstr "これから行う内容です。パスワードは一度だけ尋ねます。"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:410
+msgid "Todo listo para empezar"
+msgstr "準備完了"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:424
+msgid "Ver detalles"
+msgstr "詳細を表示"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:447
+msgid "Tu AxolOS está listo"
+msgstr "AxolOS の準備ができました"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:448
+msgid "Algunos trucos para empezar:"
+msgstr "はじめるためのヒント："
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:451
+msgid "escribe «ia» y tu pregunta para hablar con Axo, la IA local"
+msgstr "「ai」と質問を入力して、ローカル AI の Axo と話せます"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:452
+msgid "el chat con tu IA, en el menú de aplicaciones"
+msgstr "AI とのチャット。アプリケーションメニューにあります"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:453
+#: packages/axolos-bienvenida/bin/axolos-centro:404
+#: packages/axolos-bienvenida/bin/axolos-centro:418
+#: packages/axolos-bienvenida/bin/axolos-centro:474
+#: packages/axolos-bienvenida/bin/axolos-centro:515
+msgid "Centro de AxolOS"
+msgstr "AxolOS センター"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:453
+msgid "en el menú: actualizaciones, lenguajes, modelos de IA y apariencia"
+msgstr "メニューから：アップデート、言語、AI モデル、外観"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:454
+msgid "en la terminal: busca en todo tu historial de comandos"
+msgstr "ターミナルで：コマンド履歴全体を検索"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:455
+msgid "salta a tus carpetas más usadas"
+msgstr "よく使うフォルダーへ移動"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:455
+msgid "z carpeta"
+msgstr "z フォルダー"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:495
+msgid "Terminado"
+msgstr "完了"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:512
+msgid "(no se pudo ejecutar)"
+msgstr "（実行できませんでした）"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:602
+#: packages/axolos-bienvenida/bin/axolos-centro:269
+#: packages/axolos-bienvenida/bin/axolos-centro:376
+#: packages/axolos-bienvenida/bin/axolos-centro:380
+msgid "Aplicar"
+msgstr "適用"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
+msgid "Bienvenida"
+msgstr "ようこそ"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
+msgid "Git y GitHub"
+msgstr "Git と GitHub"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
+#: packages/axolos-bienvenida/bin/axolos-centro:280
+#: packages/axolos-bienvenida/bin/axolos-centro:387
+#: packages/axolos-ia/lib/axolos-ia-krunner:123
+#: packages/axolos-ia/lib/axolos-ia-krunner:126
+msgid "IA local"
+msgstr "ローカル AI"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
+msgid "Listo"
+msgstr "完了"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
+#: packages/axolos-bienvenida/bin/axolos-centro:235
+#: packages/axolos-bienvenida/bin/axolos-centro:386
+msgid "Programación"
+msgstr "プログラミング"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:539
+#: packages/axolos-bienvenida/bin/axolos-centro:382
+msgid "Bienvenida a AxolOS"
+msgstr "AxolOS へようこそ"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:561
+msgid ""
+"Nada de esto envía datos a\n"
+"ninguna parte."
+msgstr ""
+"どの操作も\n"
+"データを外部に送りません。"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:577
+msgid "Ahora no"
+msgstr "あとで"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:579
+msgid "Atrás"
+msgstr "戻る"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:581
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:602
+msgid "Empezar"
+msgstr "はじめる"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:602
+msgid "Cerrar"
+msgstr "閉じる"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:602
+msgid "Revisar"
+msgstr "確認"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:602
+msgid "Siguiente"
+msgstr "次へ"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:625
+msgid "Instalando "
+msgstr "インストール中："
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:628
+msgid "Activando la gráfica para la IA"
+msgstr "AI 用にグラフィックスを有効化しています"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:630
+msgid "Encendiendo la IA local"
+msgstr "ローカル AI を起動しています"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:635
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:637
+msgid "Configurando Git"
+msgstr "Git を設定しています"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:639
+msgid "Creando tu clave SSH"
+msgstr "SSH 鍵を作成しています"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:647
+#: packages/axolos-bienvenida/bin/axolos-centro:268
+msgid "Tema AxolOS en los editores"
+msgstr "エディターの AxolOS テーマ"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:649
+msgid "Importando tu historial de comandos"
+msgstr "コマンド履歴を取り込んでいます"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:654
+msgid "Conectando VS Code con la IA"
+msgstr "VS Code を AI に接続しています"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:663
+#, python-brace-format
+msgid "Activar la aceleración por gráfica (<b>{0}</b>)"
+msgstr "グラフィックス アクセラレーションを有効化（<b>{0}</b>）"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:665
+msgid "Crear tu clave SSH"
+msgstr "SSH 鍵を作成"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:667
+msgid "Guardar tu nombre y correo en Git"
+msgstr "名前とメールを Git に保存"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:670
+msgid "Descargar "
+msgstr "ダウンロード："
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:672
+msgid "Conectar VS Code con la IA local"
+msgstr "VS Code をローカル AI に接続"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:676
+msgid "Al final, abrir la conexión con GitHub"
+msgstr "最後に GitHub への接続を開く"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:678
+msgid "Nada pendiente: tu equipo ya está al día"
+msgstr "保留中の作業はありません：最新の状態です"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:703
+msgid "No se pudo completar: "
+msgstr "完了できませんでした："
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:704
+msgid ". Puedes volver a abrir «Bienvenida a AxolOS» desde el menú para reintentarlo."
+msgstr "。メニューから「AxolOS へようこそ」をもう一度開いて再試行できます。"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:707
+msgid "Para usar Docker sin sudo, cierra sesión y vuelve a entrar."
+msgstr "sudo なしで Docker を使うには、ログアウトして再ログインしてください。"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:164
+msgid "Tu AxolOS"
+msgstr "あなたの AxolOS"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:165
+msgid "El estado del sistema de un vistazo."
+msgstr "システムの状態をひと目で。"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:176
+msgid "Sistema"
+msgstr "システム"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:177
+msgid "(sin axolos-desktop)"
+msgstr "（axolos-desktop なし）"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:178
+#, python-brace-format
+msgid "Sobre CachyOS · núcleo {kernel}"
+msgstr "CachyOS ベース · カーネル {kernel}"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:179
+msgid "Equipo"
+msgstr "パソコン"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:180
+msgid "Actualizaciones"
+msgstr "アップデート"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:181
+msgid "Comprobando…"
+msgstr "確認しています…"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:182
+#: packages/axolos-bienvenida/bin/axolos-centro:351
+msgid "Actualizar ahora"
+msgstr "今すぐ更新"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:184
+msgid "Actualizaciones de CachyOS y AxolOS"
+msgstr "CachyOS と AxolOS のアップデート"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:210
+msgid "Todo al día."
+msgstr "すべて最新です。"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:213
+#, python-brace-format
+msgid " (de AxolOS: {0})"
+msgstr "（AxolOS から：{0}）"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:214
+#, python-brace-format
+msgid "{0} paquetes por actualizar{extra}."
+msgstr "{0} 個のパッケージを更新できます{extra}。"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:216
+msgid "No se pudo comprobar (¿sin conexión?)."
+msgstr "確認できませんでした（オフライン？）。"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:231
+msgid "Actualizar el sistema"
+msgstr "システムを更新"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:236
+msgid "Lenguajes y herramientas. Marca los que quieras añadir; lo instalado se queda como está."
+msgstr "言語とツール。追加したいものにチェックを入れてください。インストール済みのものはそのままです。"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:242
+msgid "No encuentro los perfiles de axolos-dev."
+msgstr "axolos-dev のプロファイルが見つかりません。"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:245
+msgid "Perfiles"
+msgstr "プロファイル"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:255
+msgid "Sin instalar"
+msgstr "未インストール"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:261
+msgid "Instalar los marcados"
+msgstr "選択したものをインストール"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:267
+msgid "Editores"
+msgstr "エディター"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:268
+msgid "VS Code, VSCodium y Antigravity (Kate y Neovim ya lo traen)."
+msgstr "VS Code、VSCodium、Antigravity（Kate と Neovim には適用済み）。"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:269
+msgid "Tema en los editores"
+msgstr "エディターのテーマ"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:276
+msgid "Instalar perfiles: "
+msgstr "プロファイルをインストール："
+
+#: packages/axolos-bienvenida/bin/axolos-centro:281
+msgid "Axo y la búsqueda de archivos usan modelos que corren en tu equipo, sin internet."
+msgstr "Axo とファイル検索は、インターネットなしでパソコン上で動くモデルを使います。"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:286
+msgid "Servicio"
+msgstr "サービス"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:288
+msgid "Activo"
+msgstr "稼働中"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:288
+msgid "Servicio de IA en marcha"
+msgstr "AI サービスが動作中"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:290
+msgid "El servicio de IA está parado"
+msgstr "AI サービスは停止しています"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:290
+msgid "Sin él no funcionan Axo ni la búsqueda por contenido."
+msgstr "これがないと、Axo も内容検索も動きません。"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:291
+msgid "Arrancar"
+msgstr "起動"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:292
+msgid "Arrancar la IA"
+msgstr "AI を起動"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:293
+#: packages/axolos-ia/bin/axolos-ia:38
+msgid "sin gráfica dedicada"
+msgstr "専用グラフィックスなし"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:295
+msgid "Gráfica"
+msgstr "グラフィックス"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:296
+msgid "Acelerada"
+msgstr "高速化済み"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:298
+msgid "La IA no usa la gráfica"
+msgstr "AI がグラフィックスを使っていません"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:298
+#, python-brace-format
+msgid "{nombre_gpu}: falta {0}. Irá mucho más lenta."
+msgstr "{nombre_gpu}：{0} がありません。かなり遅くなります。"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:299
+#: packages/axolos-bienvenida/bin/axolos-centro:300
+msgid "Activar la gráfica"
+msgstr "グラフィックスを有効化"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:304
+msgid "Modelos"
+msgstr "モデル"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:308
+#: packages/axolos-bienvenida/bin/axolos-centro:319
+#: packages/axolos-ia/bin/axolos-ia-chat:1074
+msgid "Quitar"
+msgstr "削除"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:310
+msgid "Recomendado"
+msgstr "おすすめ"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:311
+msgid "Grande para tu equipo"
+msgstr "このパソコンには大きめ"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:311
+msgid "Opcional"
+msgstr "任意"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:313
+msgid "Descargar"
+msgstr "ダウンロード"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:314
+#, python-brace-format
+msgid "Descargar {i}"
+msgstr "{i} をダウンロード"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:318
+#, python-brace-format
+msgid "Instalado aparte · {0:.1f} GB"
+msgstr "個別にインストール済み · {0:.1f} GB"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:322
+msgid "Quitar modelo"
+msgstr "モデルを削除"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:323
+#, python-brace-format
+msgid "¿Quitar {modelo}? Se borra del disco; puedes volver a descargarlo cuando quieras."
+msgstr "{modelo} を削除しますか？ディスクから消えますが、いつでも再ダウンロードできます。"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:335
+#, python-brace-format
+msgid "No se pudo quitar {modelo}: {e}"
+msgstr "{modelo} を削除できませんでした：{e}"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:340
+msgid "Búsqueda de archivos"
+msgstr "ファイル検索"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:341
+msgid "«ia busco …» en el menú o en KRunner encuentra tus archivos por lo que contienen."
+msgstr "メニューや KRunner で「ai 探して …」と入力すると、内容でファイルを探せます。"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:348
+#, python-brace-format
+msgid "no disponible ({e})"
+msgstr "利用できません（{e}）"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:349
+msgid "Índice"
+msgstr "インデックス"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:350
+msgid "Archivos indexados"
+msgstr "インデックス済みのファイル"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:352
+msgid "Actualizar el índice"
+msgstr "インデックスを更新"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:357
+msgid "Indexar al momento lo nuevo"
+msgstr "新しいファイルをすぐにインデックス化"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:358
+msgid "Las descargas y fotos nuevas se pueden buscar a los pocos segundos. Con batería baja espera."
+msgstr "新しいダウンロードや写真は数秒で検索できるようになります。バッテリー残量が少ないときは待ちます。"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:364
+msgid "Indexado al momento: "
+msgstr "即時インデックス化："
+
+#: packages/axolos-bienvenida/bin/axolos-centro:368
+msgid "Apariencia y arranque"
+msgstr "外観と起動"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:369
+msgid "Para dejar como AxolOS lo que otras apps o el instalador cambian."
+msgstr "他のアプリやインストーラーが変えた部分を AxolOS の見た目に戻します。"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:372
+msgid "Ventanas"
+msgstr "ウィンドウ"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:374
+msgid "Botones AxolOS en los navegadores"
+msgstr "ブラウザーの AxolOS ボタン"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:375
+msgid "Brave, Chrome y Chromium usan la barra con los botones de AxolOS. Ciérralos antes."
+msgstr "Brave、Chrome、Chromium が AxolOS ボタン付きのタイトルバーを使います。先に閉じてください。"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:376
+msgid "Botones en los navegadores"
+msgstr "ブラウザーのボタン"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:377
+msgid "Arranque"
+msgstr "起動"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:378
+msgid "Menú de arranque de AxolOS"
+msgstr "AxolOS の起動メニュー"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:379
+msgid "Colores y fondo de AxolOS en Limine, y un solo grupo «AxolOS». Guarda una copia antes."
+msgstr "Limine に AxolOS の色と背景を使い、グループを「AxolOS」ひとつにします。先にバックアップします。"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:380
+msgid "Menú de arranque"
+msgstr "起動メニュー"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:381
+msgid "Primeros pasos"
+msgstr "はじめに"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:382
+msgid "El asistente del primer inicio, por si quieres repasarlo."
+msgstr "初回起動時のアシスタントです。もう一度見たいときに。"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:383
+msgid "Abrir"
+msgstr "開く"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:386
+msgid "Resumen"
+msgstr "概要"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:387
+msgid "Búsqueda"
+msgstr "検索"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:388
+msgid "Apariencia"
+msgstr "外観"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:445
+msgid "Ocultar"
+msgstr "隠す"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:474
+msgid "Espera a que termine la tarea en curso."
+msgstr "実行中の作業が終わるまでお待ちください。"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:480
+msgid "(simulado: no se ejecuta)"
+msgstr "（シミュレーション：実行しません）"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:489
+msgid " · hecho"
+msgstr " · 完了"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:489
+#, python-brace-format
+msgid " · terminó con error ({codigo})"
+msgstr " · エラーで終了（{codigo}）"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:509
+msgid "Pulsa Intro para cerrar"
+msgstr "Enter キーで閉じます"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:515
+msgid "Hay una tarea en marcha. ¿Cerrar igualmente?"
+msgstr "作業が実行中です。閉じてもよいですか？"
+
+#: packages/axolos-branding/static/axolos-apps:8
+msgid "Ejecuta axolos-apps como usuario normal (pedirá sudo)."
+msgstr "axolos-apps は一般ユーザーで実行してください（sudo を求められます）。"
+
+#: packages/axolos-branding/static/axolos-apps:12
+msgid "Paquetes de los repositorios"
+msgstr "リポジトリのパッケージ"
+
+#: packages/axolos-branding/static/axolos-apps:17
+msgid "(no están en los repos, se omiten: {0})"
+msgstr "（リポジトリにないため省略：{0}）"
+
+#: packages/axolos-branding/static/axolos-apps:23
+msgid "Paquetes del AUR con {0}"
+msgstr "{0} で AUR パッケージ"
+
+#: packages/axolos-branding/static/axolos-apps:26
+msgid "No hay paru ni yay. Paquetes del AUR pendientes:"
+msgstr "paru も yay もありません。未インストールの AUR パッケージ："
+
+#: packages/axolos-branding/static/axolos-root:39
+msgid "Ejecútalo con pkexec o sudo."
+msgstr "pkexec または sudo で実行してください。"
+
+#: packages/axolos-branding/static/axolos-root:60
+msgid "Ya estaba todo instalado"
+msgstr "すべてインストール済みでした"
+
+#: packages/axolos-branding/static/axolos-root:62
+msgid "Instalando: "
+msgstr "インストール中："
+
+#: packages/axolos-branding/static/axolos-root:66
+msgid "Actualizando el sistema y reintentando"
+msgstr "システムを更新して再試行しています"
+
+#: packages/axolos-branding/static/axolos-root:68
+msgid "pacman falló"
+msgstr "pacman が失敗しました"
+
+#: packages/axolos-branding/static/axolos-root:79
+msgid "Perfiles no válidos: "
+msgstr "無効なプロファイル："
+
+#: packages/axolos-branding/static/axolos-root:88
+msgid "Docker: arranque bajo demanda y permiso para tu usuario"
+msgstr "Docker：必要時に起動し、ユーザーに権限を付与"
+
+#: packages/axolos-branding/static/axolos-root:97
+#, python-brace-format
+msgid "Gráfica {v}: "
+msgstr "グラフィックス {v}："
+
+#: packages/axolos-branding/static/axolos-root:100
+msgid "Docker con acceso a la gráfica (nvidia-container-toolkit)"
+msgstr "Docker からグラフィックスを使えるようにします（nvidia-container-toolkit）"
+
+#: packages/axolos-branding/static/axolos-root:108
+msgid "Servicio de IA local"
+msgstr "ローカル AI サービス"
+
+#: packages/axolos-branding/static/axolos-root:150
+#, python-brace-format
+msgid "colores: {clave}"
+msgstr "色：{clave}"
+
+#: packages/axolos-branding/static/axolos-root:156
+msgid "fondo de AxolOS"
+msgstr "AxolOS の背景"
+
+#: packages/axolos-branding/static/axolos-root:168
+msgid "quitado el grupo vacío «CachyOS»"
+msgstr "空の「CachyOS」グループを削除しました"
+
+#: packages/axolos-branding/static/axolos-root:172
+msgid "grupo «CachyOS» renombrado a «AxolOS»"
+msgstr "「CachyOS」グループを「AxolOS」に名前変更しました"
+
+#: packages/axolos-branding/static/axolos-root:174
+msgid "hay un grupo «CachyOS» con entradas además de «AxolOS»: no lo toco"
+msgstr "「AxolOS」のほかに項目のある「CachyOS」グループがあります。変更しません"
+
+#: packages/axolos-branding/static/axolos-root:192
+msgid "No encuentro limine.conf (¿el equipo arranca con Limine?)."
+msgstr "limine.conf が見つかりません（Limine で起動していますか？）。"
+
+#: packages/axolos-branding/static/axolos-root:205
+msgid "Aviso: "
+msgstr "注意："
+
+#: packages/axolos-branding/static/axolos-root:211
+#, python-brace-format
+msgid "{conf}: ya tiene el aspecto y el nombre de AxolOS"
+msgstr "{conf}：すでに AxolOS の見た目と名前です"
+
+#: packages/axolos-branding/static/axolos-root:214
+#, python-brace-format
+msgid "Cambios que haría en {conf} (no escribo nada):"
+msgstr "{conf} に加える変更（書き込みはしません）："
+
+#: packages/axolos-branding/static/axolos-root:222
+#, python-brace-format
+msgid "Copia de seguridad: {copia}"
+msgstr "バックアップ：{copia}"
+
+#: packages/axolos-branding/static/axolos-root:234
+msgid "instantáneas: grupo «AxolOS»"
+msgstr "スナップショット：「AxolOS」グループ"
+
+#: packages/axolos-branding/static/axolos-root:235
+msgid "Listo: se verá en el próximo arranque"
+msgstr "完了：次回の起動で反映されます"
+
+#: packages/axolos-branding/static/axolos-root:240
+msgid "axolos-root necesita permisos de administrador (usa pkexec)."
+msgstr "axolos-root には管理者権限が必要です（pkexec を使ってください）。"
+
+#: packages/axolos-dev/axolos-dev.install:6
+msgid "«axolos-dev» muestra los perfiles de lenguajes; «axolos-dev editores» pone el tema en VS Code."
+msgstr "「axolos-dev」で言語プロファイルを表示、「axolos-dev editors」で VS Code にテーマを適用します。"
+
+#: packages/axolos-dev/static/axolos-dev:51
+#, python-brace-format
+msgid "{MORADO}Perfiles de desarrollo de AxolOS{FIN}\n"
+msgstr "{MORADO}AxolOS の開発プロファイル{FIN}\n"
+
+#: packages/axolos-dev/static/axolos-dev:54
+#, python-brace-format
+msgid "{GRIS}faltan {0}{FIN}"
+msgstr "{GRIS}{0} 個不足{FIN}"
+
+#: packages/axolos-dev/static/axolos-dev:54
+#, python-brace-format
+msgid "{VERDE}instalado{FIN}"
+msgstr "{VERDE}インストール済み{FIN}"
+
+#: packages/axolos-dev/static/axolos-dev:57
+msgid ""
+"\n"
+"Instala con:  axolos-dev instalar web python …"
+msgstr ""
+"\n"
+"インストール：  axolos-dev install web python …"
+
+#: packages/axolos-dev/static/axolos-dev:65
+#, python-brace-format
+msgid "Perfil desconocido: {0} · disponibles: {1}"
+msgstr "不明なプロファイル：{0} · 利用可能：{1}"
+
+#: packages/axolos-dev/static/axolos-dev:68
+msgid "No se instalaron los perfiles (¿cancelaste la contraseña?)."
+msgstr "プロファイルはインストールされませんでした（パスワードをキャンセルしましたか？）。"
+
+#: packages/axolos-dev/static/axolos-dev:74
+#, python-brace-format
+msgid "{GRIS}Docker: cierra sesión y vuelve a entrar para usarlo sin sudo.{FIN}"
+msgstr "{GRIS}Docker：sudo なしで使うには、ログアウトして再ログインしてください。{FIN}"
+
+#: packages/axolos-dev/static/axolos-dev:89
+#, python-brace-format
+msgid "  {cmd}: no se pudo instalar el tema ({0})"
+msgstr "  {cmd}：テーマをインストールできませんでした（{0}）"
+
+#: packages/axolos-dev/static/axolos-dev:92
+msgid "tema instalado"
+msgstr "テーマをインストールしました"
+
+#: packages/axolos-dev/static/axolos-dev:103
+msgid "tema instalado y activado"
+msgstr "テーマをインストールして有効にしました"
+
+#: packages/axolos-dev/static/axolos-dev:105
+msgid " (actívalo en Preferencias → Tema de color → AxolOS)"
+msgstr "（基本設定 → 配色テーマ → AxolOS で有効にしてください）"
+
+#: packages/axolos-dev/static/axolos-dev:109
+msgid "No hay ningún editor basado en VS Code instalado."
+msgstr "VS Code ベースのエディターがインストールされていません。"
+
+#: packages/axolos-dev/static/axolos-dev:124
+msgid ""
+"axolos-dev · herramientas de desarrollo de AxolOS\n"
+"\n"
+"  axolos-dev                      perfiles disponibles y si ya están instalados\n"
+"  axolos-dev instalar PERFIL...   instala perfiles (web, python, rust…); pide la contraseña una vez\n"
+"  axolos-dev editores             tema AxolOS en VS Code / VSCodium / Antigravity\n"
+msgstr ""
+"axolos-dev · AxolOS の開発ツール\n"
+"\n"
+"  axolos-dev                      利用できるプロファイルとインストール状況\n"
+"  axolos-dev install ID...        プロファイルをインストール（web、python、rust…）。パスワードは 1 回だけ\n"
+"  axolos-dev editors              VS Code / VSCodium / Antigravity に AxolOS テーマ\n"
+
+#: packages/axolos-ia/axolos-ia.install:9
+msgid "«axolos-ia» muestra el estado; «axolos-ia gpu» activa la gráfica; «axolos-ia descargar» baja los modelos."
+msgstr "「axolos-ia」で状態を表示、「axolos-ia gpu」で GPU を有効化、「axolos-ia download」でモデルをダウンロードします。"
+
+#: packages/axolos-ia/bin/axolos-ia:37
+#, python-brace-format
+msgid "{M}{B}IA local de AxolOS{F}\n"
+msgstr "{M}{B}AxolOS のローカル AI{F}\n"
+
+#: packages/axolos-ia/bin/axolos-ia:38
+#, python-brace-format
+msgid "{0} · {1} GB de VRAM"
+msgstr "{0} · VRAM {1} GB"
+
+#: packages/axolos-ia/bin/axolos-ia:39
+#, python-brace-format
+msgid "  Gráfica     {gpu}"
+msgstr "  GPU         {gpu}"
+
+#: packages/axolos-ia/bin/axolos-ia:40
+#, python-brace-format
+msgid "  Aceleración {0} {1}"
+msgstr "  高速化      {0} {1}"
+
+#: packages/axolos-ia/bin/axolos-ia:41
+#, python-brace-format
+msgid "   {G}→ actívala con: axolos-ia gpu{F}"
+msgstr "   {G}→ 有効化：axolos-ia gpu{F}"
+
+#: packages/axolos-ia/bin/axolos-ia:42
+#, python-brace-format
+msgid "  Servicio    {0} "
+msgstr "  サービス    {0} "
+
+#: packages/axolos-ia/bin/axolos-ia:42
+#, python-brace-format
+msgid "apagado   {G}→ axolos-ia gpu{F}"
+msgstr "停止中   {G}→ axolos-ia gpu{F}"
+
+#: packages/axolos-ia/bin/axolos-ia:46
+#, python-brace-format
+msgid "  Modelos     {0}"
+msgstr "  モデル      {0}"
+
+#: packages/axolos-ia/bin/axolos-ia:46
+msgid "ninguno → axolos-ia descargar"
+msgstr "なし → axolos-ia download"
+
+#: packages/axolos-ia/bin/axolos-ia:48
+#, python-brace-format
+msgid "{0} GB en gráfica, resto en RAM"
+msgstr "GPU に {0} GB、残りはメモリ"
+
+#: packages/axolos-ia/bin/axolos-ia:49
+#, python-brace-format
+msgid "  En uso      {0} ({1} GB, {donde})"
+msgstr "  使用中      {0}（{1} GB、{donde}）"
+
+#: packages/axolos-ia/bin/axolos-ia:53
+#, python-brace-format
+msgid ""
+"\n"
+"  {G}Recomendados para tu equipo: {0}  →  axolos-ia descargar{F}"
+msgstr ""
+"\n"
+"  {G}このパソコンへのおすすめ：{0}  →  axolos-ia download{F}"
+
+#: packages/axolos-ia/bin/axolos-ia:56
+#, python-brace-format
+msgid "  Archivos    {0}"
+msgstr "  ファイル    {0}"
+
+#: packages/axolos-ia/bin/axolos-ia:59
+#, python-brace-format
+msgid ""
+"\n"
+"  {G}Chat: Axo en el menú · Alt+Espacio y escribe «ia tu pregunta» o «ia busco …»{F}"
+msgstr ""
+"\n"
+"  {G}チャット：メニューの Axo · Alt+Space で「ai 質問」や「ai 探して …」と入力{F}"
+
+#: packages/axolos-ia/bin/axolos-ia:66
+#, python-brace-format
+msgid "{M}{B}Modelos para la IA local{F}  {G}(tu equipo: {0} GB de VRAM, {1} GB de RAM){F}\n"
+msgstr "{M}{B}ローカル AI のモデル{F}  {G}（このパソコン：VRAM {0} GB、メモリ {1} GB）{F}\n"
+
+#: packages/axolos-ia/bin/axolos-ia:69
+#, python-brace-format
+msgid "{M}recomendado{F}"
+msgstr "{M}おすすめ{F}"
+
+#: packages/axolos-ia/bin/axolos-ia:69
+#, python-brace-format
+msgid "{V}instalado{F}"
+msgstr "{V}インストール済み{F}"
+
+#: packages/axolos-ia/bin/axolos-ia:70
+#, python-brace-format
+msgid "{M}opcional{F}"
+msgstr "{M}任意{F}"
+
+#: packages/axolos-ia/bin/axolos-ia:71
+#, python-brace-format
+msgid " {G}(irá lento en tu equipo){F}"
+msgstr " {G}（このパソコンでは遅くなります）{F}"
+
+#: packages/axolos-ia/bin/axolos-ia:87
+msgid "La IA local está apagada: ejecuta  axolos-ia gpu"
+msgstr "ローカル AI は停止中です：axolos-ia gpu を実行してください"
+
+#: packages/axolos-ia/bin/axolos-ia:102
+#, python-brace-format
+msgid "   {V}✓ listo{F}"
+msgstr "   {V}✓ 完了{F}"
+
+#: packages/axolos-ia/bin/axolos-ia:111
+#, python-brace-format
+msgid "{G}Aviso: faltan modelos ({0}, {1}); descárgalos con  axolos-ia descargar{F}"
+msgstr "{G}注意：モデルがありません（{0}、{1}）。axolos-ia download でダウンロードしてください{F}"
+
+#: packages/axolos-ia/bin/axolos-ia:135
+msgid "No hay VS Code instalado."
+msgstr "VS Code がインストールされていません。"
+
+#: packages/axolos-ia/bin/axolos-ia:136
+#, python-brace-format
+msgid "{M}==>{F} Extensión Continue en {code}"
+msgstr "{M}==>{F} {code} の Continue 拡張機能"
+
+#: packages/axolos-ia/bin/axolos-ia:142
+#, python-brace-format
+msgid "   tu configuración anterior está en {bak}"
+msgstr "   以前の設定は {bak} にあります"
+
+#: packages/axolos-ia/bin/axolos-ia:145
+msgid "Continue usa la IA local. En VS Code: Ctrl+L para el chat; el autocompletado va solo."
+msgstr "Continue はローカル AI を使います。VS Code では Ctrl+L でチャット、補完は自動です。"
+
+#: packages/axolos-ia/bin/axolos-ia:150
+msgid "Necesitas Docker (perfil «contenedores»: axolos-dev instalar contenedores)."
+msgstr "Docker が必要です（プロファイル「containers」：axolos-dev install containers）。"
+
+#: packages/axolos-ia/bin/axolos-ia:155
+#, python-brace-format
+msgid "{M}==>{F} Descargando Open WebUI (solo la primera vez, ~4 GB)"
+msgstr "{M}==>{F} Open WebUI をダウンロードしています（初回のみ、約 4 GB）"
+
+#: packages/axolos-ia/bin/axolos-ia:162
+msgid "No se pudo arrancar Open WebUI."
+msgstr "Open WebUI を起動できませんでした。"
+
+#: packages/axolos-ia/bin/axolos-ia:163
+#, python-brace-format
+msgid "   {V}✓{F} Abriendo http://localhost:3000 (tarda unos segundos la primera vez)"
+msgstr "   {V}✓{F} http://localhost:3000 を開いています（初回は数秒かかります）"
+
+#: packages/axolos-ia/bin/axolos-ia:177
+msgid ""
+"axolos-ia · IA local de AxolOS\n"
+"\n"
+"  axolos-ia                     estado: gráfica, servicio, modelos\n"
+"  axolos-ia gpu                 activa la gráfica para la IA (CUDA / ROCm / Vulkan)\n"
+"  axolos-ia modelos             catálogo y qué conviene a tu equipo\n"
+"  axolos-ia descargar [ID...]   descarga modelos (sin ID: los recomendados)\n"
+"  axolos-ia vscode              conecta VS Code con la IA local (extensión Continue)\n"
+"  axolos-ia web                 interfaz web Open WebUI en http://localhost:3000 (Docker)\n"
+"  axolos-ia chat                abre Axo, el chat\n"
+"  axolos-ia contexto            lo que Axo sabe de este equipo (datos en vivo + manual)\n"
+"  axolos-ia buscar FRASE        busca tus archivos por lo que contienen («foto de la playa»)\n"
+"  axolos-ia indexar             actualiza ya el índice de archivos (se hace solo cada 30 min)\n"
+msgstr ""
+"axolos-ia · AxolOS のローカル AI\n"
+"\n"
+"  axolos-ia                     状態：GPU、サービス、モデル\n"
+"  axolos-ia gpu                 AI 用に GPU を有効化（CUDA / ROCm / Vulkan）\n"
+"  axolos-ia models              モデル一覧と、このパソコンに合うもの\n"
+"  axolos-ia download [ID...]    モデルをダウンロード（ID なし：おすすめ）\n"
+"  axolos-ia vscode              VS Code をローカル AI に接続（Continue 拡張機能）\n"
+"  axolos-ia web                 Open WebUI の Web 画面 http://localhost:3000（Docker）\n"
+"  axolos-ia chat                チャット Axo を開く\n"
+"  axolos-ia context             Axo がこのパソコンについて知っていること（ライブ情報＋マニュアル）\n"
+"  axolos-ia search フレーズ     ファイルを中身で検索（「海の写真」）\n"
+"  axolos-ia index               ファイルのインデックスを今すぐ更新（30 分ごとに自動更新）\n"
+
+#: packages/axolos-ia/bin/axolos-ia:214
+msgid "No encuentro nada parecido."
+msgstr "似たものは見つかりません。"
+
+#: packages/axolos-ia/bin/axolos-ia:217
+msgid "(parecido)"
+msgstr "（類似）"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:216
+#: packages/axolos-ia/bin/axolos-ia-chat:711
+msgid "Conversación"
+msgstr "会話"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:243
+msgid "HOY"
+msgstr "今日"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:245
+msgid "AYER"
+msgstr "昨日"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:247
+msgid "ÚLTIMOS 7 DÍAS"
+msgstr "過去 7 日間"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:249
+msgid "ÚLTIMOS 30 DÍAS"
+msgstr "過去 30 日間"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:250
+msgid "ANTES"
+msgstr "それ以前"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:305
+msgid "Autocompletado"
+msgstr "自動補完"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:390
+msgid "Razonamiento"
+msgstr "推論"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:401
+msgid "Copiar"
+msgstr "コピー"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:405
+msgid "Regenerar"
+msgstr "再生成"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:434
+msgid "Cargando el modelo"
+msgstr "モデルを読み込んでいます"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:434
+msgid "Pensando"
+msgstr "考え中"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:442
+msgid "Pensando…"
+msgstr "考え中…"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:447
+msgid "Ver razonamiento"
+msgstr "推論を表示"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:458
+#, python-brace-format
+msgid "<span style=\"color:{0}\">(respuesta detenida)</span>"
+msgstr "<span style=\"color:{0}\">（回答を中止しました）</span>"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:467
+#, python-brace-format
+msgid "<span style=\"color:{0}\">No he podido responder: {1}</span>"
+msgstr "<span style=\"color:{0}\">回答できませんでした：{1}</span>"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:472
+msgid "Copiado"
+msgstr "コピーしました"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:479
+msgid "Código copiado"
+msgstr "コードをコピーしました"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:518
+msgid "Conectando con la IA local…"
+msgstr "ローカル AI に接続しています…"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:538
+msgid "Ocultar el historial (Ctrl+B)"
+msgstr "履歴を隠す（Ctrl+B）"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:542
+msgid "  Nueva conversación"
+msgstr "  新しい会話"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:549
+msgid "Buscar en el historial  (Ctrl+K)"
+msgstr "履歴を検索  (Ctrl+K)"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:561
+msgid "● Todo se queda en tu equipo"
+msgstr "● すべてこのパソコンの中にとどまります"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:579
+msgid "Mostrar el historial (Ctrl+B)"
+msgstr "履歴を表示（Ctrl+B）"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:582
+#: packages/axolos-ia/bin/axolos-ia-chat:1058
+msgid "Nueva conversación"
+msgstr "新しい会話"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:587
+msgid "Pensar a fondo"
+msgstr "じっくり考える"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:589
+msgid "Razona antes de responder: respuestas más cuidadas, algo más lento"
+msgstr "回答の前に推論します。丁寧になりますが少し遅くなります"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:632
+msgid "Adjuntar imagen (también puedes arrastrarla)"
+msgstr "画像を添付（ドラッグもできます）"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:636
+msgid "Pregunta lo que quieras…"
+msgstr "何でも聞いてください…"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:648
+msgid "Intro envía · Mayús+Intro, nueva línea · Esc detiene · Ctrl+N nueva"
+msgstr "Enter で送信 · Shift+Enter で改行 · Esc で停止 · Ctrl+N で新規"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:686
+msgid "Aún no hay conversaciones"
+msgstr "まだ会話はありません"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:686
+msgid "Sin resultados"
+msgstr "結果はありません"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:726
+#: packages/axolos-ia/bin/axolos-ia-chat:734
+msgid "Renombrar"
+msgstr "名前を変更"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:727
+msgid "Exportar a Markdown…"
+msgstr "Markdown に書き出す…"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:729
+msgid "Eliminar"
+msgstr "削除"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:734
+msgid "Nombre de la conversación:"
+msgstr "会話の名前："
+
+#: packages/axolos-ia/bin/axolos-ia-chat:745
+msgid "Exportar conversación"
+msgstr "会話を書き出す"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:751
+msgid "Tú"
+msgstr "あなた"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:756
+msgid "Eliminar conversación"
+msgstr "会話を削除"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:757
+#, python-brace-format
+msgid "¿Eliminar esta conversación? Se mueve a la papelera de Axo ({0})."
+msgstr "この会話を削除しますか？Axo のごみ箱（{0}）に移動します。"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:789
+msgid "Encender la IA local"
+msgstr "ローカル AI を起動"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:789
+msgid "La IA local está apagada."
+msgstr "ローカル AI は停止中です。"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:791
+msgid "Aún no hay ningún modelo descargado."
+msgstr "まだモデルがダウンロードされていません。"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:792
+#, python-brace-format
+msgid "Descargar {0}"
+msgstr "{0} をダウンロード"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:803
+msgid "Encendiendo la IA local…"
+msgstr "ローカル AI を起動しています…"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:808
+msgid "Descargando el modelo… 0 %"
+msgstr "モデルをダウンロードしています… 0 %"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:811
+#, python-brace-format
+msgid "Error: {err}"
+msgstr "エラー：{err}"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:846
+msgid "¿En qué te ayudo?"
+msgstr "何をお手伝いしましょうか？"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:849
+msgid "Soy Axo, la IA de tu equipo. Funciono sin internet y nada de lo que me cuentes sale de aquí."
+msgstr "Axo です。このパソコンの AI です。インターネットなしで動き、話した内容が外に出ることはありません。"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:868
+msgid "Explícame un error"
+msgstr "エラーを説明"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:868
+msgid "Pega el mensaje de la terminal y te digo qué pasa"
+msgstr "ターミナルのメッセージを貼り付ければ、何が起きているか説明します"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:869
+msgid ""
+"Explícame qué significa este error y cómo lo arreglo:\n"
+"\n"
+msgstr ""
+"このエラーの意味と直し方を説明して：\n"
+"\n"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:870
+msgid "En Python, bash o fish, listo para usar"
+msgstr "Python・bash・fish で、すぐ使える形で"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:870
+msgid "Escribe un script"
+msgstr "スクリプトを書く"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:871
+msgid "Escribe un script de Python que "
+msgstr "次のことをする Python スクリプトを書いて："
+
+#: packages/axolos-ia/bin/axolos-ia-chat:872
+msgid "Fallos, mejoras y buenas prácticas"
+msgstr "バグ、改善点、ベストプラクティス"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:872
+msgid "Revisa mi código"
+msgstr "コードをレビュー"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:873
+msgid ""
+"Revisa este código y dime cómo mejorarlo:\n"
+"\n"
+msgstr ""
+"このコードをレビューして、改善方法を教えて：\n"
+"\n"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:874
+msgid "Comandos de Linux"
+msgstr "Linux コマンド"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:874
+msgid "Cómo hacer algo en AxolOS desde la terminal"
+msgstr "AxolOS でターミナルから何かをする方法"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:875
+msgid "¿Cómo puedo, desde la terminal, "
+msgstr "ターミナルから次のことをするには："
+
+#: packages/axolos-ia/bin/axolos-ia-chat:1048
+msgid "Detener (Esc)"
+msgstr "停止（Esc）"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:1048
+msgid "Enviar (Intro)"
+msgstr "送信（Enter）"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:1065
+msgid "Adjuntar imagen"
+msgstr "画像を添付"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:1066
+msgid "Imágenes (*.png *.jpg *.jpeg *.webp)"
+msgstr "画像 (*.png *.jpg *.jpeg *.webp)"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:1111
+msgid "Axo, la IA local de AxolOS"
+msgstr "Axo — AxolOS のローカル AI"
+
+#: packages/axolos-ia/lib/axolos-ia-krunner:84
+msgid "Preparar la búsqueda de archivos con IA"
+msgstr "AI ファイル検索を準備"
+
+#: packages/axolos-ia/lib/axolos-ia-krunner:85
+msgid "Aún no hay índice: se crea en segundo plano (axolos-ia indexar)"
+msgstr "インデックスはまだありません。バックグラウンドで作成中です（axolos-ia index）"
+
+#: packages/axolos-ia/lib/axolos-ia-krunner:89
+#, python-brace-format
+msgid "No se pudo buscar: {e}"
+msgstr "検索できませんでした：{e}"
+
+#: packages/axolos-ia/lib/axolos-ia-krunner:91
+#, python-brace-format
+msgid "Busca en mis archivos: {frase}"
+msgstr "ファイルを検索：{frase}"
+
+#: packages/axolos-ia/lib/axolos-ia-krunner:91
+#, python-brace-format
+msgid "No encuentro nada parecido a «{frase}»"
+msgstr "「{frase}」に似たものは見つかりません"
+
+#: packages/axolos-ia/lib/axolos-ia-krunner:92
+msgid "Pulsa para preguntárselo a Axo"
+msgstr "クリックして Axo に聞く"
+
+#: packages/axolos-ia/lib/axolos-ia-krunner:101
+msgid "Lo más parecido · "
+msgstr "最も近いもの · "
+
+#: packages/axolos-ia/lib/axolos-ia-krunner:102
+msgid "Archivos (IA local)"
+msgstr "ファイル（ローカル AI）"
+
+#: packages/axolos-ia/lib/axolos-ia-krunner:123
+#, python-brace-format
+msgid "Preguntar a Axo: {t}"
+msgstr "Axo に聞く：{t}"
+
+#: packages/axolos-ia/lib/axolos-ia-krunner:126
+#, python-brace-format
+msgid "Preguntar a Axo: {q}"
+msgstr "Axo に聞く：{q}"
+
+#: packages/axolos-ia/lib/axolos-ia-krunner:131
+msgid "Abrir la carpeta que lo contiene"
+msgstr "保存先のフォルダーを開く"
+
+#: packages/axolos-ia/lib/axolos-indice-vigia:41
+#, python-brace-format
+msgid "Vigilando {0} carpetas"
+msgstr "{0} 個のフォルダーを監視中"
+
+#: packages/axolos-ia/lib/axolos-indice-vigia:89
+#, python-brace-format
+msgid "No se pudo indexar: {e}"
+msgstr "インデックスを作成できませんでした：{e}"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:58
+msgid "Describe esta imagen en español en una o dos frases, para poder encontrarla después con una búsqueda: qué tipo es (foto, captura de pantalla, dibujo, documento escaneado…), qué se ve, el lugar, personas, animales, objetos y cualquier texto visible importante. Sin introducción."
+msgstr "あとで検索で見つけられるように、この画像を日本語で 1〜2 文で説明してください。種類（写真、スクリーンショット、イラスト、スキャンした書類…）、写っているもの、場所、人、動物、物、重要な文字をすべて含めてください。前置きは不要です。"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:267
+msgid "La IA local está apagada: no se puede indexar."
+msgstr "ローカル AI が停止中のため、インデックスを作成できません。"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:270
+#, python-brace-format
+msgid "Falta el modelo de búsqueda: axolos-ia descargar {EMBED}"
+msgstr "検索用モデルがありません：axolos-ia download {EMBED}"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:274
+msgid "Sin modelo de visión: las fotos se buscarán solo por nombre y fecha."
+msgstr "画像認識モデルがないため、写真は名前と日付だけで検索されます。"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:288
+#, python-brace-format
+msgid "{total} archivos nuevos: se indexarán al enchufar el portátil (describir fotos usa la gráfica)"
+msgstr "新しいファイル {total} 個：ノートパソコンを電源につないだときにインデックスを作成します（写真の説明に GPU を使うため）"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:290
+#, python-brace-format
+msgid "{0} archivos en {1}: {total} por indexar"
+msgstr "{1} に {0} 個のファイル：未処理 {total} 個"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:291
+#, python-brace-format
+msgid ", {0} quitados"
+msgstr "、{0} 個を削除"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:340
+msgid "Índice al día."
+msgstr "インデックスは最新です。"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:515
+msgid "sin índice todavía"
+msgstr "インデックスはまだありません"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:520
+msgid "documentos"
+msgstr "文書"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:520
+msgid "imágenes"
+msgstr "画像"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:520
+msgid "textos"
+msgstr "テキスト"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:520
+msgid "vídeos"
+msgstr "動画"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:523
+msgid "%d/%m %H:%M"
+msgstr "%m月%d日 %H:%M"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:523
+msgid "nunca"
+msgstr "なし"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:524
+#, python-brace-format
+msgid "{0} archivos ({1}), actualizado {cuando}"
+msgstr "ファイル {0} 個（{1}）、更新 {cuando}"
+
+#: packages/axolos-ia/lib/axolos_ia.py:37
+msgid "Chat, código e imágenes (equipos modestos)"
+msgstr "チャット・コード・画像（控えめなパソコン向け）"
+
+#: packages/axolos-ia/lib/axolos_ia.py:39
+msgid "Chat, código e imágenes"
+msgstr "チャット・コード・画像"
+
+#: packages/axolos-ia/lib/axolos_ia.py:41
+msgid "Chat, código e imágenes (máxima calidad)"
+msgstr "チャット・コード・画像（最高品質）"
+
+#: packages/axolos-ia/lib/axolos_ia.py:43
+msgid "Programación avanzada (agentes, proyectos grandes)"
+msgstr "高度なプログラミング（エージェント、大規模プロジェクト）"
+
+#: packages/axolos-ia/lib/axolos_ia.py:45
+msgid "Autocompletado de código en el editor"
+msgstr "エディターでのコード補完"
+
+#: packages/axolos-ia/lib/axolos_ia.py:47
+msgid "Autocompletado de código (más preciso)"
+msgstr "コード補完（より高精度）"
+
+#: packages/axolos-ia/lib/axolos_ia.py:50
+msgid "Buscar tus archivos por lo que contienen"
+msgstr "中身でファイルを検索"
+
+#: packages/axolos-ia/lib/axolos_ia.py:193
+msgid "Devuelves solo un título de 3 a 6 palabras, sin comillas ni punto final, en el mismo idioma que el usuario."
+msgstr "ユーザーと同じ言語で、3〜6 語のタイトルだけを返します。引用符や句点は付けません。"
+
+#: packages/axolos-ia/lib/axolos_ia.py:195
+#, python-brace-format
+msgid ""
+"Pregunta: {0}\n"
+"\n"
+"Respuesta: {1}\n"
+"\n"
+"Título de esta conversación:"
+msgstr ""
+"質問：{0}\n"
+"\n"
+"回答：{1}\n"
+"\n"
+"この会話のタイトル："
+
+#: packages/axolos-kde-settings/axolos-navegadores:68
+#, python-brace-format
+msgid "   {d}: está abierto; ciérralo y vuelve a ejecutar esto"
+msgstr "   {d}：起動中です。閉じてからもう一度実行してください"
+
+#: packages/axolos-kde-settings/axolos-navegadores:75
+#, python-brace-format
+msgid "   {d}: botones AxolOS"
+msgstr "   {d}：AxolOS のボタン"

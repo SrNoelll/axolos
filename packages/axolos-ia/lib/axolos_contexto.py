@@ -86,9 +86,16 @@ def _hardware():
             cpu = re.sub(r"\s+", " ", linea.split(":", 1)[1]).strip()
             break
     hilos = os.cpu_count() or 0
-    nucleos = len({ln for ln in _leer("/proc/cpuinfo").splitlines() if ln.startswith("core id")}) or hilos
+    # núcleos físicos = pares (procesador, núcleo) distintos (en los híbridos se repiten los «core id»)
+    pares, fisico = set(), "0"
+    for ln in _leer("/proc/cpuinfo").splitlines():
+        if ln.startswith("physical id"):
+            fisico = ln.split(":", 1)[1].strip()
+        elif ln.startswith("core id"):
+            pares.add((fisico, ln.split(":", 1)[1].strip()))
+    nucleos = len(pares) or hilos
     if cpu:
-        lineas.append(f"Procesador: {cpu} ({hilos} hilos)")
+        lineas.append(f"Procesador: {cpu} ({nucleos} núcleos, {hilos} hilos)")
     try:
         ram = int(_leer("/proc/meminfo").split()[1]) * 1024
         lineas.append(f"Memoria RAM: {_gb(ram)}")

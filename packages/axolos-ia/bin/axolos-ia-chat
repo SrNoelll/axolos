@@ -39,6 +39,18 @@ from PyQt6.QtWidgets import (QApplication, QComboBox, QFileDialog, QFrame,  # no
                              QListWidget, QListWidgetItem, QMenu, QMessageBox,
                              QPlainTextEdit, QPushButton, QScrollArea, QSizePolicy,
                              QToolButton, QToolTip, QVBoxLayout, QWidget)
+sys.path.insert(0, os.environ.get("AXOLOS_LIB", "/usr/lib/axolos"))
+try:
+    from axolos_i18n import _, elegir, idioma  # noqa: E402  textos en el idioma del sistema
+except ImportError:                             # sin axolos-branding: textos originales
+    def _(texto):
+        return texto
+
+    def elegir(textos):
+        return textos.get("es", "") if isinstance(textos, dict) else textos
+
+    def idioma():
+        return "es"
 
 DATOS = Path(os.environ.get("XDG_DATA_HOME", Path.home() / ".local/share")) / "axolos/axo"
 CONVS, PAPELERA = DATOS / "conversaciones", DATOS / "papelera"
@@ -52,9 +64,14 @@ C = dict(bg="#17171d", bg_dark="#0f0f13", side="#121217", surface="#1e1e26", bor
 MONO = "JetBrainsMono Nerd Font"
 TITULAR = "New York Medium"
 
+try:
+    from axolos_i18n import PARA_LA_IA
+    IDIOMA_IA = PARA_LA_IA[idioma()]                # idioma de respaldo de las respuestas
+except ImportError:
+    IDIOMA_IA = "español"
 SISTEMA = ("Eres Axo, el asistente de IA local de AxolOS. Funcionas sin internet, dentro del equipo del "
-           "usuario, y nada de lo que te cuenta sale de él. Responde en el idioma del usuario (en español, de tú), "
-           "claro y al grano; "
+           "usuario, y nada de lo que te cuenta sale de él. Responde en el mismo idioma en que te escriba el "
+           "usuario (si no está claro, en {idioma}){tuteo}, claro y al grano; "
            "usa Markdown y bloques de código con su lenguaje.\n"
            "Debajo tienes los datos REALES de este equipo (leídos ahora) y el manual de AxolOS. Úsalos cuando "
            "pregunte por su equipo, su sistema o cómo hacer algo en AxolOS, dando datos y comandos concretos "
@@ -196,7 +213,7 @@ class Almacen:
             try:
                 d = json.loads(f.read_text(encoding="utf-8"))
                 texto = " ".join(m.get("content", "") for m in d.get("mensajes", []))[:4000]
-                out.append({"id": d["id"], "titulo": d.get("titulo") or "Conversación",
+                out.append({"id": d["id"], "titulo": d.get("titulo") or _("Conversación"),
                             "actualizada": d.get("actualizada", 0), "texto": texto})
             except (OSError, ValueError, KeyError):
                 continue
@@ -223,14 +240,14 @@ def grupo(ts):
     hoy = dt.date.today()
     d = dt.date.fromtimestamp(ts)
     if d == hoy:
-        return "HOY"
+        return _("HOY")
     if d == hoy - dt.timedelta(days=1):
-        return "AYER"
+        return _("AYER")
     if d > hoy - dt.timedelta(days=7):
-        return "ÚLTIMOS 7 DÍAS"
+        return _("ÚLTIMOS 7 DÍAS")
     if d > hoy - dt.timedelta(days=30):
-        return "ÚLTIMOS 30 DÍAS"
-    return "ANTES"
+        return _("ÚLTIMOS 30 DÍAS")
+    return _("ANTES")
 
 
 # --- Hilos ---------------------------------------------------------------------------------
@@ -285,7 +302,7 @@ class Comprobar(QThread):
             for m in ia.modelos():
                 caps = ia.capacidades(m["name"])
                 if ia.es_chat(m["name"], caps) and \
-                        not ia.POR_ID.get(m["name"], {}).get("uso", "").startswith("Autocompletado"):
+                        not ia.POR_ID.get(m["name"], {}).get("uso", "").startswith(_("Autocompletado")):
                     ms.append({**m, "caps": caps})
         self.listo.emit(v, ms)
 
@@ -370,7 +387,7 @@ class MensajeAxo(QWidget):
         fila.addWidget(av, 0, Qt.AlignmentFlag.AlignTop)
         col = QVBoxLayout()
         col.setSpacing(6)
-        self.btn_razon = QToolButton(text="Razonamiento")
+        self.btn_razon = QToolButton(text=_("Razonamiento"))
         self.btn_razon.setCheckable(True)
         self.btn_razon.hide()
         self.lb_razon = QLabel(objectName="pensando")
@@ -381,11 +398,11 @@ class MensajeAxo(QWidget):
         self.cuerpo.linkActivated.connect(self._enlace)
         self.pie = QHBoxLayout()
         self.pie.setSpacing(2)
-        self.copiar = QToolButton(text="Copiar")
+        self.copiar = QToolButton(text=_("Copiar"))
         self.copiar.setIcon(icono("edit-copy"))
         self.copiar.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
         self.copiar.clicked.connect(self._copiar)
-        self.rehacer = QToolButton(text="Regenerar")
+        self.rehacer = QToolButton(text=_("Regenerar"))
         self.rehacer.setIcon(icono("view-refresh"))
         self.rehacer.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
         self.rehacer.clicked.connect(self.regenerar)
@@ -414,7 +431,7 @@ class MensajeAxo(QWidget):
             self._espera.stop()
             return
         n = int((time.time() - self.t0) / 0.4) % 4
-        msg = "Cargando el modelo" if time.time() - self.t0 > 2.5 else "Pensando"
+        msg = _("Cargando el modelo") if time.time() - self.t0 > 2.5 else _("Pensando")
         self.cuerpo.setText(f'<span style="color:{C["muted"]}">{msg}{"." * n}</span>')
 
     def pintar(self):
@@ -422,12 +439,12 @@ class MensajeAxo(QWidget):
             self.btn_razon.show()
             self.lb_razon.setText(self.razon[-6000:])
             if not self.texto:
-                self.btn_razon.setText("Pensando…")
+                self.btn_razon.setText(_("Pensando…"))
                 self.lb_razon.show()
                 self.cuerpo.setText("")
         if self.texto:
             if self.razon:
-                self.btn_razon.setText("Ver razonamiento")
+                self.btn_razon.setText(_("Ver razonamiento"))
                 if not self.btn_razon.isChecked():
                     self.lb_razon.hide()
             h, self.codigos = md_html(self.texto)
@@ -438,7 +455,7 @@ class MensajeAxo(QWidget):
             self._espera.stop()
         self.pintar()
         if not self.texto:
-            self.cuerpo.setText(f'<span style="color:{C["muted"]}">(respuesta detenida)</span>')
+            self.cuerpo.setText(_("<span style=\"color:{0}\">(respuesta detenida)</span>").format(C["muted"]))
         self.copiar.setVisible(bool(self.texto))
         self.rehacer.setVisible(ultimo)
         if stats.get("tok_s") and modelo:
@@ -447,19 +464,19 @@ class MensajeAxo(QWidget):
     def error(self, msg):
         if hasattr(self, "_espera"):
             self._espera.stop()
-        self.cuerpo.setText(f'<span style="color:{C["pink"]}">No he podido responder: {html.escape(msg)}</span>')
+        self.cuerpo.setText(_("<span style=\"color:{0}\">No he podido responder: {1}</span>").format(C["pink"], html.escape(msg)))
         self.rehacer.show()
 
     def _copiar(self):
         QApplication.clipboard().setText(self.texto)
-        QToolTip.showText(QCursor.pos(), "Copiado")
+        QToolTip.showText(QCursor.pos(), _("Copiado"))
 
     def _enlace(self, url):
         if url.startswith("copiar:"):
             i = int(url.split(":", 1)[1])
             if i < len(self.codigos):
                 QApplication.clipboard().setText(self.codigos[i])
-                QToolTip.showText(QCursor.pos(), "Código copiado")
+                QToolTip.showText(QCursor.pos(), _("Código copiado"))
         else:
             QDesktopServices.openUrl(QUrl(url))
 
@@ -498,7 +515,7 @@ class Axo(QWidget):
         self._mostrar_lateral(self.ajustes.value("lateral", True, type=bool))
         self.pensar.setChecked(self.ajustes.value("pensar", False, type=bool))
         self._recargar_lista()
-        self._portada("Conectando con la IA local…")
+        self._portada(_("Conectando con la IA local…"))
         self.comprobar()
 
     # ---- construcción
@@ -518,18 +535,18 @@ class Axo(QWidget):
         cerrar.setIcon(icono("sidebar-collapse-left"))
         if cerrar.icon().isNull():
             cerrar.setText("‹")
-        cerrar.setToolTip("Ocultar el historial (Ctrl+B)")
+        cerrar.setToolTip(_("Ocultar el historial (Ctrl+B)"))
         cerrar.clicked.connect(lambda: self._mostrar_lateral(False))
         cab.addWidget(cerrar)
         v.addLayout(cab)
-        nueva = QPushButton("  Nueva conversación", objectName="nueva")
+        nueva = QPushButton(_("  Nueva conversación"), objectName="nueva")
         nueva.setIcon(icono("list-add"))
         nueva.setToolTip("Ctrl+N")
         nueva.setCursor(Qt.CursorShape.PointingHandCursor)
         nueva.clicked.connect(self.nueva)
         v.addWidget(nueva)
         self.buscar = QLineEdit(objectName="buscar")
-        self.buscar.setPlaceholderText("Buscar en el historial  (Ctrl+K)")
+        self.buscar.setPlaceholderText(_("Buscar en el historial  (Ctrl+K)"))
         self.buscar.setClearButtonEnabled(True)
         self.buscar.textChanged.connect(self._recargar_lista)
         v.addWidget(self.buscar)
@@ -541,7 +558,7 @@ class Axo(QWidget):
         self.lista_convs.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         self.lista_convs.customContextMenuRequested.connect(self._menu_item)
         v.addWidget(self.lista_convs, 1)
-        priv = QLabel("● Todo se queda en tu equipo", objectName="mini")
+        priv = QLabel(_("● Todo se queda en tu equipo"), objectName="mini")
         priv.setStyleSheet(f"color: {C['green']}")
         v.addWidget(priv)
         return self.lateral
@@ -559,17 +576,17 @@ class Axo(QWidget):
         self.abrir_lat.setIcon(icono("sidebar-expand-left"))
         if self.abrir_lat.icon().isNull():
             self.abrir_lat.setText("›")
-        self.abrir_lat.setToolTip("Mostrar el historial (Ctrl+B)")
+        self.abrir_lat.setToolTip(_("Mostrar el historial (Ctrl+B)"))
         self.abrir_lat.clicked.connect(lambda: self._mostrar_lateral(True))
         hb.addWidget(self.abrir_lat)
-        self.titulo = QLabel("Nueva conversación", objectName="titulo")
+        self.titulo = QLabel(_("Nueva conversación"), objectName="titulo")
         self.titulo.setMinimumWidth(80)
         self.titulo.setSizePolicy(QSizePolicy.Policy.Ignored, QSizePolicy.Policy.Preferred)
         self.titulo.mouseDoubleClickEvent = lambda _e: self._renombrar(self.conv["id"]) if self.conv else None
         hb.addWidget(self.titulo, 1)
-        self.pensar = QToolButton(text="Pensar a fondo")
+        self.pensar = QToolButton(text=_("Pensar a fondo"))
         self.pensar.setCheckable(True)
-        self.pensar.setToolTip("Razona antes de responder: respuestas más cuidadas, algo más lento")
+        self.pensar.setToolTip(_("Razona antes de responder: respuestas más cuidadas, algo más lento"))
         self.pensar.toggled.connect(lambda on: self.ajustes.setValue("pensar", on))
         self.pensar.hide()
         hb.addWidget(self.pensar)
@@ -612,11 +629,11 @@ class Axo(QWidget):
         he.setContentsMargins(12, 8, 8, 8)
         self.adjuntar = QToolButton()
         self.adjuntar.setIcon(icono("insert-image"))
-        self.adjuntar.setToolTip("Adjuntar imagen (también puedes arrastrarla)")
+        self.adjuntar.setToolTip(_("Adjuntar imagen (también puedes arrastrarla)"))
         self.adjuntar.clicked.connect(self._elegir_imagen)
         self.adjuntar.hide()
         self.caja = QPlainTextEdit()
-        self.caja.setPlaceholderText("Pregunta lo que quieras…")
+        self.caja.setPlaceholderText(_("Pregunta lo que quieras…"))
         self.caja.setFixedHeight(46)
         self.caja.textChanged.connect(self._ajustar_caja)
         self.caja.installEventFilter(self)
@@ -628,7 +645,7 @@ class Axo(QWidget):
         he.addWidget(self.caja, 1)
         he.addWidget(self.enviar, 0, Qt.AlignmentFlag.AlignBottom)
         abajo.addWidget(self.marco)
-        ayuda = QLabel("Intro envía · Mayús+Intro, nueva línea · Esc detiene · Ctrl+N nueva", objectName="mini")
+        ayuda = QLabel(_("Intro envía · Mayús+Intro, nueva línea · Esc detiene · Ctrl+N nueva"), objectName="mini")
         abajo.addWidget(ayuda, 0, Qt.AlignmentFlag.AlignRight)
         pv.addWidget(columna(cuerpo))
         v.addWidget(pie)
@@ -645,7 +662,7 @@ class Axo(QWidget):
         super().closeEvent(ev)
 
     # ---- historial
-    def _recargar_lista(self, *_):
+    def _recargar_lista(self, *_args):
         filtro = self.buscar.text().strip().lower()
         self.lista_convs.clear()
         actual = self.conv["id"] if self.conv else None
@@ -666,7 +683,7 @@ class Axo(QWidget):
             if c["id"] == actual:
                 it.setSelected(True)
         if not self.lista_convs.count():
-            vacio = QListWidgetItem("Sin resultados" if filtro else "Aún no hay conversaciones")
+            vacio = QListWidgetItem(_("Sin resultados") if filtro else _("Aún no hay conversaciones"))
             vacio.setFlags(Qt.ItemFlag.NoItemFlags)
             self.lista_convs.addItem(vacio)
 
@@ -691,7 +708,7 @@ class Axo(QWidget):
                 w.rehacer.setVisible(i == len(msgs) - 1)
                 w.regenerar.connect(self.regenerar)
                 self._insertar(w)
-        self.titulo.setText(self.conv.get("titulo") or "Conversación")
+        self.titulo.setText(self.conv.get("titulo") or _("Conversación"))
         m = self.conv.get("modelo")
         i = self.combo.findData(m)
         if i >= 0:
@@ -706,15 +723,15 @@ class Axo(QWidget):
         if not cid:
             return
         m = QMenu(self)
-        m.addAction(icono("edit-rename"), "Renombrar", lambda: self._renombrar(cid))
-        m.addAction(icono("document-export"), "Exportar a Markdown…", lambda: self._exportar(cid))
+        m.addAction(icono("edit-rename"), _("Renombrar"), lambda: self._renombrar(cid))
+        m.addAction(icono("document-export"), _("Exportar a Markdown…"), lambda: self._exportar(cid))
         m.addSeparator()
-        m.addAction(icono("edit-delete"), "Eliminar", lambda: self._eliminar(cid))
+        m.addAction(icono("edit-delete"), _("Eliminar"), lambda: self._eliminar(cid))
         m.exec(self.lista_convs.mapToGlobal(pos))
 
     def _renombrar(self, cid):
         conv = self.conv if self.conv and self.conv["id"] == cid else self.almacen.cargar(cid)
-        t, ok = QInputDialog.getText(self, "Renombrar", "Nombre de la conversación:", text=conv.get("titulo", ""))
+        t, ok = QInputDialog.getText(self, _("Renombrar"), _("Nombre de la conversación:"), text=conv.get("titulo", ""))
         if ok and t.strip():
             conv["titulo"], conv["titulo_manual"] = t.strip()[:80], True
             self.almacen.guardar(conv)
@@ -725,20 +742,19 @@ class Axo(QWidget):
     def _exportar(self, cid):
         conv = self.almacen.cargar(cid)
         nombre = re.sub(r"[^\w\- ]", "", conv.get("titulo", "conversacion")).strip() or "conversacion"
-        ruta, _ = QFileDialog.getSaveFileName(self, "Exportar conversación", str(Path.home() / f"{nombre}.md"),
+        ruta, _filtro = QFileDialog.getSaveFileName(self, _("Exportar conversación"), str(Path.home() / f"{nombre}.md"),
                                               "Markdown (*.md)")
         if not ruta:
             return
         partes = [f"# {conv.get('titulo', 'Conversación')}\n"]
         for m in conv["mensajes"]:
-            quien = "Tú" if m["role"] == "user" else "Axo"
+            quien = _("Tú") if m["role"] == "user" else "Axo"
             partes.append(f"**{quien}:**\n\n{m['content']}\n")
         Path(ruta).write_text("\n".join(partes), encoding="utf-8")
 
     def _eliminar(self, cid):
-        r = QMessageBox.question(self, "Eliminar conversación",
-                                 "¿Eliminar esta conversación? Se mueve a la papelera de Axo "
-                                 f"({PAPELERA.relative_to(Path.home())}).")
+        r = QMessageBox.question(self, _("Eliminar conversación"),
+                                 _("¿Eliminar esta conversación? Se mueve a la papelera de Axo ({0}).").format(PAPELERA.relative_to(Path.home())))
         if r != QMessageBox.StandardButton.Yes:
             return
         if self.conv and self.conv["id"] == cid:
@@ -770,10 +786,10 @@ class Axo(QWidget):
         self.combo.blockSignals(False)
         self.combo.setVisible(bool(ms))
         if not version:
-            self._portada("La IA local está apagada.", ("Encender la IA local", self._encender))
+            self._portada(_("La IA local está apagada."), (_("Encender la IA local"), self._encender))
         elif not ms:
-            self._portada("Aún no hay ningún modelo descargado.",
-                          (f"Descargar {ia.nombre_bonito(rec[0])}", lambda: self._descargar([rec[0]])))
+            self._portada(_("Aún no hay ningún modelo descargado."),
+                          (_("Descargar {0}").format(ia.nombre_bonito(rec[0])), lambda: self._descargar([rec[0]])))
         else:
             self._modelo_cambiado()
             if not self.conv:
@@ -784,15 +800,15 @@ class Axo(QWidget):
         self.caja.setFocus()
 
     def _encender(self):
-        self._portada("Encendiendo la IA local…")
+        self._portada(_("Encendiendo la IA local…"))
         os.spawnlp(os.P_WAIT, "pkexec", "pkexec", ia.ROOT_HELPER, "ia-servicio")
         QTimer.singleShot(1500, self.comprobar)
 
     def _descargar(self, models):
-        self._portada("Descargando el modelo… 0 %")
+        self._portada(_("Descargando el modelo… 0 %"))
         self._dl = Descarga(models)
         self._dl.progreso.connect(lambda p, s: self._texto_portada.setText(f"{s}… {p} %"))
-        self._dl.fin.connect(lambda err: self._portada(f"Error: {err}") if err else self.comprobar())
+        self._dl.fin.connect(lambda err: self._portada(_("Error: {err}").format(err=err)) if err else self.comprobar())
         self._dl.start()
 
     def _caps(self):
@@ -827,11 +843,11 @@ class Axo(QWidget):
         logo = QLabel()
         logo.setPixmap(QIcon.fromTheme("axolos-axo", QIcon.fromTheme("axolos")).pixmap(80, 80))
         logo.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        t = QLabel("¿En qué te ayudo?")
+        t = QLabel(_("¿En qué te ayudo?"))
         t.setStyleSheet(f"font-family: '{TITULAR}'; font-size: 26pt")
         t.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self._texto_portada = QLabel(aviso or "Soy Axo, la IA de tu equipo. Funciono sin internet y "
-                                              "nada de lo que me cuentes sale de aquí.", objectName="tenue")
+        self._texto_portada = QLabel(aviso or _("Soy Axo, la IA de tu equipo. Funciono sin internet y "
+                                              "nada de lo que me cuentes sale de aquí."), objectName="tenue")
         self._texto_portada.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self._texto_portada.setWordWrap(True)
         v.addWidget(logo)
@@ -849,14 +865,14 @@ class Axo(QWidget):
             col1, col2 = QVBoxLayout(), QVBoxLayout()
             for c in (col1, col2):
                 c.setSpacing(10)
-            ideas = [("Explícame un error", "Pega el mensaje de la terminal y te digo qué pasa",
-                      "Explícame qué significa este error y cómo lo arreglo:\n\n"),
-                     ("Escribe un script", "En Python, bash o fish, listo para usar",
-                      "Escribe un script de Python que "),
-                     ("Revisa mi código", "Fallos, mejoras y buenas prácticas",
-                      "Revisa este código y dime cómo mejorarlo:\n\n"),
-                     ("Comandos de Linux", "Cómo hacer algo en AxolOS desde la terminal",
-                      "¿Cómo puedo, desde la terminal, ")]
+            ideas = [(_("Explícame un error"), _("Pega el mensaje de la terminal y te digo qué pasa"),
+                      _("Explícame qué significa este error y cómo lo arreglo:\n\n")),
+                     (_("Escribe un script"), _("En Python, bash o fish, listo para usar"),
+                      _("Escribe un script de Python que ")),
+                     (_("Revisa mi código"), _("Fallos, mejoras y buenas prácticas"),
+                      _("Revisa este código y dime cómo mejorarlo:\n\n")),
+                     (_("Comandos de Linux"), _("Cómo hacer algo en AxolOS desde la terminal"),
+                      _("¿Cómo puedo, desde la terminal, "))]
             for i, (tt, sub, txt) in enumerate(ideas):
                 b = QPushButton(objectName="sugerencia")
                 b.setCursor(Qt.CursorShape.PointingHandCursor)
@@ -871,7 +887,7 @@ class Axo(QWidget):
                     lb.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents)
                     bl.addWidget(lb)
                 b.setMinimumSize(300, 66)
-                b.clicked.connect(lambda _=False, s=txt: self._sugerir(s))
+                b.clicked.connect(lambda _marcado=False, s=txt: self._sugerir(s))
                 (col1 if i % 2 == 0 else col2).addWidget(b)
             rej.addLayout(col1)
             rej.addLayout(col2)
@@ -953,7 +969,8 @@ class Axo(QWidget):
         self.actual.regenerar.connect(self.regenerar)
         self._insertar(self.actual)
         self._pegado = True
-        sistema = {"role": "system", "content": SISTEMA.format(contexto=self.contexto or "(sin datos del equipo)")}
+        sistema = {"role": "system", "content": SISTEMA.format(contexto=self.contexto or "(sin datos del equipo)", idioma=IDIOMA_IA,
+                                                         tuteo=" y de tú" if idioma() == "es" else "")}
         msgs = [sistema] + [{k: v for k, v in m.items() if k in ("role", "content", "images")}
                             for m in self.conv["mensajes"]]
         self.hilo = Chat(modelo, msgs, self.pensar.isVisible() and self.pensar.isChecked())
@@ -1028,7 +1045,7 @@ class Axo(QWidget):
 
     def _modo_parar(self, on):
         self.enviar.setText("■" if on else "↑")
-        self.enviar.setToolTip("Detener (Esc)" if on else "Enviar (Intro)")
+        self.enviar.setToolTip(_("Detener (Esc)") if on else _("Enviar (Intro)"))
         self.enviar.setProperty("parar", on)
         self.enviar.style().polish(self.enviar)
 
@@ -1038,15 +1055,15 @@ class Axo(QWidget):
             self.comprobar()
         self._parar()
         self.conv = None
-        self.titulo.setText("Nueva conversación")
+        self.titulo.setText(_("Nueva conversación"))
         self._portada()
         self._recargar_lista()
         self.caja.setFocus()
 
     # ---- imágenes
     def _elegir_imagen(self):
-        rutas, _ = QFileDialog.getOpenFileNames(self, "Adjuntar imagen", str(Path.home()),
-                                                "Imágenes (*.png *.jpg *.jpeg *.webp)")
+        rutas, _filtro = QFileDialog.getOpenFileNames(self, _("Adjuntar imagen"), str(Path.home()),
+                                                _("Imágenes (*.png *.jpg *.jpeg *.webp)"))
         self._adjuntar(rutas)
 
     def _adjuntar(self, rutas):
@@ -1054,7 +1071,7 @@ class Axo(QWidget):
         if self.imagenes:
             self.chip.setText("🖼  " + ", ".join(os.path.basename(r) for r in self.imagenes) + "   ✕")
             self.chip.mousePressEvent = lambda _e: (self.imagenes.clear(), self.chip.hide())
-            self.chip.setToolTip("Quitar")
+            self.chip.setToolTip(_("Quitar"))
             self.chip.show()
 
     def dragEnterEvent(self, ev):
@@ -1091,7 +1108,7 @@ def enviar_a_abierta(datos):
 
 
 def main():
-    ap = argparse.ArgumentParser(description="Axo, la IA local de AxolOS")
+    ap = argparse.ArgumentParser(description=_("Axo, la IA local de AxolOS"))
     ap.add_argument("--pregunta")
     a, rest = ap.parse_known_args()
     app = QApplication([sys.argv[0], *rest])

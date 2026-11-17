@@ -11,6 +11,19 @@ import subprocess
 import urllib.error
 import urllib.request
 from pathlib import Path
+import sys
+sys.path.insert(0, os.environ.get("AXOLOS_LIB", "/usr/lib/axolos"))
+try:
+    from axolos_i18n import _, elegir, idioma  # noqa: E402  textos en el idioma del sistema
+except ImportError:                             # sin axolos-branding: textos originales
+    def _(texto):
+        return texto
+
+    def elegir(textos):
+        return textos.get("es", "") if isinstance(textos, dict) else textos
+
+    def idioma():
+        return "es"
 
 URL = os.environ.get("AXOLOS_IA_URL", "http://127.0.0.1:11434").rstrip("/")
 ROOT_HELPER = "/usr/lib/axolos/axolos-root"
@@ -21,20 +34,20 @@ ROOT_HELPER = "/usr/lib/axolos/axolos-root"
 #   qwen3-coder:30b  38 tokens/s  (MoE: 6,8 GB en gráfica y el resto en RAM)
 #   sin gráfica (CPU) qwen3:8b va a 9,6 tokens/s
 CATALOGO = [
-    dict(id="qwen3.5:4b", nombre="Qwen 3.5 · 4B", uso="Chat, código e imágenes (equipos modestos)",
+    dict(id="qwen3.5:4b", nombre="Qwen 3.5 · 4B", uso=_("Chat, código e imágenes (equipos modestos)"),
          gb=3.3, vram=4.5, ram=8),
-    dict(id="qwen3.5:9b", nombre="Qwen 3.5 · 9B", uso="Chat, código e imágenes",
+    dict(id="qwen3.5:9b", nombre="Qwen 3.5 · 9B", uso=_("Chat, código e imágenes"),
          gb=6.6, vram=7.5, ram=16),
-    dict(id="qwen3.5:27b", nombre="Qwen 3.5 · 27B", uso="Chat, código e imágenes (máxima calidad)",
+    dict(id="qwen3.5:27b", nombre="Qwen 3.5 · 27B", uso=_("Chat, código e imágenes (máxima calidad)"),
          gb=17.5, vram=20, ram=32),
-    dict(id="qwen3-coder:30b", nombre="Qwen3 Coder · 30B", uso="Programación avanzada (agentes, proyectos grandes)",
+    dict(id="qwen3-coder:30b", nombre="Qwen3 Coder · 30B", uso=_("Programación avanzada (agentes, proyectos grandes)"),
          gb=18.6, vram=6, ram=28),
-    dict(id="qwen2.5-coder:1.5b", nombre="Qwen2.5 Coder · 1.5B", uso="Autocompletado de código en el editor",
+    dict(id="qwen2.5-coder:1.5b", nombre="Qwen2.5 Coder · 1.5B", uso=_("Autocompletado de código en el editor"),
          gb=1.0, vram=1.5, ram=8),
-    dict(id="qwen2.5-coder:7b", nombre="Qwen2.5 Coder · 7B", uso="Autocompletado de código (más preciso)",
+    dict(id="qwen2.5-coder:7b", nombre="Qwen2.5 Coder · 7B", uso=_("Autocompletado de código (más preciso)"),
          gb=4.7, vram=6, ram=16),
     # Elegido midiendo búsquedas en español: 12/12 aciertos frente a 7/12 de nomic-embed-text
-    dict(id="embeddinggemma", nombre="EmbeddingGemma", uso="Buscar tus archivos por lo que contienen",
+    dict(id="embeddinggemma", nombre="EmbeddingGemma", uso=_("Buscar tus archivos por lo que contienen"),
          gb=0.6, vram=1, ram=4),
 ]
 POR_ID = {m["id"]: m for m in CATALOGO}
@@ -177,10 +190,9 @@ def chat(model, messages, think=False, stop=None, num_ctx=CTX_CHAT):
 
 def titulo(model, pregunta, respuesta):
     """Título corto (3-6 palabras) para una conversación, en el idioma de la pregunta."""
-    msgs = [{"role": "system", "content": "Devuelves solo un título de 3 a 6 palabras, sin comillas ni "
-                                          "punto final, en el mismo idioma que el usuario."},
-            {"role": "user", "content": f"Pregunta: {pregunta[:1500]}\n\nRespuesta: {respuesta[:1500]}\n\n"
-                                        "Título de esta conversación:"}]
+    msgs = [{"role": "system", "content": _("Devuelves solo un título de 3 a 6 palabras, sin comillas ni "
+                                          "punto final, en el mismo idioma que el usuario.")},
+            {"role": "user", "content": _("Pregunta: {0}\n\nRespuesta: {1}\n\nTítulo de esta conversación:").format(pregunta[:1500], respuesta[:1500])}]
     with _req("/api/chat", {"model": model, "messages": msgs, "stream": False, "think": False,
                             "options": {"num_predict": 24, "temperature": 0.2}}, timeout=120) as r:
         t = json.load(r).get("message", {}).get("content", "")

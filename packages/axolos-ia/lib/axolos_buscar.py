@@ -24,6 +24,19 @@ from pathlib import Path
 import numpy as np
 
 import axolos_ia as ia
+import sys
+sys.path.insert(0, os.environ.get("AXOLOS_LIB", "/usr/lib/axolos"))
+try:
+    from axolos_i18n import _, elegir, idioma  # noqa: E402  textos en el idioma del sistema
+except ImportError:                             # sin axolos-branding: textos originales
+    def _(texto):
+        return texto
+
+    def elegir(textos):
+        return textos.get("es", "") if isinstance(textos, dict) else textos
+
+    def idioma():
+        return "es"
 
 DATOS = Path(os.environ.get("XDG_DATA_HOME", Path.home() / ".local/share")) / "axolos/indice"
 DB = DATOS / "archivos.db"
@@ -42,9 +55,9 @@ SALTAR = {".git", "node_modules", ".venv", "venv", "__pycache__", ".cache", "bui
           ".idea", ".vscode", "site-packages"}
 MAX_MB = {"img": 60, "vid": 4000, "pdf": 200, "office": 100, "txt": 5}
 
-PROMPT_FOTO = ("Describe esta imagen en español en una o dos frases, para poder encontrarla después con una "
+PROMPT_FOTO = (_("Describe esta imagen en español en una o dos frases, para poder encontrarla después con una "
                "búsqueda: qué tipo es (foto, captura de pantalla, dibujo, documento escaneado…), qué se ve, el "
-               "lugar, personas, animales, objetos y cualquier texto visible importante. Sin introducción.")
+               "lugar, personas, animales, objetos y cualquier texto visible importante. Sin introducción."))
 
 
 def tipo_de(p: Path):
@@ -251,14 +264,14 @@ def indexar(aviso=print, parar=lambda: False, max_bateria=None):
 
 def _indexar(aviso, parar, max_bateria):
     if not ia.servidor_ok():
-        aviso("La IA local está apagada: no se puede indexar.")
+        aviso(_("La IA local está apagada: no se puede indexar."))
         return 1
     if EMBED not in {m["name"].removesuffix(":latest") for m in ia.modelos()}:
-        aviso(f"Falta el modelo de búsqueda: axolos-ia descargar {EMBED}")
+        aviso(_("Falta el modelo de búsqueda: axolos-ia descargar {EMBED}").format(EMBED=EMBED))
         return 1
     vision = modelo_vision()
     if not vision:
-        aviso("Sin modelo de visión: las fotos se buscarán solo por nombre y fecha.")
+        aviso(_("Sin modelo de visión: las fotos se buscarán solo por nombre y fecha."))
     db = conectar()
     vistos, pendientes = set(), []
     hechos = {r[0]: (r[1], r[2]) for r in db.execute("SELECT ruta, mtime, tam FROM archivos")}
@@ -272,10 +285,10 @@ def _indexar(aviso, parar, max_bateria):
     db.commit()
     total = len(pendientes)
     if max_bateria is not None and total > max_bateria and en_bateria():
-        aviso(f"{total} archivos nuevos: se indexarán al enchufar el portátil (describir fotos usa la gráfica)")
+        aviso(_("{total} archivos nuevos: se indexarán al enchufar el portátil (describir fotos usa la gráfica)").format(total=total))
         return 0
-    aviso(f"{len(vistos)} archivos en {', '.join(str(c) for c in carpetas())}: {total} por indexar"
-          + (f", {len(borrados)} quitados" if borrados else ""))
+    aviso(_("{0} archivos en {1}: {total} por indexar").format(len(vistos), ', '.join(str(c) for c in carpetas()), total=total)
+          + (_(", {0} quitados").format(len(borrados)) if borrados else ""))
     lote = []
     for i, (p, t, st) in enumerate(pendientes, 1):
         if parar():
@@ -324,57 +337,102 @@ def _indexar(aviso, parar, max_bateria):
         db.commit()
     db.execute("INSERT OR REPLACE INTO meta VALUES ('ultima', ?)", (str(time.time()),))
     db.commit()
-    aviso("Índice al día.")
+    aviso(_("Índice al día."))
     return 0
 
 
 # --- buscar ------------------------------------------------------------------------------------------
-TIPOS_CONSULTA = [   # palabra de la frase → extensiones que se aceptan
-    (r"\b(fotos?|im[aá]genes|imagen|capturas?|pantallazos?|selfies?)\b", IMG),
-    (r"\b(v[ií]deos?|grabaci[oó]n(es)?|pel[ií]culas?)\b", VID),
-    (r"\bpdfs?\b", PDF),
-    (r"\b(presentaci[oó]n(es)?|diapositivas|pptx?|powerpoint)\b", {"pptx", "odp"}),
-    (r"\b(excel|hojas? de c[aá]lculo|xlsx)\b", {"xlsx", "ods", "csv"}),
-    (r"\b(word|docx)\b", {"docx", "odt"}),
-    (r"\b(documentos?|apuntes|notas|textos?)\b", PDF | OFFICE | TXT),
+# Palabras de la frase en los seis idiomas de AxolOS (es, en, fr, ru, zh, ja), todos a la vez: se puede
+# buscar en cualquiera sea cual sea el idioma del sistema. En chino y japonés no hay espacios entre
+# palabras, así que esas se buscan sin \b.
+def _palabras(latinas, cjk=""):
+    partes = [rf"\b(?:{latinas})\b"] if latinas else []
+    if cjk:
+        partes.append(rf"(?:{cjk})")
+    return "|".join(partes)
+
+
+TIPOS_CONSULTA = [   # palabra de la frase → extensiones que se aceptan (el primero de la lista manda)
+    (_palabras(r"fotos?|im[aá]genes|imagen|capturas?|pantallazos?|selfies?|photos?|pictures?|pics?|images?|"
+               r"screenshots?|фото\w*|картинк\w*|изображени\w*|скриншот\w*|снимк\w*|снимок|селфи",
+               r"照片|图片|相片|截图|自拍|图像|写真|画像|スクショ|スクリーンショット|自撮り"), IMG),
+    (_palabras(r"v[ií]deos?|vidéos?|grabaci[oó]n(?:es)?|pel[ií]culas?|recordings?|movies?|clips?|"
+               r"enregistrements?|films?|видео|ролик\w*|записи|запись|фильм\w*",
+               r"视频|录像|电影|動画|ビデオ|映像|録画"), VID),
+    (_palabras(r"pdfs?", r"ＰＤＦ"), PDF),
+    (_palabras(r"presentaci[oó]n(?:es)?|pr[ée]sentations?|presentations?|diapositivas|diapositives?|slides?|"
+               r"slideshows?|pptx?|powerpoint|презентаци\w*|слайд\w*",
+               r"演示文稿|幻灯片|プレゼン|スライド"), {"pptx", "odp"}),
+    (_palabras(r"excel|hojas? de c[aá]lculo|xlsx|spreadsheets?|tableurs?|feuilles? de calcul|таблиц\w*|эксел\w*",
+               r"电子表格|表格|表計算|スプレッドシート|エクセル"), {"xlsx", "ods", "csv"}),
+    (_palabras(r"word|docx", r"ワード"), {"docx", "odt"}),
+    (_palabras(r"documentos?|documents?|docs?|apuntes|notas|notes|textos?|textes?|texts?|papers?|"
+               r"документ\w*|заметк\w*|конспект\w*|текст\w*",
+               r"文档|笔记|文本|文書|ドキュメント|ノート|メモ"), PDF | OFFICE | TXT),
 ]
 # Por debajo: «lo más parecido», no una coincidencia clara (medido con embeddinggemma en archivos reales:
 # las descripciones de fotos son cortas y puntúan más alto que documentos largos)
 UMBRAL_CLARO = {"img": 0.38, "vid": 0.38}
 UMBRAL_DOC = 0.22
-VACIAS = {"una", "uno", "unos", "unas", "los", "las", "del", "mis", "que", "con", "por", "para", "busco",
-          "buscar", "busca", "archivo", "archivos", "fichero", "ficheros", "foto", "fotos", "imagen",
-          "documento", "pdf", "video", "vídeo", "donde", "dónde", "está", "esta", "tengo", "algo"}
-MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre",
-         "octubre", "noviembre", "diciembre"]
+VACIAS = {  # palabras de relleno: no cuentan para el nombre del archivo
+    "una", "uno", "unos", "unas", "los", "las", "del", "mis", "que", "con", "por", "para", "busco", "buscar", "busca",
+    "archivo", "archivos", "fichero", "ficheros", "foto", "fotos", "imagen", "documento", "pdf", "video", "vídeo",
+    "donde", "dónde", "está", "esta", "tengo", "algo",
+    "the", "and", "for", "with", "find", "search", "look", "looking", "file", "files", "photo", "photos", "image",
+    "document", "where", "show", "open", "some", "that", "from",
+    "les", "des", "une", "mon", "mes", "pour", "avec", "cherche", "chercher", "trouve", "fichier", "fichiers",
+    "où", "est", "dans", "sur",
+    "мои", "мой", "моя", "для", "найди", "найти", "ищи", "файл", "файлы", "где", "покажи", "открой",
+}
+MESES = {  # nombre del mes (o su raíz) en cada idioma → número
+    1: r"enero|january|janvier|январ\w*|1月|一月", 2: r"febrero|february|f[ée]vrier|феврал\w*|2月|二月",
+    3: r"marzo|march|mars|март\w*|3月|三月", 4: r"abril|april|avril|апрел\w*|4月|四月",
+    5: r"mayo|may|mai|ма[йяе]|5月|五月", 6: r"junio|june|juin|июн\w*|6月|六月",
+    7: r"julio|july|juillet|июл\w*|7月|七月", 8: r"agosto|august|ao[uû]t|август\w*|8月|八月",
+    9: r"septiembre|setiembre|september|septembre|сентябр\w*|9月|九月",
+    10: r"octubre|october|octobre|октябр\w*|10月|十月", 11: r"noviembre|november|novembre|ноябр\w*|11月|十一月",
+    12: r"diciembre|december|d[ée]cembre|декабр\w*|12月|十二月",
+}
+HOY = _palabras(r"hoy|today|aujourd'hui|сегодня", r"今天|今日")
+AYER = _palabras(r"ayer|yesterday|hier|вчера", r"昨天|昨日")
+SEMANA = _palabras(r"esta semana|this week|cette semaine|на этой неделе", r"本周|这周|今週")
+ESTE_MES = _palabras(r"este mes|this month|ce mois(?:-ci)?|в этом месяце", r"本月|这个月|今月")
+MES_PASADO = _palabras(r"mes pasado|last month|mois dernier|прошл\w* месяц\w*", r"上个月|上月|先月")
+RECIENTE = _palabras(r"[uú]ltim[oa]s?|recientes?|nuev[oa]s?|actual|latest|last|recent|newest|new|"
+                     r"derni[eè]re?s?|r[ée]cents?|nouveaux?|nouvelles?|последн\w*|недавн\w*|нов\w*",
+                     r"最近|最新")
 
 
 def _fechas(q, ahora):
     """(desde, hasta, preferir_reciente) a partir de la frase."""
     hoy = dt.datetime.combine(ahora.date(), dt.time())
-    if re.search(r"\bhoy\b", q):
-        return hoy.timestamp(), None, False
-    if re.search(r"\bayer\b", q):
-        return (hoy - dt.timedelta(days=1)).timestamp(), hoy.timestamp(), False
-    if re.search(r"\besta semana\b", q):
-        return (hoy - dt.timedelta(days=hoy.weekday())).timestamp(), None, False
-    if re.search(r"\b(este mes)\b", q):
-        return hoy.replace(day=1).timestamp(), None, False
-    if re.search(r"\bmes pasado\b", q):
+    if re.search(MES_PASADO, q):                 # antes que «mes»/«month» sueltos
         fin = hoy.replace(day=1)
         return (fin - dt.timedelta(days=1)).replace(day=1).timestamp(), fin.timestamp(), False
-    m = re.search(r"\b(19|20)\d\d\b", q)
+    if re.search(HOY, q):
+        return hoy.timestamp(), None, False
+    if re.search(AYER, q):
+        return (hoy - dt.timedelta(days=1)).timestamp(), hoy.timestamp(), False
+    if re.search(SEMANA, q):
+        return (hoy - dt.timedelta(days=hoy.weekday())).timestamp(), None, False
+    if re.search(ESTE_MES, q):
+        return hoy.replace(day=1).timestamp(), None, False
+    m = re.search(r"(?<!\d)(19|20)\d\d(?!\d)", q)
     if m:
         a = int(m.group(0))
         return dt.datetime(a, 1, 1).timestamp(), dt.datetime(a + 1, 1, 1).timestamp(), False
-    for i, mes in enumerate(MESES, 1):
-        if re.search(rf"\b{mes}\b", q):
+    # los meses de 2 cifras primero (10月 antes que 1月)
+    for i in sorted(MESES, key=lambda k: -k):
+        nombres = MESES[i]
+        latinas = "|".join(n for n in nombres.split("|") if not re.search(r"[　-鿿]", n))
+        cjk = "|".join(n for n in nombres.split("|") if re.search(r"[　-鿿]", n))
+        patron = _palabras(latinas, rf"(?<![0-9十]){cjk}" if cjk else "")
+        if re.search(patron, q):
             a = ahora.year if i <= ahora.month else ahora.year - 1
             ini = dt.datetime(a, i, 1)
             fin = dt.datetime(a + (i == 12), i % 12 + 1, 1)
             return ini.timestamp(), fin.timestamp(), False
-    reciente = bool(re.search(r"\b([uú]ltim[oa]s?|recientes?|nuev[oa]s?|actual)\b", q))
-    return None, None, reciente
+    return None, None, bool(re.search(RECIENTE, q))
 
 
 class Buscador:
@@ -432,7 +490,9 @@ class Buscador:
             return []
         # ¿queda algo que buscar además del tipo y las palabras de relleno? («presentación» → solo tipo)
         resto = re.sub(r"\b(un|una|unos|unas|el|la|los|las|de|del|mi|mis|que|en|con|busco|buscar|"
-                       r"archivo|archivos|fichero|ficheros)\b", " ", q)
+                       r"archivo|archivos|fichero|ficheros|a|an|the|my|of|in|find|search|for|file|files|"
+                       r"le|les|un|une|des|mes|mon|du|cherche|fichiers?|мои|мой|моя|найди|файл\w*)\b"
+                       r"|[我的找搜索查一个张些私の私を探して]", " ", q)
         for patron, _ts in TIPOS_CONSULTA:
             resto = re.sub(patron, " ", resto)
         solo_tipo = not resto.strip()
@@ -452,12 +512,13 @@ class Buscador:
 
 def estado():
     if not DB.exists():
-        return "sin índice todavía"
+        return _("sin índice todavía")
     db = conectar()
     n = dict(db.execute("SELECT tipo, COUNT(*) FROM archivos GROUP BY tipo").fetchall())
     ult = db.execute("SELECT v FROM meta WHERE k='ultima'").fetchone()
     db.close()
-    plural = {"img": "imágenes", "vid": "vídeos", "pdf": "PDF", "office": "documentos", "txt": "textos"}
+    plural = {"img": _("imágenes"), "vid": _("vídeos"), "pdf": "PDF", "office": _("documentos"), "txt": _("textos")}
     partes = [f"{v} {plural.get(k, k)}" for k, v in sorted(n.items(), key=lambda x: -x[1])]
-    cuando = dt.datetime.fromtimestamp(float(ult[0])).strftime("%d/%m %H:%M") if ult else "nunca"
-    return f"{sum(n.values())} archivos ({', '.join(partes)}), actualizado {cuando}"
+    # formato de fecha del idioma: día/mes en español, mes/día en inglés…
+    cuando = dt.datetime.fromtimestamp(float(ult[0])).strftime(_("%d/%m %H:%M")) if ult else _("nunca")
+    return _("{0} archivos ({1}), actualizado {cuando}").format(sum(n.values()), ', '.join(partes), cuando=cuando)

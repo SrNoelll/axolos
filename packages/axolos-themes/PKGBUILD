@@ -2,7 +2,7 @@
 pkgname=axolos-themes
 pkgver=$(<"${startdir}/../../VERSION")
 pkgrel=10
-pkgdesc="Aspecto de AxolOS: tema global, MacTahoe-Dark (oscuro), Kvantum, colores AxolOS Obsidian, fondo, splash y perfil de Konsole"
+pkgdesc="AxolOS look: global theme, MacTahoe-Dark, Kvantum, AxolOS Obsidian colors, wallpaper, splash and Konsole profile"
 arch=('any')
 # MacTahoe (vinceliuice) es GPL-3.0; fondo, logo y animación de arranque, de Noel
 license=('GPL-3.0-or-later' 'custom')

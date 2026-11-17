@@ -18,11 +18,23 @@ PlasmoidItem {
     id: root
 
     Plasmoid.icon: Plasmoid.configuration.icon || "axolos"
-    toolTipMainText: "Aplicaciones"
-    toolTipSubText: "Favoritas, recientes y búsqueda"
+    toolTipMainText: i18n("Applications")
+    toolTipSubText: i18n("Favorites, recent files and search")
     // en el panel: botón; suelto (escritorio o ventana): el menú completo
     preferredRepresentation: Plasmoid.formFactor === PlasmaCore.Types.Planar ? fullRepresentation : compactRepresentation
     hideOnWindowDeactivate: true
+
+    // «Wi-Fi: Conectado a Casa» → «Casa», en cualquier idioma: plasma-nm escribe «dispositivo: estado»
+    // y la plantilla del estado sale de su propio catálogo («Connecté à %1», «%1 に接続済み»…)
+    readonly property var plantillaRed: i18nd("plasmanetworkmanagement-libs", "Connected to %1", "\u0001").split("\u0001")
+    function nombreRed(linea) {
+        const antes = plantillaRed[0], despues = plantillaRed.length > 1 ? plantillaRed[1] : ""
+        const sep = linea.indexOf(": ")
+        const estado = sep >= 0 ? linea.slice(sep + 2) : linea
+        const conectado = (!antes.length || estado.startsWith(antes)) && (!despues.length || estado.endsWith(despues))
+        if (!conectado) return linea                       // conectando, sin internet…: tal cual
+        return estado.slice(antes.length, despues.length ? -despues.length : undefined)
+    }
 
     // ---- modelos de Plasma -----------------------------------------------------
     Kicker.RootModel {
@@ -46,11 +58,11 @@ PlasmoidItem {
                     favoritesModel.portOldFavorites(Plasmoid.configuration.favorites)
                 Plasmoid.configuration.favoritesPortedToKAstats = true
             }
-            // Primera vez: completa las favoritas hasta 8 con las apps que más usas
+            // Primera vez: completa las favoritas con lo que trae todo AxolOS
             if (!Plasmoid.configuration.favoritesSeeded) {
-                const extra = ["applications:org.kde.konsole.desktop", "applications:antigravity.desktop",
-                               "applications:com.anthropic.Claude.desktop", "applications:discord.desktop",
-                               "applications:com.heroicgameslauncher.hgl.desktop"]
+                const extra = ["preferred://filemanager", "preferred://browser",
+                               "applications:org.kde.konsole.desktop", "applications:org.axolos.ia.desktop",
+                               "applications:org.axolos.centro.desktop", "applications:systemsettings.desktop"]
                 for (const id of extra) {
                     if (favoritesModel.count >= 8) break
                     if (!favoritesModel.isFavorite(id)) favoritesModel.addFavorite(id, -1)
@@ -124,7 +136,7 @@ PlasmoidItem {
             systemModel: kSystem
             appCount: root.allApps ? root.allApps.count : 0
             battery: pm.data["Battery"] && pm.data["Battery"]["Has Battery"] ? pm.data["Battery"]["Percent"] : -1
-            networkText: net.activeConnections.split("\n")[0].replace(/^.*?(Conectado a |Connected to )/, "")
+            networkText: root.nombreRed(net.activeConnections.split("\n")[0])
 
             onQueryChanged: kRunner.query = query
             onLaunch: (model, row) => {

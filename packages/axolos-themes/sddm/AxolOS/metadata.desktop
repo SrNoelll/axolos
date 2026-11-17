@@ -1,6 +1,11 @@
 [SddmGreeterTheme]
 Name=AxolOS
-Description=Inicio de sesión de AxolOS: reloj, avatar y tu fondo del ajolote
+Description=AxolOS login screen: clock, avatar and the axolotl wallpaper
+Description[es]=Inicio de sesión de AxolOS: reloj, avatar y tu fondo del ajolote
+Description[fr]=Écran de connexion d'AxolOS : horloge, avatar et fond d'écran de l'axolotl
+Description[ru]=Экран входа AxolOS: часы, аватар и обои с аксолотлем
+Description[zh_CN]=AxolOS 登录界面：时钟、头像和美西螈壁纸
+Description[ja]=AxolOS のログイン画面：時計、アバター、ウーパールーパーの壁紙
 Author=Noel Alarcón
 License=GPL-3.0-or-later
 Type=sddm-theme

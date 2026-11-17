@@ -1,9 +1,24 @@
 [Desktop Entry]
 Type=Application
-Name=Bienvenida a AxolOS
-Comment=Prepara tu equipo para programar y usar IA local
+Name=Welcome to AxolOS
+Name[es]=Bienvenida a AxolOS
+Name[fr]=Bienvenue dans AxolOS
+Name[ru]=Добро пожаловать в AxolOS
+Name[zh_CN]=欢迎使用 AxolOS
+Name[ja]=AxolOS へようこそ
+Comment=Get your computer ready for coding and local AI
+Comment[es]=Prepara tu equipo para programar y usar IA local
+Comment[fr]=Préparez votre ordinateur pour programmer et utiliser l'IA locale
+Comment[ru]=Подготовьте компьютер к программированию и локальному ИИ
+Comment[zh_CN]=为编程和本地 AI 准备好你的电脑
+Comment[ja]=プログラミングとローカル AI のためにパソコンを準備します
+Keywords=welcome;setup;profiles;development;ai;git;github;
+Keywords[es]=bienvenida;configurar;perfiles;desarrollo;ia;git;github;
+Keywords[fr]=bienvenue;configurer;profils;développement;ia;git;github;
+Keywords[ru]=приветствие;настройка;профили;разработка;ии;git;github;
+Keywords[zh_CN]=欢迎;设置;配置;开发;AI;git;github;
+Keywords[ja]=ようこそ;設定;プロファイル;開発;AI;git;github;
 Exec=axolos-bienvenida
 Icon=axolos-bienvenida
 Terminal=false
 Categories=Settings;
-Keywords=bienvenida;welcome;configurar;perfiles;desarrollo;ia;git;github;

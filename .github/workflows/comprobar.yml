@@ -1,0 +1,56 @@
+# AxolOS · comprobaciones de cada cambio: que todo compile, que los scripts sean válidos,
+# que los lanzadores cumplan el estándar y que las traducciones (6 idiomas) estén completas.
+name: Comprobar
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  comprobar:
+    name: Código, scripts y traducciones
+    runs-on: ubuntu-latest
+    container: archlinux:base-devel
+    steps:
+      - name: Herramientas
+        run: pacman -Syu --noconfirm --needed git python gettext desktop-file-utils
+
+      - uses: actions/checkout@v4
+
+      - name: Programas en Python
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          for f in $(git ls-files); do
+            [ -f "$f" ] || continue
+            case "$f" in *.py) ;; *) head -1 "$f" | grep -q '^#!.*python' || continue ;; esac
+            python -m py_compile "$f" && echo "ok  $f"
+          done
+
+      - name: Scripts de shell y PKGBUILD
+        run: |
+          for f in $(git ls-files); do
+            [ -f "$f" ] || continue
+            case "$f" in
+              */PKGBUILD|*.install|*.sh) ;;
+              *) head -1 "$f" | grep -qE '^#!.*(bash|/sh)' || continue ;;
+            esac
+            bash -n "$f" && echo "ok  $f"
+          done
+
+      - name: Lanzadores (.desktop)
+        run: |
+          for f in $(git ls-files '*.desktop' | grep -v -E 'metadata\.desktop$|\.krunner\.desktop$'); do
+            desktop-file-validate "$f" && echo "ok  $f"
+          done
+
+      - name: Metadatos JSON
+        run: |
+          for f in $(git ls-files '*.json'); do python -m json.tool "$f" > /dev/null && echo "ok  $f"; done
+
+      - name: Traducciones
+        run: tools/i18n.sh --comprobar

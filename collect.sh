@@ -26,7 +26,6 @@ CUBE_IMG="${AXOLOS_CUBE:-$(pick "$HOME/Descargas/fondocubo.jpg" $SYS/axolos/cube
 LOGO_PNG="${AXOLOS_LOGO_PNG:-$(pick /usr/local/share/pixmaps/cachy-custom-logo.png /usr/share/pixmaps/axolos-logo.png)}"
 LOGO_SVG="${AXOLOS_LOGO_SVG:-$(pick "$HOME/Descargas/logoajofinal.svg" $SYS/icons/hicolor/scalable/apps/axolos.svg)}"
 FASTFETCH_CFG="${AXOLOS_FASTFETCH:-$(pick "$C/fastfetch/axolos.jsonc" $SYS/fastfetch/presets/axolos.jsonc)}"
-WAL_KONSOLE="${AXOLOS_WAL_KONSOLE:-$(pick "$HOME/.cache/wal/colors-konsole.colorscheme" $SYS/konsole/AxolOS.colorscheme)}"
 LNF_SRC="$(pick "$L/plasma/look-and-feel/com.noel.axolos" $SYS/plasma/look-and-feel/com.noel.axolos)"
 
 # --- Destinos dentro del repo -------------------------------------------------

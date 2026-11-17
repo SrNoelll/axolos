@@ -2,7 +2,7 @@
 pkgname=axolos-dev
 pkgver=$(<"${startdir}/../../VERSION")
 pkgrel=1
-pkgdesc="AxolOS para desarrolladores: herramientas de terminal, git con delta, temas de editor y perfiles de lenguajes"
+pkgdesc="AxolOS for developers: terminal tools, git with delta, editor themes and language profiles"
 arch=('any')
 license=('GPL-3.0-or-later')
 depends=(

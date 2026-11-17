@@ -1,16 +1,23 @@
 #!/usr/bin/env python3
-"""axolos-dev · herramientas de desarrollo de AxolOS
-
-  axolos-dev                      perfiles disponibles y si ya están instalados
-  axolos-dev instalar PERFIL...   instala perfiles (web, python, rust…); pide la contraseña una vez
-  axolos-dev editores             tema AxolOS en VS Code / VSCodium / Antigravity
-"""
+"""axolos-dev · herramientas de desarrollo de AxolOS (ayuda traducida: axolos-dev --help)."""
 import json
 import os
 import shutil
 import subprocess
 import sys
 from pathlib import Path
+sys.path.insert(0, os.environ.get("AXOLOS_LIB", "/usr/lib/axolos"))
+try:
+    from axolos_i18n import _, elegir, idioma  # noqa: E402  textos en el idioma del sistema
+except ImportError:                             # sin axolos-branding: textos originales
+    def _(texto):
+        return texto
+
+    def elegir(textos):
+        return textos.get("es", "") if isinstance(textos, dict) else textos
+
+    def idioma():
+        return "es"
 
 PERFILES = Path("/usr/share/axolos/perfiles.json")
 VSIX = Path("/usr/share/axolos/vscode/axolos-theme.vsix")
@@ -41,29 +48,30 @@ def faltan(pkgs):
 
 
 def listar():
-    print(f"{MORADO}Perfiles de desarrollo de AxolOS{FIN}\n")
+    print(_("{MORADO}Perfiles de desarrollo de AxolOS{FIN}\n").format(MORADO=MORADO, FIN=FIN))
     for k, p in perfiles().items():
         f = faltan(paquetes(p))
-        estado = f"{VERDE}instalado{FIN}" if not f else f"{GRIS}faltan {len(f)}{FIN}"
-        print(f"  {MORADO}{k:<13}{FIN}{p['nombre']:<28}{estado}")
-        print(f"  {'':13}{GRIS}{p['descripcion']}{FIN}")
-    print(f"\nInstala con:  axolos-dev instalar web python …")
+        estado = _("{VERDE}instalado{FIN}").format(VERDE=VERDE, FIN=FIN) if not f else _("{GRIS}faltan {0}{FIN}").format(len(f), GRIS=GRIS, FIN=FIN)
+        print(f"  {MORADO}{id_visible(k):<13}{FIN}{elegir(p['nombre']):<28}{estado}")
+        print(f"  {'':13}{GRIS}{elegir(p['descripcion'])}{FIN}")
+    print(_("\nInstala con:  axolos-dev instalar web python …"))
 
 
 def instalar(ids):
     todos = perfiles()
+    ids = [PERFIL_ES.get(i, i) for i in ids]
     malos = [i for i in ids if i not in todos]
     if malos or not ids:
-        sys.exit(f"Perfil desconocido: {' '.join(malos) or '(ninguno)'} · disponibles: {' '.join(todos)}")
+        sys.exit(_("Perfil desconocido: {0} · disponibles: {1}").format(' '.join(malos) or '-', ' '.join(map(id_visible, todos))))
     r = subprocess.run(["pkexec", ROOT_HELPER, "perfiles", *ids])
     if r.returncode:
-        sys.exit("No se instalaron los perfiles (¿cancelaste la contraseña?).")
+        sys.exit(_("No se instalaron los perfiles (¿cancelaste la contraseña?)."))
     for i in ids:
         for cmd in todos[i].get("usuario", []):
             print(f"{MORADO}==>{FIN} {' '.join(cmd)}")
             subprocess.run(cmd)
     if any("docker" in todos[i].get("sistema", []) for i in ids):
-        print(f"{GRIS}Docker: cierra sesión y vuelve a entrar para usarlo sin sudo.{FIN}")
+        print(_("{GRIS}Docker: cierra sesión y vuelve a entrar para usarlo sin sudo.{FIN}").format(GRIS=GRIS, FIN=FIN))
 
 
 def ajustes_vscode(carpeta):
@@ -78,10 +86,10 @@ def editores():
         r = subprocess.run([cmd, "--install-extension", str(VSIX), "--force"],
                            capture_output=True, text=True)
         if r.returncode:
-            print(f"  {cmd}: no se pudo instalar el tema ({r.stderr.strip()[:120]})")
+            print(_("  {cmd}: no se pudo instalar el tema ({0})").format(r.stderr.strip()[:120], cmd=cmd))
             continue
         f = ajustes_vscode(carpeta)
-        estado = "tema instalado"
+        estado = _("tema instalado")
         try:
             data = json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
         except ValueError:
@@ -92,17 +100,39 @@ def editores():
             tmp = f.with_suffix(".axolos-tmp")
             tmp.write_text(json.dumps(data, indent=4, ensure_ascii=False) + "\n", encoding="utf-8")
             os.replace(tmp, f)
-            estado = "tema instalado y activado"
+            estado = _("tema instalado y activado")
         elif data is None or data.get("workbench.colorTheme") != "AxolOS":
-            estado += " (actívalo en Preferencias → Tema de color → AxolOS)"
+            estado += _(" (actívalo en Preferencias → Tema de color → AxolOS)")
         print(f"  {VERDE}✓{FIN} {cmd}: {estado}")
         hechos += 1
     if not hechos:
-        print("No hay ningún editor basado en VS Code instalado.")
+        print(_("No hay ningún editor basado en VS Code instalado."))
+
+
+# Las órdenes y los perfiles se escriben en español o en inglés
+ALIAS = {"install": "instalar", "editors": "editores", "profiles": "perfiles", "list": "lista", "help": "ayuda"}
+PERFIL_EN = {"datos": "data", "contenedores": "containers", "bd": "db"}
+PERFIL_ES = {v: k for k, v in PERFIL_EN.items()}
+
+
+def id_visible(k):
+    """Identificador del perfil como se escribe en el idioma del sistema (todos valen)."""
+    return k if idioma() == "es" else PERFIL_EN.get(k, k)
+
+
+def ayuda():
+    return _("""axolos-dev · herramientas de desarrollo de AxolOS
+
+  axolos-dev                      perfiles disponibles y si ya están instalados
+  axolos-dev instalar PERFIL...   instala perfiles (web, python, rust…); pide la contraseña una vez
+  axolos-dev editores             tema AxolOS en VS Code / VSCodium / Antigravity
+""")
 
 
 def main():
     a = sys.argv[1:]
+    if a:
+        a[0] = ALIAS.get(a[0], a[0])
     if not a or a[0] in ("perfiles", "lista"):
         listar()
     elif a[0] == "instalar":
@@ -110,7 +140,7 @@ def main():
     elif a[0] == "editores":
         editores()
     else:
-        print(__doc__)
+        print(ayuda())
         sys.exit(0 if a[0] in ("-h", "--help", "ayuda") else 1)
 
 

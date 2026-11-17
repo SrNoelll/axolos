@@ -1,6 +1,16 @@
 [Desktop Entry]
-Name=Axo · IA local
-Comment=Pregunta a la IA local: escribe «ia» y tu pregunta
+Name=Axo · local AI
+Name[es]=Axo · IA local
+Name[fr]=Axo · IA locale
+Name[ru]=Axo · локальный ИИ
+Name[zh_CN]=Axo · 本地 AI
+Name[ja]=Axo · ローカル AI
+Comment=Ask the local AI: type «ai» and your question
+Comment[es]=Pregunta a la IA local: escribe «ia» y tu pregunta
+Comment[fr]=Interrogez l'IA locale : tapez « ai » et votre question
+Comment[ru]=Спросите локальный ИИ: введите «ии» и вопрос
+Comment[zh_CN]=向本地 AI 提问：输入“ai”和你的问题
+Comment[ja]=ローカル AI に質問：「ai」と質問を入力
 Type=Service
 Icon=axolos-axo
 X-KDE-ServiceTypes=Plasma/Runner

@@ -1,24 +1,28 @@
 #!/usr/bin/env bash
-# Instala las aplicaciones que Noel tenía en su sistema original (lista guardada
-# en /usr/share/axolos/pkglists). Solo instala lo que falte.
+# AxolOS · instala la selección de aplicaciones de AxolOS (listas en /usr/share/axolos/pkglists).
+# Solo instala lo que falte; lo que no esté en los repositorios se omite.
 set -euo pipefail
 D=/usr/share/axolos/pkglists
-[[ $EUID -eq 0 ]] && { echo "Ejecuta axolos-apps como usuario normal (pedirá sudo)."; exit 1; }
+t() { /usr/lib/axolos/axolos-texto "$@" 2>/dev/null || printf '%s\n' "$1"; }   # texto en el idioma del sistema
+if [[ $EUID -eq 0 ]]; then
+  t "Ejecuta axolos-apps como usuario normal (pedirá sudo)." >&2
+  exit 1
+fi
 
-echo ":: Paquetes de los repositorios"
+echo ":: $(t "Paquetes de los repositorios")"
 mapfile -t avail < <(pacman -Slq | sort -u)
 mapfile -t want  < <(sort -u "$D/native.txt")
 mapfile -t todo  < <(comm -12 <(printf '%s\n' "${want[@]}") <(printf '%s\n' "${avail[@]}"))
 missing=$(comm -23 <(printf '%s\n' "${want[@]}") <(printf '%s\n' "${avail[@]}") | tr '\n' ' ')
-[[ -n $missing ]] && echo "   (no están en los repos, se omiten: $missing)"
+[[ -n $missing ]] && echo "   $(t "(no están en los repos, se omiten: {0})" "$missing")"
 sudo pacman -S --needed "${todo[@]}"
 
 if [[ -s $D/aur.txt ]]; then
   helper=$(command -v paru || command -v yay || true)
   if [[ -n $helper ]]; then
-    echo ":: Paquetes del AUR con $(basename "$helper")"
+    echo ":: $(t "Paquetes del AUR con {0}" "$(basename "$helper")")"
     grep -vxE 'axolos-.*' "$D/aur.txt" | "$helper" -S --needed -
   else
-    echo ":: No hay paru/yay. Paquetes AUR pendientes:"; sed 's/^/   /' "$D/aur.txt"
+    echo ":: $(t "No hay paru ni yay. Paquetes del AUR pendientes:")"; sed 's/^/   /' "$D/aur.txt"
   fi
 fi

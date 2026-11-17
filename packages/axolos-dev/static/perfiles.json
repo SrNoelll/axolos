@@ -1,66 +1,273 @@
 {
   "web": {
-    "nombre": "Web y JavaScript",
-    "descripcion": "Node, npm, pnpm, Bun, Deno y TypeScript",
+    "nombre": {
+      "es": "Web y JavaScript",
+      "en": "Web & JavaScript",
+      "fr": "Web et JavaScript",
+      "ru": "Веб и JavaScript",
+      "zh": "Web 与 JavaScript",
+      "ja": "Web と JavaScript"
+    },
+    "descripcion": {
+      "es": "Node, npm, pnpm, Bun, Deno y TypeScript",
+      "en": "Node, npm, pnpm, Bun, Deno and TypeScript",
+      "fr": "Node, npm, pnpm, Bun, Deno et TypeScript",
+      "ru": "Node, npm, pnpm, Bun, Deno и TypeScript",
+      "zh": "Node、npm、pnpm、Bun、Deno 和 TypeScript",
+      "ja": "Node、npm、pnpm、Bun、Deno、TypeScript"
+    },
     "icono": "text-html",
-    "paquetes": ["nodejs", "npm", "pnpm", "bun", "deno", "typescript"]
+    "paquetes": [
+      "nodejs",
+      "npm",
+      "pnpm",
+      "bun",
+      "deno",
+      "typescript"
+    ]
   },
   "python": {
-    "nombre": "Python",
-    "descripcion": "Python con uv (entornos y versiones por proyecto) y pip",
+    "nombre": {
+      "es": "Python",
+      "en": "Python",
+      "fr": "Python",
+      "ru": "Python",
+      "zh": "Python",
+      "ja": "Python"
+    },
+    "descripcion": {
+      "es": "Python con uv (entornos y versiones por proyecto) y pip",
+      "en": "Python with uv (per-project environments and versions) and pip",
+      "fr": "Python avec uv (environnements et versions par projet) et pip",
+      "ru": "Python с uv (окружения и версии для каждого проекта) и pip",
+      "zh": "Python、uv（按项目管理环境与版本）和 pip",
+      "ja": "Python、uv（プロジェクトごとの環境とバージョン）、pip"
+    },
     "icono": "text-x-python",
-    "paquetes": ["python", "python-pip", "uv"]
+    "paquetes": [
+      "python",
+      "python-pip",
+      "uv"
+    ]
   },
   "datos": {
-    "nombre": "Datos y machine learning",
-    "descripcion": "JupyterLab, NumPy, pandas, scikit-learn y PyTorch (con CUDA si hay NVIDIA)",
+    "nombre": {
+      "es": "Datos y machine learning",
+      "en": "Data & machine learning",
+      "fr": "Données et machine learning",
+      "ru": "Данные и машинное обучение",
+      "zh": "数据与机器学习",
+      "ja": "データと機械学習"
+    },
+    "descripcion": {
+      "es": "JupyterLab, NumPy, pandas, scikit-learn y PyTorch (con CUDA si hay NVIDIA)",
+      "en": "JupyterLab, NumPy, pandas, scikit-learn and PyTorch (with CUDA on NVIDIA)",
+      "fr": "JupyterLab, NumPy, pandas, scikit-learn et PyTorch (avec CUDA sur NVIDIA)",
+      "ru": "JupyterLab, NumPy, pandas, scikit-learn и PyTorch (с CUDA на NVIDIA)",
+      "zh": "JupyterLab、NumPy、pandas、scikit-learn 和 PyTorch（NVIDIA 显卡上支持 CUDA）",
+      "ja": "JupyterLab、NumPy、pandas、scikit-learn、PyTorch（NVIDIA では CUDA 対応）"
+    },
     "icono": "office-chart-line",
-    "paquetes": ["jupyterlab", "python-numpy", "python-pandas", "python-matplotlib", "python-scikit-learn"],
-    "paquetes_nvidia": ["python-pytorch-cuda"],
-    "paquetes_otros": ["python-pytorch"]
+    "paquetes": [
+      "jupyterlab",
+      "python-numpy",
+      "python-pandas",
+      "python-matplotlib",
+      "python-scikit-learn"
+    ],
+    "paquetes_nvidia": [
+      "python-pytorch-cuda"
+    ],
+    "paquetes_otros": [
+      "python-pytorch"
+    ]
   },
   "rust": {
-    "nombre": "Rust",
-    "descripcion": "rustup con la versión estable, cargo y rust-analyzer",
+    "nombre": {
+      "es": "Rust",
+      "en": "Rust",
+      "fr": "Rust",
+      "ru": "Rust",
+      "zh": "Rust",
+      "ja": "Rust"
+    },
+    "descripcion": {
+      "es": "rustup con la versión estable, cargo y rust-analyzer",
+      "en": "rustup with the stable toolchain, cargo and rust-analyzer",
+      "fr": "rustup avec la version stable, cargo et rust-analyzer",
+      "ru": "rustup со стабильной версией, cargo и rust-analyzer",
+      "zh": "rustup（稳定版）、cargo 和 rust-analyzer",
+      "ja": "rustup（安定版）、cargo、rust-analyzer"
+    },
     "icono": "application-x-executable",
-    "paquetes": ["rustup"],
-    "usuario": [["rustup", "default", "stable"], ["rustup", "component", "add", "rust-analyzer"]]
+    "paquetes": [
+      "rustup"
+    ],
+    "usuario": [
+      [
+        "rustup",
+        "default",
+        "stable"
+      ],
+      [
+        "rustup",
+        "component",
+        "add",
+        "rust-analyzer"
+      ]
+    ]
   },
   "go": {
-    "nombre": "Go",
-    "descripcion": "Go, gopls y el depurador delve",
+    "nombre": {
+      "es": "Go",
+      "en": "Go",
+      "fr": "Go",
+      "ru": "Go",
+      "zh": "Go",
+      "ja": "Go"
+    },
+    "descripcion": {
+      "es": "Go, gopls y el depurador delve",
+      "en": "Go, gopls and the delve debugger",
+      "fr": "Go, gopls et le débogueur delve",
+      "ru": "Go, gopls и отладчик delve",
+      "zh": "Go、gopls 和调试器 delve",
+      "ja": "Go、gopls、デバッガー delve"
+    },
     "icono": "application-x-executable",
-    "paquetes": ["go", "gopls", "delve"]
+    "paquetes": [
+      "go",
+      "gopls",
+      "delve"
+    ]
   },
   "c": {
-    "nombre": "C y C++",
-    "descripcion": "GCC, Clang, CMake, Meson, Ninja, GDB y LLDB",
+    "nombre": {
+      "es": "C y C++",
+      "en": "C & C++",
+      "fr": "C et C++",
+      "ru": "C и C++",
+      "zh": "C 与 C++",
+      "ja": "C と C++"
+    },
+    "descripcion": {
+      "es": "GCC, Clang, CMake, Meson, Ninja, GDB y LLDB",
+      "en": "GCC, Clang, CMake, Meson, Ninja, GDB and LLDB",
+      "fr": "GCC, Clang, CMake, Meson, Ninja, GDB et LLDB",
+      "ru": "GCC, Clang, CMake, Meson, Ninja, GDB и LLDB",
+      "zh": "GCC、Clang、CMake、Meson、Ninja、GDB 和 LLDB",
+      "ja": "GCC、Clang、CMake、Meson、Ninja、GDB、LLDB"
+    },
     "icono": "text-x-c++src",
-    "paquetes": ["base-devel", "clang", "cmake", "meson", "ninja", "gdb", "lldb"]
+    "paquetes": [
+      "base-devel",
+      "clang",
+      "cmake",
+      "meson",
+      "ninja",
+      "gdb",
+      "lldb"
+    ]
   },
   "java": {
-    "nombre": "Java y Kotlin",
-    "descripcion": "OpenJDK, Maven y Gradle",
+    "nombre": {
+      "es": "Java y Kotlin",
+      "en": "Java & Kotlin",
+      "fr": "Java et Kotlin",
+      "ru": "Java и Kotlin",
+      "zh": "Java 与 Kotlin",
+      "ja": "Java と Kotlin"
+    },
+    "descripcion": {
+      "es": "OpenJDK, Maven y Gradle",
+      "en": "OpenJDK, Maven and Gradle",
+      "fr": "OpenJDK, Maven et Gradle",
+      "ru": "OpenJDK, Maven и Gradle",
+      "zh": "OpenJDK、Maven 和 Gradle",
+      "ja": "OpenJDK、Maven、Gradle"
+    },
     "icono": "application-x-java",
-    "paquetes": ["jdk-openjdk", "maven", "gradle"]
+    "paquetes": [
+      "jdk-openjdk",
+      "maven",
+      "gradle"
+    ]
   },
   "contenedores": {
-    "nombre": "Contenedores y Kubernetes",
-    "descripcion": "Docker, Compose, lazydocker, kubectl, k9s y Helm",
+    "nombre": {
+      "es": "Contenedores y Kubernetes",
+      "en": "Containers & Kubernetes",
+      "fr": "Conteneurs et Kubernetes",
+      "ru": "Контейнеры и Kubernetes",
+      "zh": "容器与 Kubernetes",
+      "ja": "コンテナと Kubernetes"
+    },
+    "descripcion": {
+      "es": "Docker, Compose, lazydocker, kubectl, k9s y Helm",
+      "en": "Docker, Compose, lazydocker, kubectl, k9s and Helm",
+      "fr": "Docker, Compose, lazydocker, kubectl, k9s et Helm",
+      "ru": "Docker, Compose, lazydocker, kubectl, k9s и Helm",
+      "zh": "Docker、Compose、lazydocker、kubectl、k9s 和 Helm",
+      "ja": "Docker、Compose、lazydocker、kubectl、k9s、Helm"
+    },
     "icono": "virtualbox",
-    "paquetes": ["docker", "docker-compose", "docker-buildx", "lazydocker", "kubectl", "k9s", "helm"],
-    "sistema": ["docker"]
+    "paquetes": [
+      "docker",
+      "docker-compose",
+      "docker-buildx",
+      "lazydocker",
+      "kubectl",
+      "k9s",
+      "helm"
+    ],
+    "sistema": [
+      "docker"
+    ]
   },
   "android": {
-    "nombre": "Android",
-    "descripcion": "adb, fastboot y permisos USB para móviles",
+    "nombre": {
+      "es": "Android",
+      "en": "Android",
+      "fr": "Android",
+      "ru": "Android",
+      "zh": "Android",
+      "ja": "Android"
+    },
+    "descripcion": {
+      "es": "adb, fastboot y permisos USB para móviles",
+      "en": "adb, fastboot and USB permissions for phones",
+      "fr": "adb, fastboot et accès USB aux téléphones",
+      "ru": "adb, fastboot и доступ к телефонам по USB",
+      "zh": "adb、fastboot 及手机 USB 权限",
+      "ja": "adb、fastboot、スマートフォンの USB 権限"
+    },
     "icono": "smartphone",
-    "paquetes": ["android-tools", "android-udev"]
+    "paquetes": [
+      "android-tools",
+      "android-udev"
+    ]
   },
   "bd": {
-    "nombre": "Bases de datos",
-    "descripcion": "DBeaver (cualquier base de datos) y DB Browser para SQLite",
+    "nombre": {
+      "es": "Bases de datos",
+      "en": "Databases",
+      "fr": "Bases de données",
+      "ru": "Базы данных",
+      "zh": "数据库",
+      "ja": "データベース"
+    },
+    "descripcion": {
+      "es": "DBeaver (cualquier base de datos) y DB Browser para SQLite",
+      "en": "DBeaver (any database) and DB Browser for SQLite",
+      "fr": "DBeaver (toute base de données) et DB Browser pour SQLite",
+      "ru": "DBeaver (любая база данных) и DB Browser для SQLite",
+      "zh": "DBeaver（任意数据库）和 DB Browser for SQLite",
+      "ja": "DBeaver（あらゆるデータベース）、DB Browser for SQLite"
+    },
     "icono": "server-database",
-    "paquetes": ["dbeaver", "sqlitebrowser"]
+    "paquetes": [
+      "dbeaver",
+      "sqlitebrowser"
+    ]
   }
 }

@@ -45,8 +45,6 @@ cachyos-zsh-config
 cantarell-fonts
 chromium
 chwd
-claude-code
-claude-desktop
 cpupower
 cryptsetup
 cuda

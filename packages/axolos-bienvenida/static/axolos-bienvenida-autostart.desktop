@@ -1,6 +1,11 @@
 [Desktop Entry]
 Type=Application
-Name=Bienvenida a AxolOS
+Name=Welcome to AxolOS
+Name[es]=Bienvenida a AxolOS
+Name[fr]=Bienvenue dans AxolOS
+Name[ru]=Добро пожаловать в AxolOS
+Name[zh_CN]=欢迎使用 AxolOS
+Name[ja]=AxolOS へようこそ
 Exec=axolos-bienvenida --auto
 Icon=axolos-bienvenida
 Terminal=false

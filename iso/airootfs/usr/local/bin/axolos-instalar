@@ -14,6 +14,18 @@ from PyQt6.QtCore import QProcess, QSize, Qt, QTimer
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import (QApplication, QFrame, QHBoxLayout, QLabel, QPlainTextEdit,
                              QProgressBar, QPushButton, QSizePolicy, QVBoxLayout)
+sys.path.insert(0, os.environ.get("AXOLOS_LIB", "/usr/lib/axolos"))
+try:
+    from axolos_i18n import _, elegir, idioma  # noqa: E402  textos en el idioma del sistema
+except ImportError:                             # sin axolos-branding: textos originales
+    def _(texto):
+        return texto
+
+    def elegir(textos):
+        return textos.get("es", "") if isinstance(textos, dict) else textos
+
+    def idioma():
+        return "es"
 
 INSTALADOR = os.environ.get("AXOLOS_INSTALADOR", "/usr/local/bin/calamares-online.sh")
 SIN_RED = os.environ.get("AXOLOS_INSTALADOR_SIN_RED", "/usr/local/bin/axolos-instalar-sin-red")
@@ -63,16 +75,16 @@ QScrollBar::add-line, QScrollBar::sub-line, QScrollBar::add-page, QScrollBar::su
 # Lo que imprime calamares-online.sh → qué le contamos a la persona
 FASES = [
     (re.compile(r"archlinux-keyring|cachyos-keyring|pacman-key|gpg:", re.I),
-     "Renovando las claves de los repositorios"),
-    (re.compile(r"cachyos-calamares", re.I), "Descargando el instalador más reciente"),
-    (re.compile(r"inxi|calamares -D|pkexec", re.I), "Abriendo el instalador"),
+     _("Renovando las claves de los repositorios")),
+    (re.compile(r"cachyos-calamares", re.I), _("Descargando el instalador más reciente")),
+    (re.compile(r"inxi|calamares -D|pkexec", re.I), _("Abriendo el instalador")),
 ]
 
 
 class Lanzador(QFrame):
     def __init__(self):
         super().__init__(objectName="raiz")
-        self.setWindowTitle("Instalar AxolOS")
+        self.setWindowTitle(_("Instalar AxolOS"))
         self.setWindowIcon(QIcon.fromTheme("axolos-instalar", QIcon.fromTheme("axolos")))
         self.setMinimumSize(780, 500)
         self.proc = None
@@ -90,16 +102,16 @@ class Lanzador(QFrame):
 
         v = QVBoxLayout()
         v.setSpacing(14)
-        v.addWidget(QLabel("Te damos la bienvenida a AxolOS", objectName="titulo", wordWrap=True))
+        v.addWidget(QLabel(_("Te damos la bienvenida a AxolOS"), objectName="titulo", wordWrap=True))
         texto = QLabel(
-            "Estás usando AxolOS sin instalar: puedes probarlo todo lo que quieras, nada se guarda "
+            _("Estás usando AxolOS sin instalar: puedes probarlo todo lo que quieras, nada se guarda "
             "en tu equipo. Cuando quieras quedártelo, instálalo.\n\n"
             "La instalación descarga la versión más reciente de todo, con lo optimizado para tu "
-            "procesador y los controladores de tu gráfica.", objectName="texto", wordWrap=True)
+            "procesador y los controladores de tu gráfica."), objectName="texto", wordWrap=True)
         v.addWidget(texto)
         chips = QHBoxLayout()
         chips.setSpacing(8)
-        for t in ("Mejor con internet", "Unos 15–20 minutos", "Podrás elegir el disco"):
+        for t in (_("Mejor con internet"), "Unos 15–20 minutos", _("Podrás elegir el disco")):
             chips.addWidget(QLabel(t, objectName="chip"))
         chips.addStretch(1)
         v.addLayout(chips)
@@ -119,16 +131,16 @@ class Lanzador(QFrame):
             w.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Minimum)
 
         botones = QHBoxLayout()
-        self.b_red = QPushButton("Ajustes de red", objectName="plano")
+        self.b_red = QPushButton(_("Ajustes de red"), objectName="plano")
         self.b_red.clicked.connect(lambda: QProcess.startDetached("systemsettings", ["kcm_networkmanagement"]))
         self.b_red.hide()
-        self.b_sinred = QPushButton("Instalar sin conexión", objectName="plano")
-        self.b_sinred.setToolTip("Instala la versión de esta ISO. Al conectarte, se pone al día con una actualización.")
+        self.b_sinred = QPushButton(_("Instalar sin conexión"), objectName="plano")
+        self.b_sinred.setToolTip(_("Instala la versión de esta ISO. Al conectarte, se pone al día con una actualización."))
         self.b_sinred.clicked.connect(lambda: self.lanzar(sin_red=True))
         self.b_sinred.hide()
-        self.b_probar = QPushButton("Seguir probando", objectName="plano")
+        self.b_probar = QPushButton(_("Seguir probando"), objectName="plano")
         self.b_probar.clicked.connect(self.close)
-        self.b_instalar = QPushButton("Instalar AxolOS", objectName="principal")
+        self.b_instalar = QPushButton(_("Instalar AxolOS"), objectName="principal")
         self.b_instalar.setDefault(True)
         self.b_instalar.clicked.connect(self.comprobar_red)
         botones.addWidget(self.b_red)
@@ -165,7 +177,7 @@ class Lanzador(QFrame):
         self.b_instalar.setEnabled(False)
         self.b_red.hide()
         self.registro.hide()
-        self.poner_estado("Comprobando la conexión a internet…", ocupado=True)
+        self.poner_estado(_("Comprobando la conexión a internet…"), ocupado=True)
         self.red = QProcess(self)
         self.red.finished.connect(self.red_comprobada)
         # GitHub (repositorio AxolOS) y los repositorios de CachyOS
@@ -175,13 +187,13 @@ class Lanzador(QFrame):
     def red_comprobada(self, codigo, _estado):
         if codigo != 0:
             hay_sin_red = os.path.exists(SIN_RED)
-            self.poner_estado("No hay conexión a internet", "error",
-                              "Conéctate a una red (icono de red del panel) y vuelve a intentarlo."
-                              + (" También puedes instalar sin conexión la versión de esta ISO y ponerla al día "
-                                 "después." if hay_sin_red else ""))
+            self.poner_estado(_("No hay conexión a internet"), "error",
+                              _("Conéctate a una red (icono de red del panel) y vuelve a intentarlo.")
+                              + (_(" También puedes instalar sin conexión la versión de esta ISO y ponerla al día "
+                                 "después.") if hay_sin_red else ""))
             self.b_red.show()
             self.b_sinred.setVisible(hay_sin_red)
-            self.b_instalar.setText("Reintentar")
+            self.b_instalar.setText(_("Reintentar"))
             self.b_instalar.setEnabled(True)
             return
         self.lanzar()
@@ -194,9 +206,9 @@ class Lanzador(QFrame):
         self.b_red.hide()
         self.b_sinred.hide()
         self.registro.hide()
-        self.poner_estado("Preparando el instalador", ocupado=True,
-                          detalle="Sin conexión: se instalará la versión de esta ISO." if sin_red else
-                          "Se actualiza antes de abrirse: puede tardar uno o dos minutos.")
+        self.poner_estado(_("Preparando el instalador"), ocupado=True,
+                          detalle=_("Sin conexión: se instalará la versión de esta ISO.") if sin_red else
+                          _("Se actualiza antes de abrirse: puede tardar uno o dos minutos."))
         self.proc = QProcess(self)
         self.proc.setProcessChannelMode(QProcess.ProcessChannelMode.MergedChannels)
         self.proc.readyReadStandardOutput.connect(self.leer)
@@ -222,8 +234,8 @@ class Lanzador(QFrame):
         abierto = subprocess.run(["pgrep", "-x", "calamares"], capture_output=True).returncode == 0
         if abierto and not self.calamares_visto:
             self.calamares_visto = True
-            self.poner_estado("El instalador está abierto", "ok",
-                              "Sigue los pasos en su ventana. Esta se queda aquí por si la necesitas.")
+            self.poner_estado(_("El instalador está abierto"), "ok",
+                              _("Sigue los pasos en su ventana. Esta se queda aquí por si la necesitas."))
             self.showMinimized()
 
     def terminado(self, codigo, _estado):
@@ -235,20 +247,19 @@ class Lanzador(QFrame):
         self.raise_()
         self.b_instalar.setEnabled(True)
         if self.calamares_visto:
-            self.poner_estado("Se ha cerrado el instalador", "ok",
-                              "Si terminó la instalación, reinicia y quita el USB. Si no, puedes volver a abrirlo.")
-            self.b_instalar.setText("Abrir el instalador otra vez")
+            self.poner_estado(_("Se ha cerrado el instalador"), "ok",
+                              _("Si terminó la instalación, reinicia y quita el USB. Si no, puedes volver a abrirlo."))
+            self.b_instalar.setText(_("Abrir el instalador otra vez"))
         else:
-            self.poner_estado("No se pudo preparar el instalador", "error",
-                              f"Comprueba la conexión y vuelve a intentarlo. Detalles en {LOG_CAPA} "
-                              "y /home/liveuser/cachy-install.log")
-            self.registro.setPlainText("\n".join(self.salida[-200:]) or f"(código {codigo})")
+            self.poner_estado(_("No se pudo preparar el instalador"), "error",
+                              _("Comprueba la conexión y vuelve a intentarlo. Detalles en {LOG_CAPA} y /home/liveuser/cachy-install.log").format(LOG_CAPA=LOG_CAPA))
+            self.registro.setPlainText("\n".join(self.salida[-200:]) or _("(código {codigo})").format(codigo=codigo))
             barra = self.registro.verticalScrollBar()
             QTimer.singleShot(0, lambda: barra.setValue(barra.maximum()))   # lo último: lo que falló
             self.registro.show()
             self.b_red.show()
             self.ajustar()
-            self.b_instalar.setText("Reintentar")
+            self.b_instalar.setText(_("Reintentar"))
 
     def closeEvent(self, ev):
         if self.proc is not None and not self.calamares_visto:
@@ -260,7 +271,7 @@ class Lanzador(QFrame):
 
 def main():
     if not os.path.exists(INSTALADOR) and "AXOLOS_INSTALADOR" not in os.environ:
-        print("Esto solo funciona en el sistema live de la ISO de AxolOS.", file=sys.stderr)
+        print(_("Esto solo funciona en el sistema live de la ISO de AxolOS."), file=sys.stderr)
         sys.exit(1)
     app = QApplication(sys.argv)
     app.setApplicationName("axolos-instalar")

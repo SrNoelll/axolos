@@ -1,7 +1,7 @@
 # AxolOS · publica los paquetes al subir cambios (o a mano, desde la pestaña Actions).
 # Hace lo mismo que tools/publicar-repo.sh en el equipo de Noel: compila cada paquete, lo compara
 # con el publicado, sube pkgrel si cambió (y lo guarda en git), firma y sube la release x86_64.
-# Necesita el secreto AXOLOS_GPG_KEY: la clave privada de firma de AxolOS (armada, sin frase).
+# Los pkgrel automáticos se guardan a nombre de SrNoelll. Necesita el secreto AXOLOS_GPG_KEY: la clave privada de firma de AxolOS (armada, sin frase).
 name: Publicar paquetes
 
 on:
@@ -60,8 +60,8 @@ jobs:
             cd "$GITHUB_WORKSPACE"
             printf "%s\n" "$AXOLOS_GPG_KEY" | gpg --batch --quiet --import
             git config --global --add safe.directory "$PWD"
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git config user.name "SrNoelll"
+            git config user.email "159236885+SrNoelll@users.noreply.github.com"
             git remote set-url origin "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
             AXOLOS_CI=1 tools/publicar-repo.sh
           '

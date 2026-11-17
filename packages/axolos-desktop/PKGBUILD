@@ -2,7 +2,7 @@
 pkgname=axolos-desktop
 pkgver=$(<"${startdir}/../../VERSION")
 pkgrel=5
-pkgdesc="AxolOS completo: instala de una vez la marca, el tema, los ajustes y sus dependencias"
+pkgdesc="Complete AxolOS: installs the branding, theme, settings and their dependencies at once"
 arch=('any')
 license=('GPL-3.0-or-later')
 depends=(

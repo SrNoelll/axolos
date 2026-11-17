@@ -2,7 +2,7 @@
 pkgname=axolos-kde-settings
 pkgver=$(<"${startdir}/../../VERSION")
 pkgrel=8
-pkgdesc="Ajustes de Plasma de AxolOS para usuarios nuevos (panel, dock, Konsole, colores...)"
+pkgdesc="AxolOS Plasma defaults for new users (panel, dock, Konsole, colors…)"
 arch=('any')
 license=('GPL-3.0-or-later')
 depends=('axolos-themes' 'axolos-branding')

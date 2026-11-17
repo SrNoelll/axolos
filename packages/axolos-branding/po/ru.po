@@ -1,0 +1,1675 @@
+# AxolOS · Russian translation.
+# Copyright (C) 2026 Noel Alarcón
+# This file is distributed under the same license as the AxolOS package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AxolOS\n"
+"Report-Msgid-Bugs-To: https://github.com/SrNoelll/axolos/issues\n"
+"POT-Creation-Date: 2026-11-08 14:20+0100\n"
+"PO-Revision-Date: 2026-11-08 12:00+0100\n"
+"Last-Translator: Noel Alarcón\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:78
+msgid "Renovando las claves de los repositorios"
+msgstr "Обновление ключей репозиториев"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:79
+msgid "Descargando el instalador más reciente"
+msgstr "Загрузка последней версии установщика"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:80
+msgid "Abriendo el instalador"
+msgstr "Открытие установщика"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:87
+#: iso/airootfs/usr/local/bin/axolos-instalar:143
+msgid "Instalar AxolOS"
+msgstr "Установить AxolOS"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:105
+msgid "Te damos la bienvenida a AxolOS"
+msgstr "Добро пожаловать в AxolOS"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:107
+msgid ""
+"Estás usando AxolOS sin instalar: puedes probarlo todo lo que quieras, nada se guarda en tu equipo. Cuando quieras quedártelo, instálalo.\n"
+"\n"
+"La instalación descarga la versión más reciente de todo, con lo optimizado para tu procesador y los controladores de tu gráfica."
+msgstr ""
+"Вы используете AxolOS без установки: пробуйте что угодно, на компьютере ничего не сохраняется. Когда захотите оставить систему, установите её.\n"
+"\n"
+"При установке загружаются самые свежие версии всех компонентов, оптимизированные под ваш процессор, и драйверы для вашей видеокарты."
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:114
+msgid "Mejor con internet"
+msgstr "Лучше с интернетом"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:114
+msgid "Podrás elegir el disco"
+msgstr "Диск выбираете вы"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:134
+msgid "Ajustes de red"
+msgstr "Настройки сети"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:137
+msgid "Instalar sin conexión"
+msgstr "Установить без интернета"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:138
+msgid "Instala la versión de esta ISO. Al conectarte, se pone al día con una actualización."
+msgstr "Устанавливает версию с этого ISO. После подключения к сети обновление доведёт её до актуальной."
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:141
+msgid "Seguir probando"
+msgstr "Продолжить знакомство"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:180
+msgid "Comprobando la conexión a internet…"
+msgstr "Проверка подключения к интернету…"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:190
+msgid "No hay conexión a internet"
+msgstr "Нет подключения к интернету"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:191
+msgid "Conéctate a una red (icono de red del panel) y vuelve a intentarlo."
+msgstr "Подключитесь к сети (значок сети на панели) и попробуйте снова."
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:192
+msgid " También puedes instalar sin conexión la versión de esta ISO y ponerla al día después."
+msgstr " Можно также установить версию с этого ISO без интернета и обновить её позже."
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:196
+#: iso/airootfs/usr/local/bin/axolos-instalar:262
+msgid "Reintentar"
+msgstr "Повторить"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:209
+msgid "Preparando el instalador"
+msgstr "Подготовка установщика"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:210
+msgid "Sin conexión: se instalará la versión de esta ISO."
+msgstr "Без интернета: будет установлена версия с этого ISO."
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:211
+msgid "Se actualiza antes de abrirse: puede tardar uno o dos minutos."
+msgstr "Перед запуском он обновляется: это может занять минуту-две."
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:237
+msgid "El instalador está abierto"
+msgstr "Установщик открыт"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:238
+msgid "Sigue los pasos en su ventana. Esta se queda aquí por si la necesitas."
+msgstr "Следуйте шагам в его окне. Это окно останется здесь на всякий случай."
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:250
+msgid "Se ha cerrado el instalador"
+msgstr "Установщик закрыт"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:251
+msgid "Si terminó la instalación, reinicia y quita el USB. Si no, puedes volver a abrirlo."
+msgstr "Если установка завершена, перезагрузитесь и извлеките USB-накопитель. Если нет, откройте установщик снова."
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:252
+msgid "Abrir el instalador otra vez"
+msgstr "Открыть установщик снова"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:254
+msgid "No se pudo preparar el instalador"
+msgstr "Не удалось подготовить установщик"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:255
+#, python-brace-format
+msgid "Comprueba la conexión y vuelve a intentarlo. Detalles en {LOG_CAPA} y /home/liveuser/cachy-install.log"
+msgstr "Проверьте подключение и попробуйте снова. Подробности в {LOG_CAPA} и /home/liveuser/cachy-install.log"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:256
+#, python-brace-format
+msgid "(código {codigo})"
+msgstr "(код {codigo})"
+
+#: iso/airootfs/usr/local/bin/axolos-instalar:274
+msgid "Esto solo funciona en el sistema live de la ISO de AxolOS."
+msgstr "Это работает только в live-системе с ISO AxolOS."
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:182
+#: packages/axolos-bienvenida/bin/axolos-centro:257
+#: packages/axolos-bienvenida/bin/axolos-centro:308
+msgid "Instalado"
+msgstr "Установлено"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:222
+msgid "Bienvenido a AxolOS"
+msgstr "Добро пожаловать в AxolOS"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:225
+msgid "En un par de minutos dejamos tu equipo listo para programar y para usar inteligencia artificial en local, sin depender de internet. Elige lo que quieras; lo pesado se instala solo al final."
+msgstr "За пару минут мы подготовим компьютер к программированию и к работе с искусственным интеллектом локально, без зависимости от интернета. Выберите что хотите — всё тяжёлое установится только в конце."
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:235
+msgid "Procesador"
+msgstr "Процессор"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:236
+msgid "Gráfica integrada"
+msgstr "Встроенная графика"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:237
+#: packages/axolos-bienvenida/bin/axolos-centro:179
+#, python-brace-format
+msgid "{0:.0f} GB de RAM"
+msgstr "{0:.0f} ГБ ОЗУ"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:253
+msgid "¿Con qué vas a programar?"
+msgstr "На чём вы будете программировать?"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:254
+msgid "Marca tus lenguajes y herramientas. Git, Docker, la terminal mejorada y el editor ya vienen de serie."
+msgstr "Отметьте языки и инструменты. Git, Docker, улучшенный терминал и редактор уже есть."
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:289
+msgid "Tu identidad para Git y GitHub"
+msgstr "Ваши данные для Git и GitHub"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:290
+msgid "Con esto firmas tus commits y subes código a GitHub por SSH, sin contraseñas."
+msgstr "Так вы подписываете коммиты и отправляете код на GitHub по SSH, без паролей."
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:297
+msgid "Tu nombre"
+msgstr "Ваше имя"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:299
+msgid "tu@correo.com"
+msgstr "вы@пример.рф"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:300
+msgid "Nombre"
+msgstr "Имя"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:302
+msgid "Correo"
+msgstr "Почта"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:307
+msgid "Crear una clave SSH para este equipo"
+msgstr "Создать SSH-ключ для этого компьютера"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:310
+msgid "Ya tienes una clave SSH (~/.ssh/id_ed25519)"
+msgstr "У вас уже есть SSH-ключ (~/.ssh/id_ed25519)"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:315
+msgid "Conectar con GitHub al terminar (se abre una terminal y el navegador)"
+msgstr "Подключиться к GitHub в конце (откроются терминал и браузер)"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:318
+msgid "Ya estás conectado a GitHub"
+msgstr "Вы уже подключены к GitHub"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:321
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:674
+msgid "Poner el tema AxolOS en VS Code"
+msgstr "Включить тему AxolOS в VS Code"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:324
+msgid "Buscar en tu historial de comandos con Ctrl+R (importa el historial actual)"
+msgstr "Поиск по истории команд через Ctrl+R (импортирует текущую историю)"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:342
+msgid "Inteligencia artificial en local"
+msgstr "Локальный искусственный интеллект"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:343
+msgid "Modelos que funcionan en tu equipo: sin internet, sin cuotas y sin que nada salga de aquí. Los he elegido según tu gráfica."
+msgstr "Модели, работающие на вашем компьютере: без интернета, без лимитов, и ничего не покидает машину. Я подобрал их под вашу видеокарту."
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:348
+msgid "Sin gráfica dedicada: irá por procesador"
+msgstr "Нет дискретной видеокарты: работать будет на процессоре"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:348
+#, python-brace-format
+msgid "{0} · {1:.0f} GB de VRAM"
+msgstr "{0} · {1:.0f} ГБ видеопамяти"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:354
+msgid "Aceleración por gráfica activada"
+msgstr "Ускорение на видеокарте включено"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:356
+#, python-brace-format
+msgid "Se activará la aceleración por gráfica ({0})"
+msgstr "Будет включено ускорение на видеокарте ({0})"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:362
+msgid "MODELOS"
+msgstr "МОДЕЛИ"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:379
+msgid " · opcional, va bien en tu equipo"
+msgstr " · необязательно, хорошо работает на вашем компьютере"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:382
+msgid "instalado"
+msgstr "установлено"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:387
+msgid "Conectar VS Code con la IA local (chat y autocompletado con Continue)"
+msgstr "Подключить VS Code к локальному ИИ (чат и автодополнение через Continue)"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:401
+#, python-brace-format
+msgid "Descarga: {gb:.1f} GB"
+msgstr "Загрузка: {gb:.1f} ГБ"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:401
+msgid "No hay nada que descargar"
+msgstr "Загружать нечего"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:410
+msgid "Esto es lo que voy a hacer. Te pediré la contraseña una vez."
+msgstr "Вот что я сделаю. Пароль спрошу один раз."
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:410
+msgid "Todo listo para empezar"
+msgstr "Всё готово к началу"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:424
+msgid "Ver detalles"
+msgstr "Подробности"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:447
+msgid "Tu AxolOS está listo"
+msgstr "Ваш AxolOS готов"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:448
+msgid "Algunos trucos para empezar:"
+msgstr "Несколько советов для начала:"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:451
+msgid "escribe «ia» y tu pregunta para hablar con Axo, la IA local"
+msgstr "введите «ии» и вопрос, чтобы поговорить с Axo, локальным ИИ"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:452
+msgid "el chat con tu IA, en el menú de aplicaciones"
+msgstr "чат с вашим ИИ в меню приложений"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:453
+#: packages/axolos-bienvenida/bin/axolos-centro:404
+#: packages/axolos-bienvenida/bin/axolos-centro:418
+#: packages/axolos-bienvenida/bin/axolos-centro:474
+#: packages/axolos-bienvenida/bin/axolos-centro:515
+msgid "Centro de AxolOS"
+msgstr "Центр AxolOS"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:453
+msgid "en el menú: actualizaciones, lenguajes, modelos de IA y apariencia"
+msgstr "в меню: обновления, языки, модели ИИ и оформление"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:454
+msgid "en la terminal: busca en todo tu historial de comandos"
+msgstr "в терминале: поиск по всей истории команд"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:455
+msgid "salta a tus carpetas más usadas"
+msgstr "переход в часто используемые папки"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:455
+msgid "z carpeta"
+msgstr "z папка"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:495
+msgid "Terminado"
+msgstr "Готово"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:512
+msgid "(no se pudo ejecutar)"
+msgstr "(не удалось выполнить)"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:602
+#: packages/axolos-bienvenida/bin/axolos-centro:269
+#: packages/axolos-bienvenida/bin/axolos-centro:376
+#: packages/axolos-bienvenida/bin/axolos-centro:380
+msgid "Aplicar"
+msgstr "Применить"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
+msgid "Bienvenida"
+msgstr "Приветствие"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
+msgid "Git y GitHub"
+msgstr "Git и GitHub"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
+#: packages/axolos-bienvenida/bin/axolos-centro:280
+#: packages/axolos-bienvenida/bin/axolos-centro:387
+#: packages/axolos-ia/lib/axolos-ia-krunner:123
+#: packages/axolos-ia/lib/axolos-ia-krunner:126
+msgid "IA local"
+msgstr "Локальный ИИ"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
+msgid "Listo"
+msgstr "Готово"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
+#: packages/axolos-bienvenida/bin/axolos-centro:235
+#: packages/axolos-bienvenida/bin/axolos-centro:386
+msgid "Programación"
+msgstr "Программирование"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:539
+#: packages/axolos-bienvenida/bin/axolos-centro:382
+msgid "Bienvenida a AxolOS"
+msgstr "Добро пожаловать в AxolOS"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:561
+msgid ""
+"Nada de esto envía datos a\n"
+"ninguna parte."
+msgstr ""
+"Ничто из этого никуда\n"
+"не отправляет данные."
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:577
+msgid "Ahora no"
+msgstr "Не сейчас"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:579
+msgid "Atrás"
+msgstr "Назад"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:581
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:602
+msgid "Empezar"
+msgstr "Начать"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:602
+msgid "Cerrar"
+msgstr "Закрыть"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:602
+msgid "Revisar"
+msgstr "Проверить"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:602
+msgid "Siguiente"
+msgstr "Далее"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:625
+msgid "Instalando "
+msgstr "Установка: "
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:628
+msgid "Activando la gráfica para la IA"
+msgstr "Включение видеокарты для ИИ"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:630
+msgid "Encendiendo la IA local"
+msgstr "Запуск локального ИИ"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:635
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:637
+msgid "Configurando Git"
+msgstr "Настройка Git"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:639
+msgid "Creando tu clave SSH"
+msgstr "Создание SSH-ключа"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:647
+#: packages/axolos-bienvenida/bin/axolos-centro:268
+msgid "Tema AxolOS en los editores"
+msgstr "Тема AxolOS в редакторах"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:649
+msgid "Importando tu historial de comandos"
+msgstr "Импорт истории команд"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:654
+msgid "Conectando VS Code con la IA"
+msgstr "Подключение VS Code к ИИ"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:663
+#, python-brace-format
+msgid "Activar la aceleración por gráfica (<b>{0}</b>)"
+msgstr "Включить ускорение на видеокарте (<b>{0}</b>)"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:665
+msgid "Crear tu clave SSH"
+msgstr "Создать SSH-ключ"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:667
+msgid "Guardar tu nombre y correo en Git"
+msgstr "Сохранить имя и почту в Git"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:670
+msgid "Descargar "
+msgstr "Скачать "
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:672
+msgid "Conectar VS Code con la IA local"
+msgstr "Подключить VS Code к локальному ИИ"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:676
+msgid "Al final, abrir la conexión con GitHub"
+msgstr "В конце открыть подключение к GitHub"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:678
+msgid "Nada pendiente: tu equipo ya está al día"
+msgstr "Ничего не осталось: всё уже настроено"
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:703
+msgid "No se pudo completar: "
+msgstr "Не удалось завершить: "
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:704
+msgid ". Puedes volver a abrir «Bienvenida a AxolOS» desde el menú para reintentarlo."
+msgstr ". Можно снова открыть «Добро пожаловать в AxolOS» из меню и повторить."
+
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:707
+msgid "Para usar Docker sin sudo, cierra sesión y vuelve a entrar."
+msgstr "Чтобы пользоваться Docker без sudo, выйдите из сеанса и войдите снова."
+
+#: packages/axolos-bienvenida/bin/axolos-centro:164
+msgid "Tu AxolOS"
+msgstr "Ваш AxolOS"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:165
+msgid "El estado del sistema de un vistazo."
+msgstr "Состояние системы с первого взгляда."
+
+#: packages/axolos-bienvenida/bin/axolos-centro:176
+msgid "Sistema"
+msgstr "Система"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:177
+msgid "(sin axolos-desktop)"
+msgstr "(без axolos-desktop)"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:178
+#, python-brace-format
+msgid "Sobre CachyOS · núcleo {kernel}"
+msgstr "На базе CachyOS · ядро {kernel}"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:179
+msgid "Equipo"
+msgstr "Компьютер"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:180
+msgid "Actualizaciones"
+msgstr "Обновления"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:181
+msgid "Comprobando…"
+msgstr "Проверка…"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:182
+#: packages/axolos-bienvenida/bin/axolos-centro:351
+msgid "Actualizar ahora"
+msgstr "Обновить сейчас"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:184
+msgid "Actualizaciones de CachyOS y AxolOS"
+msgstr "Обновления CachyOS и AxolOS"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:210
+msgid "Todo al día."
+msgstr "Всё обновлено."
+
+#: packages/axolos-bienvenida/bin/axolos-centro:213
+#, python-brace-format
+msgid " (de AxolOS: {0})"
+msgstr " (из AxolOS: {0})"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:214
+#, python-brace-format
+msgid "{0} paquetes por actualizar{extra}."
+msgstr "Пакетов к обновлению: {0}{extra}."
+
+#: packages/axolos-bienvenida/bin/axolos-centro:216
+msgid "No se pudo comprobar (¿sin conexión?)."
+msgstr "Не удалось проверить (нет сети?)."
+
+#: packages/axolos-bienvenida/bin/axolos-centro:231
+msgid "Actualizar el sistema"
+msgstr "Обновить систему"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:236
+msgid "Lenguajes y herramientas. Marca los que quieras añadir; lo instalado se queda como está."
+msgstr "Языки и инструменты. Отметьте, что добавить; установленное останется как есть."
+
+#: packages/axolos-bienvenida/bin/axolos-centro:242
+msgid "No encuentro los perfiles de axolos-dev."
+msgstr "Не найдены профили axolos-dev."
+
+#: packages/axolos-bienvenida/bin/axolos-centro:245
+msgid "Perfiles"
+msgstr "Профили"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:255
+msgid "Sin instalar"
+msgstr "Не установлено"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:261
+msgid "Instalar los marcados"
+msgstr "Установить отмеченные"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:267
+msgid "Editores"
+msgstr "Редакторы"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:268
+msgid "VS Code, VSCodium y Antigravity (Kate y Neovim ya lo traen)."
+msgstr "VS Code, VSCodium и Antigravity (в Kate и Neovim она уже есть)."
+
+#: packages/axolos-bienvenida/bin/axolos-centro:269
+msgid "Tema en los editores"
+msgstr "Тема в редакторах"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:276
+msgid "Instalar perfiles: "
+msgstr "Установка профилей: "
+
+#: packages/axolos-bienvenida/bin/axolos-centro:281
+msgid "Axo y la búsqueda de archivos usan modelos que corren en tu equipo, sin internet."
+msgstr "Axo и поиск файлов используют модели, работающие на вашем компьютере, без интернета."
+
+#: packages/axolos-bienvenida/bin/axolos-centro:286
+msgid "Servicio"
+msgstr "Служба"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:288
+msgid "Activo"
+msgstr "Активна"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:288
+msgid "Servicio de IA en marcha"
+msgstr "Служба ИИ работает"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:290
+msgid "El servicio de IA está parado"
+msgstr "Служба ИИ остановлена"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:290
+msgid "Sin él no funcionan Axo ni la búsqueda por contenido."
+msgstr "Без неё не работают ни Axo, ни поиск по содержимому."
+
+#: packages/axolos-bienvenida/bin/axolos-centro:291
+msgid "Arrancar"
+msgstr "Запустить"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:292
+msgid "Arrancar la IA"
+msgstr "Запуск ИИ"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:293
+#: packages/axolos-ia/bin/axolos-ia:38
+msgid "sin gráfica dedicada"
+msgstr "нет дискретной видеокарты"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:295
+msgid "Gráfica"
+msgstr "Видеокарта"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:296
+msgid "Acelerada"
+msgstr "Ускорено"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:298
+msgid "La IA no usa la gráfica"
+msgstr "ИИ не использует видеокарту"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:298
+#, python-brace-format
+msgid "{nombre_gpu}: falta {0}. Irá mucho más lenta."
+msgstr "{nombre_gpu}: не хватает {0}. Будет работать гораздо медленнее."
+
+#: packages/axolos-bienvenida/bin/axolos-centro:299
+#: packages/axolos-bienvenida/bin/axolos-centro:300
+msgid "Activar la gráfica"
+msgstr "Включить видеокарту"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:304
+msgid "Modelos"
+msgstr "Модели"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:308
+#: packages/axolos-bienvenida/bin/axolos-centro:319
+#: packages/axolos-ia/bin/axolos-ia-chat:1074
+msgid "Quitar"
+msgstr "Удалить"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:310
+msgid "Recomendado"
+msgstr "Рекомендуется"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:311
+msgid "Grande para tu equipo"
+msgstr "Тяжеловато для вашего компьютера"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:311
+msgid "Opcional"
+msgstr "Необязательно"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:313
+msgid "Descargar"
+msgstr "Скачать"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:314
+#, python-brace-format
+msgid "Descargar {i}"
+msgstr "Скачать {i}"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:318
+#, python-brace-format
+msgid "Instalado aparte · {0:.1f} GB"
+msgstr "Установлено отдельно · {0:.1f} ГБ"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:322
+msgid "Quitar modelo"
+msgstr "Удалить модель"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:323
+#, python-brace-format
+msgid "¿Quitar {modelo}? Se borra del disco; puedes volver a descargarlo cuando quieras."
+msgstr "Удалить {modelo}? Модель будет стёрта с диска; её можно скачать снова в любой момент."
+
+#: packages/axolos-bienvenida/bin/axolos-centro:335
+#, python-brace-format
+msgid "No se pudo quitar {modelo}: {e}"
+msgstr "Не удалось удалить {modelo}: {e}"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:340
+msgid "Búsqueda de archivos"
+msgstr "Поиск файлов"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:341
+msgid "«ia busco …» en el menú o en KRunner encuentra tus archivos por lo que contienen."
+msgstr "«ии найди …» в меню или в KRunner находит файлы по их содержимому."
+
+#: packages/axolos-bienvenida/bin/axolos-centro:348
+#, python-brace-format
+msgid "no disponible ({e})"
+msgstr "недоступно ({e})"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:349
+msgid "Índice"
+msgstr "Индекс"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:350
+msgid "Archivos indexados"
+msgstr "Проиндексированные файлы"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:352
+msgid "Actualizar el índice"
+msgstr "Обновить индекс"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:357
+msgid "Indexar al momento lo nuevo"
+msgstr "Сразу индексировать новое"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:358
+msgid "Las descargas y fotos nuevas se pueden buscar a los pocos segundos. Con batería baja espera."
+msgstr "Новые загрузки и фото можно найти через несколько секунд. При низком заряде батареи ждёт."
+
+#: packages/axolos-bienvenida/bin/axolos-centro:364
+msgid "Indexado al momento: "
+msgstr "Мгновенная индексация: "
+
+#: packages/axolos-bienvenida/bin/axolos-centro:368
+msgid "Apariencia y arranque"
+msgstr "Оформление и загрузка"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:369
+msgid "Para dejar como AxolOS lo que otras apps o el instalador cambian."
+msgstr "Вернуть вид AxolOS там, где его поменяли другие приложения или установщик."
+
+#: packages/axolos-bienvenida/bin/axolos-centro:372
+msgid "Ventanas"
+msgstr "Окна"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:374
+msgid "Botones AxolOS en los navegadores"
+msgstr "Кнопки AxolOS в браузерах"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:375
+msgid "Brave, Chrome y Chromium usan la barra con los botones de AxolOS. Ciérralos antes."
+msgstr "Brave, Chrome и Chromium используют заголовок с кнопками AxolOS. Сначала закройте их."
+
+#: packages/axolos-bienvenida/bin/axolos-centro:376
+msgid "Botones en los navegadores"
+msgstr "Кнопки в браузерах"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:377
+msgid "Arranque"
+msgstr "Загрузка"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:378
+msgid "Menú de arranque de AxolOS"
+msgstr "Загрузочное меню AxolOS"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:379
+msgid "Colores y fondo de AxolOS en Limine, y un solo grupo «AxolOS». Guarda una copia antes."
+msgstr "Цвета и фон AxolOS в Limine и одна группа «AxolOS». Сначала делается резервная копия."
+
+#: packages/axolos-bienvenida/bin/axolos-centro:380
+msgid "Menú de arranque"
+msgstr "Загрузочное меню"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:381
+msgid "Primeros pasos"
+msgstr "Первые шаги"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:382
+msgid "El asistente del primer inicio, por si quieres repasarlo."
+msgstr "Помощник первого запуска — если захотите пройти его снова."
+
+#: packages/axolos-bienvenida/bin/axolos-centro:383
+msgid "Abrir"
+msgstr "Открыть"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:386
+msgid "Resumen"
+msgstr "Обзор"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:387
+msgid "Búsqueda"
+msgstr "Поиск"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:388
+msgid "Apariencia"
+msgstr "Оформление"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:445
+msgid "Ocultar"
+msgstr "Скрыть"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:474
+msgid "Espera a que termine la tarea en curso."
+msgstr "Дождитесь окончания текущей задачи."
+
+#: packages/axolos-bienvenida/bin/axolos-centro:480
+msgid "(simulado: no se ejecuta)"
+msgstr "(имитация: не выполняется)"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:489
+msgid " · hecho"
+msgstr " · готово"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:489
+#, python-brace-format
+msgid " · terminó con error ({codigo})"
+msgstr " · завершено с ошибкой ({codigo})"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:509
+msgid "Pulsa Intro para cerrar"
+msgstr "Нажмите Enter, чтобы закрыть"
+
+#: packages/axolos-bienvenida/bin/axolos-centro:515
+msgid "Hay una tarea en marcha. ¿Cerrar igualmente?"
+msgstr "Задача ещё выполняется. Всё равно закрыть?"
+
+#: packages/axolos-branding/static/axolos-apps:8
+msgid "Ejecuta axolos-apps como usuario normal (pedirá sudo)."
+msgstr "Запускайте axolos-apps от обычного пользователя (он запросит sudo)."
+
+#: packages/axolos-branding/static/axolos-apps:12
+msgid "Paquetes de los repositorios"
+msgstr "Пакеты из репозиториев"
+
+#: packages/axolos-branding/static/axolos-apps:17
+msgid "(no están en los repos, se omiten: {0})"
+msgstr "(нет в репозиториях, пропущены: {0})"
+
+#: packages/axolos-branding/static/axolos-apps:23
+msgid "Paquetes del AUR con {0}"
+msgstr "Пакеты AUR через {0}"
+
+#: packages/axolos-branding/static/axolos-apps:26
+msgid "No hay paru ni yay. Paquetes del AUR pendientes:"
+msgstr "Нет ни paru, ни yay. Не установлены пакеты AUR:"
+
+#: packages/axolos-branding/static/axolos-root:39
+msgid "Ejecútalo con pkexec o sudo."
+msgstr "Запустите через pkexec или sudo."
+
+#: packages/axolos-branding/static/axolos-root:60
+msgid "Ya estaba todo instalado"
+msgstr "Всё уже было установлено"
+
+#: packages/axolos-branding/static/axolos-root:62
+msgid "Instalando: "
+msgstr "Установка: "
+
+#: packages/axolos-branding/static/axolos-root:66
+msgid "Actualizando el sistema y reintentando"
+msgstr "Обновление системы и повторная попытка"
+
+#: packages/axolos-branding/static/axolos-root:68
+msgid "pacman falló"
+msgstr "ошибка pacman"
+
+#: packages/axolos-branding/static/axolos-root:79
+msgid "Perfiles no válidos: "
+msgstr "Недопустимые профили: "
+
+#: packages/axolos-branding/static/axolos-root:88
+msgid "Docker: arranque bajo demanda y permiso para tu usuario"
+msgstr "Docker: запуск по требованию и доступ для вашего пользователя"
+
+#: packages/axolos-branding/static/axolos-root:97
+#, python-brace-format
+msgid "Gráfica {v}: "
+msgstr "Видеокарта {v}: "
+
+#: packages/axolos-branding/static/axolos-root:100
+msgid "Docker con acceso a la gráfica (nvidia-container-toolkit)"
+msgstr "Docker с доступом к видеокарте (nvidia-container-toolkit)"
+
+#: packages/axolos-branding/static/axolos-root:108
+msgid "Servicio de IA local"
+msgstr "Служба локального ИИ"
+
+#: packages/axolos-branding/static/axolos-root:150
+#, python-brace-format
+msgid "colores: {clave}"
+msgstr "цвета: {clave}"
+
+#: packages/axolos-branding/static/axolos-root:156
+msgid "fondo de AxolOS"
+msgstr "фон AxolOS"
+
+#: packages/axolos-branding/static/axolos-root:168
+msgid "quitado el grupo vacío «CachyOS»"
+msgstr "удалена пустая группа «CachyOS»"
+
+#: packages/axolos-branding/static/axolos-root:172
+msgid "grupo «CachyOS» renombrado a «AxolOS»"
+msgstr "группа «CachyOS» переименована в «AxolOS»"
+
+#: packages/axolos-branding/static/axolos-root:174
+msgid "hay un grupo «CachyOS» con entradas además de «AxolOS»: no lo toco"
+msgstr "кроме «AxolOS» есть группа «CachyOS» с записями: не трогаю её"
+
+#: packages/axolos-branding/static/axolos-root:192
+msgid "No encuentro limine.conf (¿el equipo arranca con Limine?)."
+msgstr "limine.conf не найден (компьютер загружается через Limine?)."
+
+#: packages/axolos-branding/static/axolos-root:205
+msgid "Aviso: "
+msgstr "Внимание: "
+
+#: packages/axolos-branding/static/axolos-root:211
+#, python-brace-format
+msgid "{conf}: ya tiene el aspecto y el nombre de AxolOS"
+msgstr "{conf}: уже с оформлением и названием AxolOS"
+
+#: packages/axolos-branding/static/axolos-root:214
+#, python-brace-format
+msgid "Cambios que haría en {conf} (no escribo nada):"
+msgstr "Изменения, которые я внёс бы в {conf} (ничего не записывается):"
+
+#: packages/axolos-branding/static/axolos-root:222
+#, python-brace-format
+msgid "Copia de seguridad: {copia}"
+msgstr "Резервная копия: {copia}"
+
+#: packages/axolos-branding/static/axolos-root:234
+msgid "instantáneas: grupo «AxolOS»"
+msgstr "снимки: группа «AxolOS»"
+
+#: packages/axolos-branding/static/axolos-root:235
+msgid "Listo: se verá en el próximo arranque"
+msgstr "Готово: изменения будут видны при следующей загрузке"
+
+#: packages/axolos-branding/static/axolos-root:240
+msgid "axolos-root necesita permisos de administrador (usa pkexec)."
+msgstr "axolos-root нужны права администратора (используйте pkexec)."
+
+#: packages/axolos-dev/axolos-dev.install:6
+msgid "«axolos-dev» muestra los perfiles de lenguajes; «axolos-dev editores» pone el tema en VS Code."
+msgstr "«axolos-dev» показывает профили языков; «axolos-dev editors» применяет тему к VS Code."
+
+#: packages/axolos-dev/static/axolos-dev:51
+#, python-brace-format
+msgid "{MORADO}Perfiles de desarrollo de AxolOS{FIN}\n"
+msgstr "{MORADO}Профили разработки AxolOS{FIN}\n"
+
+#: packages/axolos-dev/static/axolos-dev:54
+#, python-brace-format
+msgid "{GRIS}faltan {0}{FIN}"
+msgstr "{GRIS}не хватает: {0}{FIN}"
+
+#: packages/axolos-dev/static/axolos-dev:54
+#, python-brace-format
+msgid "{VERDE}instalado{FIN}"
+msgstr "{VERDE}установлено{FIN}"
+
+#: packages/axolos-dev/static/axolos-dev:57
+msgid ""
+"\n"
+"Instala con:  axolos-dev instalar web python …"
+msgstr ""
+"\n"
+"Установка:  axolos-dev install web python …"
+
+#: packages/axolos-dev/static/axolos-dev:65
+#, python-brace-format
+msgid "Perfil desconocido: {0} · disponibles: {1}"
+msgstr "Неизвестный профиль: {0} · доступны: {1}"
+
+#: packages/axolos-dev/static/axolos-dev:68
+msgid "No se instalaron los perfiles (¿cancelaste la contraseña?)."
+msgstr "Профили не установлены (вы отменили ввод пароля?)."
+
+#: packages/axolos-dev/static/axolos-dev:74
+#, python-brace-format
+msgid "{GRIS}Docker: cierra sesión y vuelve a entrar para usarlo sin sudo.{FIN}"
+msgstr "{GRIS}Docker: выйдите из сеанса и войдите снова, чтобы работать без sudo.{FIN}"
+
+#: packages/axolos-dev/static/axolos-dev:89
+#, python-brace-format
+msgid "  {cmd}: no se pudo instalar el tema ({0})"
+msgstr "  {cmd}: не удалось установить тему ({0})"
+
+#: packages/axolos-dev/static/axolos-dev:92
+msgid "tema instalado"
+msgstr "тема установлена"
+
+#: packages/axolos-dev/static/axolos-dev:103
+msgid "tema instalado y activado"
+msgstr "тема установлена и включена"
+
+#: packages/axolos-dev/static/axolos-dev:105
+msgid " (actívalo en Preferencias → Tema de color → AxolOS)"
+msgstr " (включите в Параметры → Цветовая тема → AxolOS)"
+
+#: packages/axolos-dev/static/axolos-dev:109
+msgid "No hay ningún editor basado en VS Code instalado."
+msgstr "Не установлен ни один редактор на основе VS Code."
+
+#: packages/axolos-dev/static/axolos-dev:124
+msgid ""
+"axolos-dev · herramientas de desarrollo de AxolOS\n"
+"\n"
+"  axolos-dev                      perfiles disponibles y si ya están instalados\n"
+"  axolos-dev instalar PERFIL...   instala perfiles (web, python, rust…); pide la contraseña una vez\n"
+"  axolos-dev editores             tema AxolOS en VS Code / VSCodium / Antigravity\n"
+msgstr ""
+"axolos-dev · инструменты разработки AxolOS\n"
+"\n"
+"  axolos-dev                      доступные профили и установлены ли они\n"
+"  axolos-dev install ПРОФИЛЬ...   устанавливает профили (web, python, rust…); пароль спрашивается один раз\n"
+"  axolos-dev editors              тема AxolOS в VS Code / VSCodium / Antigravity\n"
+
+#: packages/axolos-ia/axolos-ia.install:9
+msgid "«axolos-ia» muestra el estado; «axolos-ia gpu» activa la gráfica; «axolos-ia descargar» baja los modelos."
+msgstr "«axolos-ia» показывает состояние; «axolos-ia gpu» включает видеокарту; «axolos-ia download» загружает модели."
+
+#: packages/axolos-ia/bin/axolos-ia:37
+#, python-brace-format
+msgid "{M}{B}IA local de AxolOS{F}\n"
+msgstr "{M}{B}Локальный ИИ AxolOS{F}\n"
+
+#: packages/axolos-ia/bin/axolos-ia:38
+#, python-brace-format
+msgid "{0} · {1} GB de VRAM"
+msgstr "{0} · {1} ГБ видеопамяти"
+
+#: packages/axolos-ia/bin/axolos-ia:39
+#, python-brace-format
+msgid "  Gráfica     {gpu}"
+msgstr "  Видеокарта  {gpu}"
+
+#: packages/axolos-ia/bin/axolos-ia:40
+#, python-brace-format
+msgid "  Aceleración {0} {1}"
+msgstr "  Ускорение   {0} {1}"
+
+#: packages/axolos-ia/bin/axolos-ia:41
+#, python-brace-format
+msgid "   {G}→ actívala con: axolos-ia gpu{F}"
+msgstr "   {G}→ включите: axolos-ia gpu{F}"
+
+#: packages/axolos-ia/bin/axolos-ia:42
+#, python-brace-format
+msgid "  Servicio    {0} "
+msgstr "  Служба      {0} "
+
+#: packages/axolos-ia/bin/axolos-ia:42
+#, python-brace-format
+msgid "apagado   {G}→ axolos-ia gpu{F}"
+msgstr "остановлена   {G}→ axolos-ia gpu{F}"
+
+#: packages/axolos-ia/bin/axolos-ia:46
+#, python-brace-format
+msgid "  Modelos     {0}"
+msgstr "  Модели      {0}"
+
+#: packages/axolos-ia/bin/axolos-ia:46
+msgid "ninguno → axolos-ia descargar"
+msgstr "нет → axolos-ia download"
+
+#: packages/axolos-ia/bin/axolos-ia:48
+#, python-brace-format
+msgid "{0} GB en gráfica, resto en RAM"
+msgstr "{0} ГБ на видеокарте, остальное в ОЗУ"
+
+#: packages/axolos-ia/bin/axolos-ia:49
+#, python-brace-format
+msgid "  En uso      {0} ({1} GB, {donde})"
+msgstr "  Сейчас      {0} ({1} ГБ, {donde})"
+
+#: packages/axolos-ia/bin/axolos-ia:53
+#, python-brace-format
+msgid ""
+"\n"
+"  {G}Recomendados para tu equipo: {0}  →  axolos-ia descargar{F}"
+msgstr ""
+"\n"
+"  {G}Рекомендуются для вашего компьютера: {0}  →  axolos-ia download{F}"
+
+#: packages/axolos-ia/bin/axolos-ia:56
+#, python-brace-format
+msgid "  Archivos    {0}"
+msgstr "  Файлы       {0}"
+
+#: packages/axolos-ia/bin/axolos-ia:59
+#, python-brace-format
+msgid ""
+"\n"
+"  {G}Chat: Axo en el menú · Alt+Espacio y escribe «ia tu pregunta» o «ia busco …»{F}"
+msgstr ""
+"\n"
+"  {G}Чат: Axo в меню · Alt+Пробел и введите «ии ваш вопрос» или «ии найди …»{F}"
+
+#: packages/axolos-ia/bin/axolos-ia:66
+#, python-brace-format
+msgid "{M}{B}Modelos para la IA local{F}  {G}(tu equipo: {0} GB de VRAM, {1} GB de RAM){F}\n"
+msgstr "{M}{B}Модели для локального ИИ{F}  {G}(ваш компьютер: {0} ГБ видеопамяти, {1} ГБ ОЗУ){F}\n"
+
+#: packages/axolos-ia/bin/axolos-ia:69
+#, python-brace-format
+msgid "{M}recomendado{F}"
+msgstr "{M}рекомендуется{F}"
+
+#: packages/axolos-ia/bin/axolos-ia:69
+#, python-brace-format
+msgid "{V}instalado{F}"
+msgstr "{V}установлено{F}"
+
+#: packages/axolos-ia/bin/axolos-ia:70
+#, python-brace-format
+msgid "{M}opcional{F}"
+msgstr "{M}необязательно{F}"
+
+#: packages/axolos-ia/bin/axolos-ia:71
+#, python-brace-format
+msgid " {G}(irá lento en tu equipo){F}"
+msgstr " {G}(на вашем компьютере будет медленно){F}"
+
+#: packages/axolos-ia/bin/axolos-ia:87
+msgid "La IA local está apagada: ejecuta  axolos-ia gpu"
+msgstr "Локальный ИИ выключен: выполните  axolos-ia gpu"
+
+#: packages/axolos-ia/bin/axolos-ia:102
+#, python-brace-format
+msgid "   {V}✓ listo{F}"
+msgstr "   {V}✓ готово{F}"
+
+#: packages/axolos-ia/bin/axolos-ia:111
+#, python-brace-format
+msgid "{G}Aviso: faltan modelos ({0}, {1}); descárgalos con  axolos-ia descargar{F}"
+msgstr "{G}Внимание: нет моделей ({0}, {1}); загрузите их:  axolos-ia download{F}"
+
+#: packages/axolos-ia/bin/axolos-ia:135
+msgid "No hay VS Code instalado."
+msgstr "VS Code не установлен."
+
+#: packages/axolos-ia/bin/axolos-ia:136
+#, python-brace-format
+msgid "{M}==>{F} Extensión Continue en {code}"
+msgstr "{M}==>{F} Расширение Continue в {code}"
+
+#: packages/axolos-ia/bin/axolos-ia:142
+#, python-brace-format
+msgid "   tu configuración anterior está en {bak}"
+msgstr "   прежняя конфигурация сохранена в {bak}"
+
+#: packages/axolos-ia/bin/axolos-ia:145
+msgid "Continue usa la IA local. En VS Code: Ctrl+L para el chat; el autocompletado va solo."
+msgstr "Continue использует локальный ИИ. В VS Code: Ctrl+L — чат; автодополнение работает само."
+
+#: packages/axolos-ia/bin/axolos-ia:150
+msgid "Necesitas Docker (perfil «contenedores»: axolos-dev instalar contenedores)."
+msgstr "Нужен Docker (профиль «containers»: axolos-dev install containers)."
+
+#: packages/axolos-ia/bin/axolos-ia:155
+#, python-brace-format
+msgid "{M}==>{F} Descargando Open WebUI (solo la primera vez, ~4 GB)"
+msgstr "{M}==>{F} Загрузка Open WebUI (только в первый раз, ~4 ГБ)"
+
+#: packages/axolos-ia/bin/axolos-ia:162
+msgid "No se pudo arrancar Open WebUI."
+msgstr "Не удалось запустить Open WebUI."
+
+#: packages/axolos-ia/bin/axolos-ia:163
+#, python-brace-format
+msgid "   {V}✓{F} Abriendo http://localhost:3000 (tarda unos segundos la primera vez)"
+msgstr "   {V}✓{F} Открываю http://localhost:3000 (в первый раз — несколько секунд)"
+
+#: packages/axolos-ia/bin/axolos-ia:177
+msgid ""
+"axolos-ia · IA local de AxolOS\n"
+"\n"
+"  axolos-ia                     estado: gráfica, servicio, modelos\n"
+"  axolos-ia gpu                 activa la gráfica para la IA (CUDA / ROCm / Vulkan)\n"
+"  axolos-ia modelos             catálogo y qué conviene a tu equipo\n"
+"  axolos-ia descargar [ID...]   descarga modelos (sin ID: los recomendados)\n"
+"  axolos-ia vscode              conecta VS Code con la IA local (extensión Continue)\n"
+"  axolos-ia web                 interfaz web Open WebUI en http://localhost:3000 (Docker)\n"
+"  axolos-ia chat                abre Axo, el chat\n"
+"  axolos-ia contexto            lo que Axo sabe de este equipo (datos en vivo + manual)\n"
+"  axolos-ia buscar FRASE        busca tus archivos por lo que contienen («foto de la playa»)\n"
+"  axolos-ia indexar             actualiza ya el índice de archivos (se hace solo cada 30 min)\n"
+msgstr ""
+"axolos-ia · локальный ИИ AxolOS\n"
+"\n"
+"  axolos-ia                     состояние: видеокарта, служба, модели\n"
+"  axolos-ia gpu                 включает видеокарту для ИИ (CUDA / ROCm / Vulkan)\n"
+"  axolos-ia models              каталог моделей и что подходит вашему компьютеру\n"
+"  axolos-ia download [ID...]    загружает модели (без ID — рекомендуемые)\n"
+"  axolos-ia vscode              подключает VS Code к локальному ИИ (расширение Continue)\n"
+"  axolos-ia web                 веб-интерфейс Open WebUI на http://localhost:3000 (Docker)\n"
+"  axolos-ia chat                открывает Axo, чат\n"
+"  axolos-ia context             что Axo знает об этом компьютере (живые данные + руководство)\n"
+"  axolos-ia search ФРАЗА        ищет файлы по содержимому («фото пляжа»)\n"
+"  axolos-ia index               обновляет индекс файлов сейчас (и так обновляется каждые 30 мин)\n"
+
+#: packages/axolos-ia/bin/axolos-ia:214
+msgid "No encuentro nada parecido."
+msgstr "Ничего похожего не найдено."
+
+#: packages/axolos-ia/bin/axolos-ia:217
+msgid "(parecido)"
+msgstr "(похоже)"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:216
+#: packages/axolos-ia/bin/axolos-ia-chat:711
+msgid "Conversación"
+msgstr "Беседа"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:243
+msgid "HOY"
+msgstr "СЕГОДНЯ"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:245
+msgid "AYER"
+msgstr "ВЧЕРА"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:247
+msgid "ÚLTIMOS 7 DÍAS"
+msgstr "ПОСЛЕДНИЕ 7 ДНЕЙ"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:249
+msgid "ÚLTIMOS 30 DÍAS"
+msgstr "ПОСЛЕДНИЕ 30 ДНЕЙ"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:250
+msgid "ANTES"
+msgstr "РАНЕЕ"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:305
+msgid "Autocompletado"
+msgstr "Автодополнение"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:390
+msgid "Razonamiento"
+msgstr "Рассуждение"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:401
+msgid "Copiar"
+msgstr "Копировать"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:405
+msgid "Regenerar"
+msgstr "Создать заново"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:434
+msgid "Cargando el modelo"
+msgstr "Загрузка модели"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:434
+msgid "Pensando"
+msgstr "Думаю"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:442
+msgid "Pensando…"
+msgstr "Думаю…"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:447
+msgid "Ver razonamiento"
+msgstr "Показать рассуждение"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:458
+#, python-brace-format
+msgid "<span style=\"color:{0}\">(respuesta detenida)</span>"
+msgstr "<span style=\"color:{0}\">(ответ остановлен)</span>"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:467
+#, python-brace-format
+msgid "<span style=\"color:{0}\">No he podido responder: {1}</span>"
+msgstr "<span style=\"color:{0}\">Не удалось ответить: {1}</span>"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:472
+msgid "Copiado"
+msgstr "Скопировано"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:479
+msgid "Código copiado"
+msgstr "Код скопирован"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:518
+msgid "Conectando con la IA local…"
+msgstr "Подключение к локальному ИИ…"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:538
+msgid "Ocultar el historial (Ctrl+B)"
+msgstr "Скрыть историю (Ctrl+B)"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:542
+msgid "  Nueva conversación"
+msgstr "  Новая беседа"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:549
+msgid "Buscar en el historial  (Ctrl+K)"
+msgstr "Поиск по истории  (Ctrl+K)"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:561
+msgid "● Todo se queda en tu equipo"
+msgstr "● Всё остаётся на вашем компьютере"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:579
+msgid "Mostrar el historial (Ctrl+B)"
+msgstr "Показать историю (Ctrl+B)"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:582
+#: packages/axolos-ia/bin/axolos-ia-chat:1058
+msgid "Nueva conversación"
+msgstr "Новая беседа"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:587
+msgid "Pensar a fondo"
+msgstr "Думать глубже"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:589
+msgid "Razona antes de responder: respuestas más cuidadas, algo más lento"
+msgstr "Рассуждает перед ответом: ответы точнее, но чуть медленнее"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:632
+msgid "Adjuntar imagen (también puedes arrastrarla)"
+msgstr "Прикрепить изображение (можно и перетащить)"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:636
+msgid "Pregunta lo que quieras…"
+msgstr "Спросите что угодно…"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:648
+msgid "Intro envía · Mayús+Intro, nueva línea · Esc detiene · Ctrl+N nueva"
+msgstr "Enter — отправить · Shift+Enter — новая строка · Esc — остановить · Ctrl+N — новая"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:686
+msgid "Aún no hay conversaciones"
+msgstr "Бесед пока нет"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:686
+msgid "Sin resultados"
+msgstr "Ничего не найдено"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:726
+#: packages/axolos-ia/bin/axolos-ia-chat:734
+msgid "Renombrar"
+msgstr "Переименовать"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:727
+msgid "Exportar a Markdown…"
+msgstr "Экспорт в Markdown…"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:729
+msgid "Eliminar"
+msgstr "Удалить"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:734
+msgid "Nombre de la conversación:"
+msgstr "Название беседы:"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:745
+msgid "Exportar conversación"
+msgstr "Экспорт беседы"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:751
+msgid "Tú"
+msgstr "Вы"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:756
+msgid "Eliminar conversación"
+msgstr "Удалить беседу"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:757
+#, python-brace-format
+msgid "¿Eliminar esta conversación? Se mueve a la papelera de Axo ({0})."
+msgstr "Удалить эту беседу? Она будет перемещена в корзину Axo ({0})."
+
+#: packages/axolos-ia/bin/axolos-ia-chat:789
+msgid "Encender la IA local"
+msgstr "Включить локальный ИИ"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:789
+msgid "La IA local está apagada."
+msgstr "Локальный ИИ выключен."
+
+#: packages/axolos-ia/bin/axolos-ia-chat:791
+msgid "Aún no hay ningún modelo descargado."
+msgstr "Ни одна модель ещё не загружена."
+
+#: packages/axolos-ia/bin/axolos-ia-chat:792
+#, python-brace-format
+msgid "Descargar {0}"
+msgstr "Загрузить {0}"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:803
+msgid "Encendiendo la IA local…"
+msgstr "Запуск локального ИИ…"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:808
+msgid "Descargando el modelo… 0 %"
+msgstr "Загрузка модели… 0 %"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:811
+#, python-brace-format
+msgid "Error: {err}"
+msgstr "Ошибка: {err}"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:846
+msgid "¿En qué te ayudo?"
+msgstr "Чем помочь?"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:849
+msgid "Soy Axo, la IA de tu equipo. Funciono sin internet y nada de lo que me cuentes sale de aquí."
+msgstr "Я Axo, ИИ вашего компьютера. Работаю без интернета, и ничего из сказанного не покидает этот компьютер."
+
+#: packages/axolos-ia/bin/axolos-ia-chat:868
+msgid "Explícame un error"
+msgstr "Объясни ошибку"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:868
+msgid "Pega el mensaje de la terminal y te digo qué pasa"
+msgstr "Вставьте сообщение из терминала, и я объясню, в чём дело"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:869
+msgid ""
+"Explícame qué significa este error y cómo lo arreglo:\n"
+"\n"
+msgstr ""
+"Объясни, что означает эта ошибка и как её исправить:\n"
+"\n"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:870
+msgid "En Python, bash o fish, listo para usar"
+msgstr "На Python, bash или fish, готовый к работе"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:870
+msgid "Escribe un script"
+msgstr "Напиши скрипт"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:871
+msgid "Escribe un script de Python que "
+msgstr "Напиши скрипт на Python, который "
+
+#: packages/axolos-ia/bin/axolos-ia-chat:872
+msgid "Fallos, mejoras y buenas prácticas"
+msgstr "Ошибки, улучшения и хорошие практики"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:872
+msgid "Revisa mi código"
+msgstr "Проверь мой код"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:873
+msgid ""
+"Revisa este código y dime cómo mejorarlo:\n"
+"\n"
+msgstr ""
+"Проверь этот код и подскажи, как его улучшить:\n"
+"\n"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:874
+msgid "Comandos de Linux"
+msgstr "Команды Linux"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:874
+msgid "Cómo hacer algo en AxolOS desde la terminal"
+msgstr "Как сделать что-то в AxolOS из терминала"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:875
+msgid "¿Cómo puedo, desde la terminal, "
+msgstr "Как мне из терминала "
+
+#: packages/axolos-ia/bin/axolos-ia-chat:1048
+msgid "Detener (Esc)"
+msgstr "Остановить (Esc)"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:1048
+msgid "Enviar (Intro)"
+msgstr "Отправить (Enter)"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:1065
+msgid "Adjuntar imagen"
+msgstr "Прикрепить изображение"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:1066
+msgid "Imágenes (*.png *.jpg *.jpeg *.webp)"
+msgstr "Изображения (*.png *.jpg *.jpeg *.webp)"
+
+#: packages/axolos-ia/bin/axolos-ia-chat:1111
+msgid "Axo, la IA local de AxolOS"
+msgstr "Axo — локальный ИИ AxolOS"
+
+#: packages/axolos-ia/lib/axolos-ia-krunner:84
+msgid "Preparar la búsqueda de archivos con IA"
+msgstr "Подготовить поиск файлов с ИИ"
+
+#: packages/axolos-ia/lib/axolos-ia-krunner:85
+msgid "Aún no hay índice: se crea en segundo plano (axolos-ia indexar)"
+msgstr "Индекса пока нет: он создаётся в фоне (axolos-ia index)"
+
+#: packages/axolos-ia/lib/axolos-ia-krunner:89
+#, python-brace-format
+msgid "No se pudo buscar: {e}"
+msgstr "Не удалось выполнить поиск: {e}"
+
+#: packages/axolos-ia/lib/axolos-ia-krunner:91
+#, python-brace-format
+msgid "Busca en mis archivos: {frase}"
+msgstr "Искать в моих файлах: {frase}"
+
+#: packages/axolos-ia/lib/axolos-ia-krunner:91
+#, python-brace-format
+msgid "No encuentro nada parecido a «{frase}»"
+msgstr "Ничего похожего на «{frase}» не найдено"
+
+#: packages/axolos-ia/lib/axolos-ia-krunner:92
+msgid "Pulsa para preguntárselo a Axo"
+msgstr "Нажмите, чтобы спросить Axo"
+
+#: packages/axolos-ia/lib/axolos-ia-krunner:101
+msgid "Lo más parecido · "
+msgstr "Самое похожее · "
+
+#: packages/axolos-ia/lib/axolos-ia-krunner:102
+msgid "Archivos (IA local)"
+msgstr "Файлы (локальный ИИ)"
+
+#: packages/axolos-ia/lib/axolos-ia-krunner:123
+#, python-brace-format
+msgid "Preguntar a Axo: {t}"
+msgstr "Спросить Axo: {t}"
+
+#: packages/axolos-ia/lib/axolos-ia-krunner:126
+#, python-brace-format
+msgid "Preguntar a Axo: {q}"
+msgstr "Спросить Axo: {q}"
+
+#: packages/axolos-ia/lib/axolos-ia-krunner:131
+msgid "Abrir la carpeta que lo contiene"
+msgstr "Открыть папку с файлом"
+
+#: packages/axolos-ia/lib/axolos-indice-vigia:41
+#, python-brace-format
+msgid "Vigilando {0} carpetas"
+msgstr "Отслеживается папок: {0}"
+
+#: packages/axolos-ia/lib/axolos-indice-vigia:89
+#, python-brace-format
+msgid "No se pudo indexar: {e}"
+msgstr "Не удалось проиндексировать: {e}"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:58
+msgid "Describe esta imagen en español en una o dos frases, para poder encontrarla después con una búsqueda: qué tipo es (foto, captura de pantalla, dibujo, documento escaneado…), qué se ve, el lugar, personas, animales, objetos y cualquier texto visible importante. Sin introducción."
+msgstr "Опиши это изображение по-русски одним-двумя предложениями, чтобы потом найти его поиском: что это (фото, снимок экрана, рисунок, отсканированный документ…), что на нём видно, место, люди, животные, предметы и любой важный видимый текст. Без вступления."
+
+#: packages/axolos-ia/lib/axolos_buscar.py:267
+msgid "La IA local está apagada: no se puede indexar."
+msgstr "Локальный ИИ выключен: индексация невозможна."
+
+#: packages/axolos-ia/lib/axolos_buscar.py:270
+#, python-brace-format
+msgid "Falta el modelo de búsqueda: axolos-ia descargar {EMBED}"
+msgstr "Нет модели поиска: axolos-ia download {EMBED}"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:274
+msgid "Sin modelo de visión: las fotos se buscarán solo por nombre y fecha."
+msgstr "Нет модели зрения: фото будут искаться только по имени и дате."
+
+#: packages/axolos-ia/lib/axolos_buscar.py:288
+#, python-brace-format
+msgid "{total} archivos nuevos: se indexarán al enchufar el portátil (describir fotos usa la gráfica)"
+msgstr "Новых файлов: {total}. Они будут проиндексированы, когда ноутбук подключат к сети (описание фото нагружает видеокарту)"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:290
+#, python-brace-format
+msgid "{0} archivos en {1}: {total} por indexar"
+msgstr "Файлов в {1}: {0}, к индексации: {total}"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:291
+#, python-brace-format
+msgid ", {0} quitados"
+msgstr ", удалено: {0}"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:340
+msgid "Índice al día."
+msgstr "Индекс актуален."
+
+#: packages/axolos-ia/lib/axolos_buscar.py:515
+msgid "sin índice todavía"
+msgstr "индекса пока нет"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:520
+msgid "documentos"
+msgstr "документы"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:520
+msgid "imágenes"
+msgstr "изображения"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:520
+msgid "textos"
+msgstr "тексты"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:520
+msgid "vídeos"
+msgstr "видео"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:523
+msgid "%d/%m %H:%M"
+msgstr "%d.%m %H:%M"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:523
+msgid "nunca"
+msgstr "никогда"
+
+#: packages/axolos-ia/lib/axolos_buscar.py:524
+#, python-brace-format
+msgid "{0} archivos ({1}), actualizado {cuando}"
+msgstr "Файлов: {0} ({1}), обновлено {cuando}"
+
+#: packages/axolos-ia/lib/axolos_ia.py:37
+msgid "Chat, código e imágenes (equipos modestos)"
+msgstr "Чат, код и изображения (скромные компьютеры)"
+
+#: packages/axolos-ia/lib/axolos_ia.py:39
+msgid "Chat, código e imágenes"
+msgstr "Чат, код и изображения"
+
+#: packages/axolos-ia/lib/axolos_ia.py:41
+msgid "Chat, código e imágenes (máxima calidad)"
+msgstr "Чат, код и изображения (максимальное качество)"
+
+#: packages/axolos-ia/lib/axolos_ia.py:43
+msgid "Programación avanzada (agentes, proyectos grandes)"
+msgstr "Продвинутое программирование (агенты, большие проекты)"
+
+#: packages/axolos-ia/lib/axolos_ia.py:45
+msgid "Autocompletado de código en el editor"
+msgstr "Автодополнение кода в редакторе"
+
+#: packages/axolos-ia/lib/axolos_ia.py:47
+msgid "Autocompletado de código (más preciso)"
+msgstr "Автодополнение кода (точнее)"
+
+#: packages/axolos-ia/lib/axolos_ia.py:50
+msgid "Buscar tus archivos por lo que contienen"
+msgstr "Поиск файлов по содержимому"
+
+#: packages/axolos-ia/lib/axolos_ia.py:193
+msgid "Devuelves solo un título de 3 a 6 palabras, sin comillas ni punto final, en el mismo idioma que el usuario."
+msgstr "Ты возвращаешь только заголовок из 3–6 слов, без кавычек и точки в конце, на том же языке, что и пользователь."
+
+#: packages/axolos-ia/lib/axolos_ia.py:195
+#, python-brace-format
+msgid ""
+"Pregunta: {0}\n"
+"\n"
+"Respuesta: {1}\n"
+"\n"
+"Título de esta conversación:"
+msgstr ""
+"Вопрос: {0}\n"
+"\n"
+"Ответ: {1}\n"
+"\n"
+"Заголовок этой беседы:"
+
+#: packages/axolos-kde-settings/axolos-navegadores:68
+#, python-brace-format
+msgid "   {d}: está abierto; ciérralo y vuelve a ejecutar esto"
+msgstr "   {d}: открыт; закройте его и запустите снова"
+
+#: packages/axolos-kde-settings/axolos-navegadores:75
+#, python-brace-format
+msgid "   {d}: botones AxolOS"
+msgstr "   {d}: кнопки AxolOS"

@@ -9,7 +9,6 @@ Yaru-purple-dark y añade enlaces con el nombre de cada app de KDE apuntando a
 su equivalente Yaru (la variante morada si existe). Son enlaces simbólicos a
 /usr/share/icons: no se copia ningún dibujo.
 """
-import colorsys
 import sys
 from pathlib import Path
 

@@ -12,7 +12,6 @@ Uso: rig_axolote.py FONDO.jpg SILUETA.png SALIDA_DIR
 Coordenadas "u" = unidades del logo (0..10 en x e y, como la rejilla de la hoja).
 """
 import json
-import math
 import sys
 
 import numpy as np

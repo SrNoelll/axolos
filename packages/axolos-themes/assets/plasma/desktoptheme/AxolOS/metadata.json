@@ -7,7 +7,12 @@
             }
         ],
         "Category": "Plasma 6.0 theme",
-        "Description": "MacTahoe-Dark (Vince Liuice) con el morado de AxolOS",
+        "Description": "MacTahoe-Dark (Vince Liuice) with the AxolOS purple",
+        "Description[es]": "MacTahoe-Dark (Vince Liuice) con el morado de AxolOS",
+        "Description[fr]": "MacTahoe-Dark (Vince Liuice) avec le violet d'AxolOS",
+        "Description[ru]": "MacTahoe-Dark (Vince Liuice) с фиолетовым цветом AxolOS",
+        "Description[zh_CN]": "MacTahoe-Dark（Vince Liuice），使用 AxolOS 紫色",
+        "Description[ja]": "MacTahoe-Dark（Vince Liuice）に AxolOS のパープル",
         "EnabledByDefault": true,
         "Id": "AxolOS",
         "License": "GPL-3.0",

@@ -2,10 +2,11 @@
 pkgname=axolos-menu
 pkgver=$(<"${startdir}/../../VERSION")
 pkgrel=3
-pkgdesc="Bento: el menú de aplicaciones de AxolOS (favoritas, recientes, búsqueda y sistema en mosaicos)"
+pkgdesc="Bento: the AxolOS app launcher (favorites, recent files, search and system tiles)"
 arch=('any')
 license=('GPL-3.0-or-later')
 depends=('plasma-workspace' 'plasma-nm' 'kirigami' 'kcoreaddons' 'axolos-branding')
+makedepends=('gettext')
 
 package() {
   local d="$pkgdir/usr/share/plasma/plasmoids/org.axolos.bento"
@@ -13,4 +14,11 @@ package() {
   cp -r --no-preserve=ownership "$startdir/org.axolos.bento/." "$d/"
   find "$d" -type d -exec chmod 755 {} +
   find "$d" -type f -exec chmod 644 {} +
+  # Traducciones del menú (originales en inglés): Plasma usa el dominio plasma_applet_<id>
+  local po l
+  for po in "$startdir"/po/*.po; do
+    l=$(basename "$po" .po)
+    install -dm755 "$pkgdir/usr/share/locale/$l/LC_MESSAGES"
+    msgfmt -c -o "$pkgdir/usr/share/locale/$l/LC_MESSAGES/plasma_applet_org.axolos.bento.mo" "$po"
+  done
 }

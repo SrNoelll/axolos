@@ -7,6 +7,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Effects
+import SddmComponents 2.0          // TextConstants: textos de SDDM traducidos al idioma del sistema
 
 Rectangle {
     id: root
@@ -23,10 +24,23 @@ Rectangle {
     property int userIndex: userModel.lastIndex >= 0 ? userModel.lastIndex : 0
     property int sessionIndex: sessionModel.lastIndex >= 0 ? sessionModel.lastIndex : 0
     property var now: new Date()
-    readonly property var dias: ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"]
-    readonly property var meses: ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto",
-                                  "septiembre", "octubre", "noviembre", "diciembre"]
     function two(n) { return (n < 10 ? "0" : "") + n }
+
+    // ---- idioma y formato regional del sistema -----------------------------------
+    TextConstants { id: textConstants }
+    readonly property var loc: Qt.locale()
+    readonly property bool reloj12: loc.timeFormat(Locale.ShortFormat).toLowerCase().indexOf("ap") >= 0
+    // formato largo de la región sin el año («domingo, 8 de noviembre», «Sunday, November 8»…)
+    readonly property string formatoFecha: loc.dateFormat(Locale.LongFormat)
+        .replace(/y+\s*[年년]\s*/, "")
+        .replace(/^y+[.,]?\s*/, "")
+        .replace(/\s*'[^']*'\s*y+/, "")
+        .replace(/[,.]?\s*y+(\s*'[^']*'\.?)?/, "")
+        .trim()
+    function hora(d) {
+        return reloj12 ? (d.getHours() % 12 || 12) + ":" + two(d.getMinutes()) + " " + d.toLocaleTimeString(loc, "AP")
+                       : two(d.getHours()) + ":" + two(d.getMinutes())
+    }
 
     Timer { interval: 1000; running: true; repeat: true; onTriggered: root.now = new Date() }
 
@@ -53,12 +67,12 @@ Rectangle {
         x: Math.round(root.width * 0.07); y: Math.round(root.height * 0.12)
         spacing: 4
         Text {
-            text: root.two(root.now.getHours()) + ":" + root.two(root.now.getMinutes())
+            text: root.hora(root.now)
             color: root.cText; font.family: root.fDisplay; font.pixelSize: Math.round(root.height * 0.13)
         }
         Text {
             leftPadding: 6
-            text: root.dias[root.now.getDay()] + ", " + root.now.getDate() + " de " + root.meses[root.now.getMonth()]
+            text: root.now.toLocaleDateString(root.loc, root.formatoFecha || "dddd d MMMM")
             color: root.cMuted; font.family: root.fUi; font.pixelSize: Math.round(root.height * 0.024)
         }
     }
@@ -175,7 +189,7 @@ Rectangle {
                     Text {
                         anchors.verticalCenter: parent.verticalCenter
                         visible: !password.text.length
-                        text: "Contraseña"
+                        text: textConstants.password
                         color: root.cMuted; font.family: root.fUi; font.pixelSize: 15
                     }
                 }
@@ -195,7 +209,7 @@ Rectangle {
             Text {
                 id: message
                 Layout.fillWidth: true
-                text: keyboard.capsLock ? "Bloq Mayús está activado" : ""
+                text: keyboard.capsLock ? textConstants.capslockWarning : ""
                 color: "#ff9fb0"; font.family: root.fUi; font.pixelSize: 13
             }
         }
@@ -218,7 +232,7 @@ Rectangle {
         target: sddm
         function onLoginFailed() {
             password.text = ""
-            message.text = "Contraseña incorrecta"
+            message.text = textConstants.loginFailed
             shake.start()
             password.forceActiveFocus()
         }
@@ -244,9 +258,9 @@ Rectangle {
         Pill { visible: keyboard.layouts.length > 1; label: keyboard.layouts[keyboard.currentLayout] ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : ""; glyph: "⌨"
                onClicked: keyboard.currentLayout = (keyboard.currentLayout + 1) % keyboard.layouts.length }
         Item { Layout.fillWidth: true }
-        Pill { visible: sddm.canSuspend; label: "Reposo"; glyph: "☾"; onClicked: sddm.suspend() }
-        Pill { visible: sddm.canReboot; label: "Reiniciar"; glyph: "↻"; onClicked: sddm.reboot() }
-        Pill { visible: sddm.canPowerOff; label: "Apagar"; glyph: "⏻"; accent: true; onClicked: sddm.powerOff() }
+        Pill { visible: sddm.canSuspend; label: textConstants.suspend; glyph: "☾"; onClicked: sddm.suspend() }
+        Pill { visible: sddm.canReboot; label: textConstants.reboot; glyph: "↻"; onClicked: sddm.reboot() }
+        Pill { visible: sddm.canPowerOff; label: textConstants.shutdown; glyph: "⏻"; accent: true; onClicked: sddm.powerOff() }
     }
 
     component Pill: Rectangle {

@@ -54,14 +54,38 @@ FocusScope {
 
     function reset() { search.text = ""; category = -1; search.forceActiveFocus() }
     function setQuery(t) { search.text = t }
+    // ---- idioma -----------------------------------------------------------------
+    // Textos en inglés traducidos con el catálogo del plasmoide (plasma_applet_org.axolos.bento);
+    // fuera de Plasma (la maqueta de tools/bento-dev) no hay i18n() y se quedan en inglés.
+    function tr(s, a, b) {
+        if (typeof i18n === "function")
+            return a === undefined ? i18n(s) : b === undefined ? i18n(s, a) : i18n(s, a, b)
+        return s.replace("%1", a).replace("%2", b)
+    }
+    function trp(uno, varios, n) {
+        if (typeof i18np === "function") return i18np(uno, varios, n)
+        return (n === 1 ? uno : varios).replace("%1", n)
+    }
     function greeting(d) {
         const h = d.getHours()
-        return h < 6 ? "Buenas noches" : h < 13 ? "Buenos días" : h < 21 ? "Buenas tardes" : "Buenas noches"
+        return h >= 6 && h < 13 ? tr("Good morning") : h >= 13 && h < 21 ? tr("Good afternoon") : tr("Good evening")
     }
     function two(n) { return (n < 10 ? "0" : "") + n }
-    readonly property var dias: ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"]
-    readonly property var meses: ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto",
-                                  "septiembre", "octubre", "noviembre", "diciembre"]
+    // Fecha y hora con el formato regional (los nombres de días y meses los pone Qt)
+    readonly property var loc: Qt.locale()
+    readonly property bool reloj12: loc.timeFormat(Locale.ShortFormat).toLowerCase().indexOf("ap") >= 0
+    // formato largo de la región sin el año: «domingo, 8 de noviembre», «Sunday, November 8»,
+    // «воскресенье, 8 ноября», «11月8日星期日»…
+    readonly property string formatoFecha: loc.dateFormat(Locale.LongFormat)
+        .replace(/y+\s*[年년]\s*/, "")                      // zh, ja, ko: «yyyy年M月d日dddd»
+        .replace(/^y+[.,]?\s*/, "")                        // año delante (hu: «yyyy. MMMM d.»)
+        .replace(/\s*'[^']*'\s*y+/, "")                     // es, pt, ca: «… 'de' yyyy», «… 'del' yyyy»
+        .replace(/[,.]?\s*y+(\s*'[^']*'\.?)?/, "")           // en, fr, de, ru («yyyy 'г'.»)
+        .trim()
+    function fecha(d) { return d.toLocaleDateString(loc, formatoFecha || "dddd d MMMM") }
+    function hora(d) {
+        return reloj12 ? (d.getHours() % 12 || 12) + ":" + two(d.getMinutes()) : two(d.getHours()) + ":" + two(d.getMinutes())
+    }
 
     Keys.onEscapePressed: {
         if (search.text.length) search.text = ""
@@ -118,11 +142,14 @@ FocusScope {
             ColumnLayout {
                 spacing: 0
                 Text {
-                    text: bento.greeting(bento.now) + (bento.userName.length ? ", " + bento.userName.charAt(0).toUpperCase() + bento.userName.slice(1) : "")
+                    text: bento.userName.length
+                          // TRANSLATORS: %1 is the greeting («Good morning»…), %2 the user's name
+                          ? bento.tr("%1, %2", bento.greeting(bento.now), bento.userName.charAt(0).toUpperCase() + bento.userName.slice(1))
+                          : bento.greeting(bento.now)
                     color: bento.cText; font.family: bento.fDisplay; font.pixelSize: 25
                 }
                 Text {
-                    text: bento.appCount + " aplicaciones"
+                    text: bento.trp("%1 application", "%1 applications", bento.appCount)
                     color: bento.cMuted; font.family: bento.fMono; font.pixelSize: 12
                 }
             }
@@ -148,7 +175,7 @@ FocusScope {
                         Text {
                             anchors.fill: parent; verticalAlignment: Text.AlignVCenter
                             visible: !search.text.length
-                            text: "Busca apps, archivos o ajustes"
+                            text: bento.tr("Search apps, files or settings")
                             color: bento.cMuted; font: search.font
                         }
                         Keys.onDownPressed: results.forceActiveFocus()
@@ -175,7 +202,7 @@ FocusScope {
                     Layout.columnSpan: 2; Layout.rowSpan: 2
                     Layout.fillWidth: true; Layout.preferredWidth: 2
                     Layout.preferredHeight: bento.tileH * 2 + 12
-                    title: "Favoritas"
+                    title: bento.tr("Favorites")
                     GridView {
                         id: favGrid
                         anchors.fill: parent; anchors.topMargin: 24
@@ -192,31 +219,38 @@ FocusScope {
                     Layout.fillWidth: true; Layout.preferredWidth: 1; Layout.preferredHeight: bento.tileH
                     Text {
                         anchors.left: parent.left; anchors.top: parent.top
-                        text: "AHORA"; color: bento.cAccent
+                        text: bento.tr("NOW"); color: bento.cAccent
                         font.family: bento.fMono; font.pixelSize: 11; font.letterSpacing: 2
                     }
                     Text {
+                        id: horaTxt
                         anchors.left: parent.left; anchors.bottom: dateTxt.top; anchors.bottomMargin: -4
-                        text: bento.two(bento.now.getHours()) + ":" + bento.two(bento.now.getMinutes())
+                        text: bento.hora(bento.now)
                         color: bento.cText; font.family: bento.fDisplay; font.pixelSize: 42
+                    }
+                    Text {                               // a. m. / p. m. si la región usa reloj de 12 horas
+                        visible: bento.reloj12
+                        anchors.left: horaTxt.right; anchors.leftMargin: 6; anchors.baseline: horaTxt.baseline
+                        text: bento.now.toLocaleTimeString(bento.loc, "AP")
+                        color: bento.cMuted; font.family: bento.fUi; font.pixelSize: 15
                     }
                     Text {
                         id: dateTxt
                         anchors.left: parent.left; anchors.bottom: parent.bottom
-                        text: bento.dias[bento.now.getDay()] + " " + bento.now.getDate() + " de " + bento.meses[bento.now.getMonth()]
+                        text: bento.fecha(bento.now)
                         color: bento.cMuted; font.family: bento.fUi; font.pixelSize: 13
                     }
                 }
                 Tile {                                   // sistema
                     Layout.fillWidth: true; Layout.preferredWidth: 1; Layout.preferredHeight: bento.tileH
-                    title: "Sistema"
+                    title: bento.tr("System")
                     ColumnLayout {
                         anchors.left: parent.left; anchors.right: parent.right; anchors.bottom: parent.bottom
                         spacing: 9
-                        StatusRow { icon: "network-wireless-symbolic"; label: bento.networkText || "Sin conexión" }
+                        StatusRow { icon: "network-wireless-symbolic"; label: bento.networkText || bento.tr("Offline") }
                         StatusRow {
                             visible: bento.battery >= 0
-                            icon: "battery-full-symbolic"; label: "Batería"; value: bento.battery + " %"
+                            icon: "battery-full-symbolic"; label: bento.tr("Battery"); value: bento.battery + " %"
                             bar: bento.battery / 100
                         }
                     }
@@ -224,7 +258,7 @@ FocusScope {
                 Tile {                                   // seguir con
                     Layout.columnSpan: 2
                     Layout.fillWidth: true; Layout.preferredWidth: 2; Layout.preferredHeight: bento.tileH
-                    title: "Seguir con"
+                    title: bento.tr("Jump back in")
                     ListView {
                         id: recentList
                         anchors.fill: parent; anchors.topMargin: 24
@@ -246,7 +280,7 @@ FocusScope {
                     Text {
                         visible: !bento.recentModel || bento.recentModel.count === 0
                         anchors.centerIn: parent
-                        text: "Aquí aparecerán tus archivos recientes"
+                        text: bento.tr("Your recent files will appear here")
                         color: bento.cMuted; font.family: bento.fUi; font.pixelSize: 13
                     }
                 }
@@ -300,7 +334,7 @@ FocusScope {
                                 Text { text: model.display; color: bento.cText; font.family: bento.fUi; font.pixelSize: 14; elide: Text.ElideRight; Layout.fillWidth: true }
                                 Text { visible: text.length; text: model.description || ""; color: bento.cMuted; font.family: bento.fUi; font.pixelSize: 12; elide: Text.ElideRight; Layout.fillWidth: true }
                             }
-                            Text { visible: parent.parent.current; text: "Intro"; color: bento.cMuted; font.family: bento.fMono; font.pixelSize: 11 }
+                            Text { visible: parent.parent.current; text: bento.tr("Enter"); color: bento.cMuted; font.family: bento.fMono; font.pixelSize: 11 }
                         }
                         onClicked: bento.launch(bento.resultsModel, index)
                     }
@@ -312,7 +346,7 @@ FocusScope {
                 Text {
                     visible: !bento.resultsModel || bento.resultsModel.count === 0
                     anchors.centerIn: parent
-                    text: "Sin resultados para «" + bento.query + "»"
+                    text: bento.tr("No results for “%1”", bento.query)
                     color: bento.cMuted; font.family: bento.fUi; font.pixelSize: 13
                 }
             }
@@ -340,7 +374,7 @@ FocusScope {
                     Text {
                         id: chipTxt
                         anchors.centerIn: parent
-                        text: index === 0 ? "Inicio" : (bento.rootModel ? bento.rootModel.labelForRow(row) : "")
+                        text: index === 0 ? bento.tr("Home") : (bento.rootModel ? bento.rootModel.labelForRow(row) : "")
                         color: parent.on ? "#1f1a3d" : bento.cText
                         font.family: bento.fUi; font.pixelSize: 13
                         font.weight: parent.on ? Font.Medium : Font.Normal

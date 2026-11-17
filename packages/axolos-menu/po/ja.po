@@ -1,0 +1,91 @@
+# AxolOS · Bento · Japanese translation.
+# Copyright (C) 2026 Noel Alarcón
+# This file is distributed under the same license as the AxolOS package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: AxolOS\n"
+"Report-Msgid-Bugs-To: https://github.com/SrNoelll/axolos/issues\n"
+"POT-Creation-Date: 2026-11-08 13:56+0100\n"
+"PO-Revision-Date: 2026-11-08 12:00+0100\n"
+"Last-Translator: Noel Alarcón\n"
+"Language-Team: Japanese\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:71
+msgid "Good afternoon"
+msgstr "こんにちは"
+
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:71
+msgid "Good evening"
+msgstr "こんばんは"
+
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:71
+msgid "Good morning"
+msgstr "おはようございます"
+
+#. TRANSLATORS: %1 is the greeting («Good morning»…), %2 the user's name
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:147
+msgid "%1, %2"
+msgstr "%1、%2さん"
+
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:152
+msgid "%1 application"
+msgid_plural "%1 applications"
+msgstr[0] "%1 個のアプリ"
+
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:178
+msgid "Search apps, files or settings"
+msgstr "アプリ、ファイル、設定を検索"
+
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:205
+msgid "Favorites"
+msgstr "お気に入り"
+
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:222
+msgid "NOW"
+msgstr "現在"
+
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:246
+msgid "System"
+msgstr "システム"
+
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:250
+msgid "Offline"
+msgstr "オフライン"
+
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:253
+msgid "Battery"
+msgstr "バッテリー"
+
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:261
+msgid "Jump back in"
+msgstr "続きから"
+
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:283
+msgid "Your recent files will appear here"
+msgstr "最近使ったファイルがここに表示されます"
+
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:337
+msgid "Enter"
+msgstr "Enter"
+
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:349
+msgid "No results for “%1”"
+msgstr "「%1」の結果はありません"
+
+#: packages/axolos-menu/org.axolos.bento/contents/ui/BentoView.qml:377
+msgid "Home"
+msgstr "ホーム"
+
+#: packages/axolos-menu/org.axolos.bento/contents/ui/main.qml:21
+msgid "Applications"
+msgstr "アプリケーション"
+
+#: packages/axolos-menu/org.axolos.bento/contents/ui/main.qml:22
+msgid "Favorites, recent files and search"
+msgstr "お気に入り、最近のファイル、検索"

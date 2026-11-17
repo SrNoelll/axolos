@@ -14,6 +14,18 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+sys.path.insert(0, os.environ.get("AXOLOS_LIB", "/usr/lib/axolos"))
+try:
+    from axolos_i18n import _, elegir, idioma  # noqa: E402  textos en el idioma del sistema
+except ImportError:                             # sin axolos-branding: textos originales
+    def _(texto):
+        return texto
+
+    def elegir(textos):
+        return textos.get("es", "") if isinstance(textos, dict) else textos
+
+    def idioma():
+        return "es"
 
 AXOLOS = {"extensions": {"theme": {"system_theme": 1}},       # colores del tema GTK
           "browser": {"custom_chrome_frame": False}}           # barra y botones de KWin
@@ -42,7 +54,7 @@ def running(proc):
 def main():
     if len(sys.argv) == 3 and sys.argv[1] == "--skel":
         cfg = Path(sys.argv[2]) / ".config"
-        for d, _, prefs in BROWSERS:
+        for d, _ruta, prefs in BROWSERS:
             p = cfg / d / "Default" / "Preferences"
             p.parent.mkdir(parents=True, exist_ok=True)
             p.write_text(json.dumps(prefs), encoding="utf-8")
@@ -53,14 +65,14 @@ def main():
         if not p.is_file():
             continue
         if running(proc):
-            print(f"   {d}: está abierto; ciérralo y vuelve a ejecutar esto")
+            print(_("   {d}: está abierto; ciérralo y vuelve a ejecutar esto").format(d=d))
             continue
         data = json.loads(p.read_text(encoding="utf-8"))
         merge(data, prefs)
         tmp = p.with_suffix(".axolos-tmp")
         tmp.write_text(json.dumps(data, separators=(",", ":")), encoding="utf-8")
         os.replace(tmp, p)
-        print(f"   {d}: botones AxolOS")
+        print(_("   {d}: botones AxolOS").format(d=d))
 
 
 if __name__ == "__main__":

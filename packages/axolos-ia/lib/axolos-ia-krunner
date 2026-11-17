@@ -20,12 +20,32 @@ from dbus.mainloop.glib import DBusGMainLoop
 from gi.repository import GLib
 
 sys.path.insert(0, os.environ.get("AXOLOS_LIB", "/usr/lib/axolos"))
+sys.path.insert(0, os.environ.get("AXOLOS_LIB", "/usr/lib/axolos"))
+try:
+    from axolos_i18n import _, elegir, idioma  # noqa: E402  textos en el idioma del sistema
+except ImportError:                             # sin axolos-branding: textos originales
+    def _(texto):
+        return texto
+
+    def elegir(textos):
+        return textos.get("es", "") if isinstance(textos, dict) else textos
+
+    def idioma():
+        return "es"
 
 IFACE = "org.kde.krunner1"
 SERVICIO = "org.axolos.ia.krunner"
-PREGUNTA = re.compile(r"^(?:ia|axo|\?)\s+(.+)$", re.I | re.S)
-BUSCAR = re.compile(r"^(?:ia|axo)\s+(?:busc[oa]r?|encuentra(?:me)?|encontrar|d[oó]nde\s+est[aá]n?|"
-                    r"ens[eé][nñ]ame|abre(?:me)?)\s+(.+)$", re.I | re.S)
+# Se escribe en cualquiera de los idiomas de AxolOS: «ia/axo/ai/ии» + pregunta, o + «busco/find/cherche/
+# найди/找/探して…» + lo que se busca. En chino y japonés no hace falta el espacio.
+PREFIJO = r"(?:ia|axo|ai|ии|аи)"
+PREGUNTA = re.compile(rf"^(?:{PREFIJO}\s+|\?\s+|{PREFIJO}(?=[\u3000-\u9fff]))(.+)$", re.I | re.S)
+VERBOS = (r"busc[oa]r?|encuentra(?:me)?|encontrar|d[oó]nde\s+est[aá]n?|ens[eé][nñ]ame|abre(?:me)?|"
+          r"find|search(?:\s+for)?|look(?:ing)?\s+for|where(?:'s|\s+is|\s+are)|show\s+me|open|"
+          r"cherche[rz]?|trouve[rz]?|o[uù]\s+(?:est|sont)|montre(?:-moi)?|ouvre|"
+          r"найди|найти|ищи|поиск|где|покажи|открой")
+VERBOS_CJK = r"找一下|查找|搜索|找|在哪|打开|探して|検索|どこ|開いて|見つけて"
+BUSCAR = re.compile(rf"^{PREFIJO}\s*(?:(?:{VERBOS})\s+|(?:{VERBOS_CJK})\s*)(.+)$", re.I | re.S)
+CJK = re.compile(r"[\u3000-\u9fff\uff00-\uffef]")
 REPOSO_S = 600
 SIN = dbus.Array([], signature="s")       # resultados sin acciones extra
 
@@ -61,15 +81,15 @@ class Runner(dbus.service.Object):
         if self.buscador is None:
             self.buscador = b.Buscador()
         if not b.DB.exists():
-            return [("indexar", "Preparar la búsqueda de archivos con IA", "axolos", 50, 0.8,
-                     {"subtext": "Aún no hay índice: se crea en segundo plano (axolos-ia indexar)"})]
+            return [("indexar", _("Preparar la búsqueda de archivos con IA"), "axolos", 50, 0.8,
+                     {"subtext": _("Aún no hay índice: se crea en segundo plano (axolos-ia indexar)")})]
         try:
             res = self.buscador.buscar(frase, n=8)
         except Exception as e:  # noqa: BLE001  IA apagada o modelo sin descargar
-            return [("", f"No se pudo buscar: {e}", "dialog-warning", 50, 0.5, {"subtext": "axolos-ia"})]
+            return [("", _("No se pudo buscar: {e}").format(e=e), "dialog-warning", 50, 0.5, {"subtext": "axolos-ia"})]
         if not res:
-            return [(f"Busca en mis archivos: {frase}", f"No encuentro nada parecido a «{frase}»", "axolos",
-                     50, 0.5, {"subtext": "Pulsa para preguntárselo a Axo"})]
+            return [(_("Busca en mis archivos: {frase}").format(frase=frase), _("No encuentro nada parecido a «{frase}»").format(frase=frase), "axolos",
+                     50, 0.5, {"subtext": _("Pulsa para preguntárselo a Axo")})]
         out = []
         for i, r in enumerate(res):
             ruta = r["ruta"]
@@ -78,8 +98,8 @@ class Runner(dbus.service.Object):
             sub = (desc[:110] + "…" if len(desc) > 110 else desc)
             sub = (f"{sub} · {carpeta}" if sub else carpeta)
             if r["parecido"]:
-                sub = "Lo más parecido · " + sub
-            props = {"subtext": sub, "urls": [Path(ruta).as_uri()], "category": "Archivos (IA local)",
+                sub = _("Lo más parecido · ") + sub
+            props = {"subtext": sub, "urls": [Path(ruta).as_uri()], "category": _("Archivos (IA local)"),
                      "actions": ["carpeta"]}
             if r["mini"]:
                 try:
@@ -95,20 +115,20 @@ class Runner(dbus.service.Object):
         self._tocar()
         q = str(query).strip()
         m = BUSCAR.match(q)
-        if m and len(m.group(1).strip()) > 2:
+        if m and len(m.group(1).strip()) >= (2 if CJK.search(m.group(1)) else 3):
             return self._archivos(m.group(1).strip())
         m = PREGUNTA.match(q)
         if m and len(m.group(1).strip()) > 1:
             t = m.group(1).strip()
-            return [(t, f"Preguntar a Axo: {t}", "axolos", 100, 1.0, {"subtext": "IA local", "actions": SIN})]
+            return [(t, _("Preguntar a Axo: {t}").format(t=t), "axolos", 100, 1.0, {"subtext": _("IA local"), "actions": SIN})]
         # Frases que parecen preguntas: se ofrece, pero por debajo de apps y ficheros
-        if q.endswith("?") and len(q.split()) >= 3:
-            return [(q, f"Preguntar a Axo: {q}", "axolos", 30, 0.3, {"subtext": "IA local", "actions": SIN})]
+        if q.endswith(("?", "？")) and (len(q.split()) >= 3 or len(CJK.findall(q)) >= 5):
+            return [(q, _("Preguntar a Axo: {q}").format(q=q), "axolos", 30, 0.3, {"subtext": _("IA local"), "actions": SIN})]
         return []
 
     @dbus.service.method(IFACE, out_signature="a(sss)")
     def Actions(self):
-        return [("carpeta", "Abrir la carpeta que lo contiene", "document-open-folder")]
+        return [("carpeta", _("Abrir la carpeta que lo contiene"), "document-open-folder")]
 
     @dbus.service.method(IFACE, in_signature="ss")
     def Run(self, data, action_id):

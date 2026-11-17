@@ -2,7 +2,7 @@
 pkgname=axolos-ia
 pkgver=$(<"${startdir}/../../VERSION")
 pkgrel=5
-pkgdesc="IA local de AxolOS: Ollama afinado, chat Axo, búsqueda en KRunner y VS Code conectado"
+pkgdesc="AxolOS local AI: tuned Ollama, the Axo chat, KRunner search and VS Code integration"
 arch=('any')
 license=('GPL-3.0-or-later')
 depends=('axolos-branding' 'ollama' 'python' 'python-pyqt6' 'python-markdown' 'python-pygments'
