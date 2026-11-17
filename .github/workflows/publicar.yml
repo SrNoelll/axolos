@@ -36,7 +36,7 @@ jobs:
       - name: Herramientas
         run: |
           pacman -Syu --noconfirm --needed base-devel git github-cli python gnupg \
-            cmake extra-cmake-modules ninja qt6-tools kwin
+            cmake extra-cmake-modules ninja qt6-tools vulkan-headers kwin
           pacman -Q kwin qt6-base
 
       - name: Código

@@ -41,7 +41,7 @@ mkdir -p "$SRCDEST"
 for p in "${AXOLOS_PKGS[@]}"; do
   # axolos-glass es C++ (efecto de KWin): necesita las herramientas de compilación y KWin del sistema
   if [[ $p == axolos-glass ]] && ! command -v cmake >/dev/null; then
-    echo "axolos-glass necesita: sudo pacman -S --needed cmake extra-cmake-modules ninja qt6-tools" >&2; exit 1
+    echo "axolos-glass necesita: sudo pacman -S --needed cmake extra-cmake-modules ninja qt6-tools vulkan-headers" >&2; exit 1
   fi
   say "Compilando $p"
   # -d: no exige tener ya instaladas las dependencias (algunas son del AUR)
