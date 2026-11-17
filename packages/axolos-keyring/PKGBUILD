@@ -1,7 +1,7 @@
 # Maintainer: Noel Alarcón
 pkgname=axolos-keyring
 pkgver=$(<"${startdir}/../../VERSION")
-pkgrel=1
+pkgrel=2
 pkgdesc="Key that signs the packages of the AxolOS repository"
 arch=('any')
 license=('GPL-3.0-or-later')

@@ -1,7 +1,7 @@
 # Maintainer: Noel Alarcón
 pkgname=axolos-themes
 pkgver=$(<"${startdir}/../../VERSION")
-pkgrel=10
+pkgrel=11
 pkgdesc="AxolOS look: global theme, MacTahoe-Dark, Kvantum, AxolOS Obsidian colors, wallpaper, splash and Konsole profile"
 arch=('any')
 # MacTahoe (vinceliuice) es GPL-3.0; fondo, logo y animación de arranque, de Noel

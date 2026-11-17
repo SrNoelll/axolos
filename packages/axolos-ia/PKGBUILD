@@ -1,7 +1,7 @@
 # Maintainer: Noel Alarcón
 pkgname=axolos-ia
 pkgver=$(<"${startdir}/../../VERSION")
-pkgrel=5
+pkgrel=6
 pkgdesc="AxolOS local AI: tuned Ollama, the Axo chat, KRunner search and VS Code integration"
 arch=('any')
 license=('GPL-3.0-or-later')

@@ -1,7 +1,7 @@
 # Maintainer: Noel Alarcón
 pkgname=axolos-dev
 pkgver=$(<"${startdir}/../../VERSION")
-pkgrel=1
+pkgrel=2
 pkgdesc="AxolOS for developers: terminal tools, git with delta, editor themes and language profiles"
 arch=('any')
 license=('GPL-3.0-or-later')
