@@ -35,8 +35,9 @@ guardan en git el generador y su resultado.
 
 | Qué | Herramienta | Notas |
 |---|---|---|
-| Fondos oscuro y claro, logo de arranque | `fondo_cristal.py` (Blender) | `blender -b --factory-startup --python tools/fondo_cristal.py -- --modo oscuro --salida X.png`; `--solo-ajolote` para el logo. El ajolote se infla resolviendo ∇²u = −1 sobre la silueta; dispersión con tres vidrios (R, G, B) |
+| Fondos oscuro y claro, logo de arranque | `fondo_cristal.py` (Blender) | `blender -b --factory-startup --python tools/fondo_cristal.py -- --modo oscuro --salida X.png`; `--solo-ajolote` para el logo. El ajolote se infla resolviendo ∇²u = −1 sobre la silueta (alisada: el trazado de potrace trae ondas de un píxel que la refracción convierte en dientes) y se extrae como superficie implícita con OpenVDB, con los vértices sobre la superficie exacta y normales analíticas: canto redondo y continuo. Dispersión con tres vidrios (R, G, B) |
 | Iconos de cristal | `iconos_cristal.py` + `iconos_cristal_blender.py` | Qt dibuja placa y símbolo; Blender renderiza; escribe el tema `AxolOS` y los iconos de las apps |
+| Índices de los temas de iconos | `iconos_tema.py` | `AxolOS` (hereda Yaru morado oscuro) y `AxolOS-Claro` (los mismos iconos por enlaces; hereda variantes claras para que los de las barras se vean en modo claro) |
 | Marcos de Plasma (paneles, menús, avisos) | `plasma_cristal.py` | 9 piezas con máscara y sombra; color `ColorScheme-Background` (claro u oscuro). Plasma usa `translucent/` cuando hay desenfoque detrás (relleno muy ligero) y la normal cuando no |
 | Esquemas de color | `colores_cristal.py` | AxolOS Cristal oscuro y claro |
 | Kvantum | `kvantum_axolos.py` | desde MacTahoe: `AxolOS` (claro) y `AxolOSDark` |

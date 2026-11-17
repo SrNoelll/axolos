@@ -3,7 +3,7 @@ ColorScheme=AxolOSCristalClaro
 AccentColor=118,98,206
 
 [kdeglobals][Icons]
-Theme=AxolOS
+Theme=AxolOS-Claro
 
 [kdeglobals][KDE]
 widgetStyle=kvantum

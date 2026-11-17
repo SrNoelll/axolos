@@ -32,7 +32,7 @@ def argumentos():
     a.add_argument("--ancho", type=int, default=3840)
     a.add_argument("--alto", type=int, default=2160)
     a.add_argument("--muestras", type=int, default=512)
-    a.add_argument("--resolucion-forma", type=int, default=1100, help="píxeles de la silueta para la malla")
+    a.add_argument("--resolucion-forma", type=int, default=3072, help="píxeles de la silueta para la malla")
     a.add_argument("--solo-ajolote", action="store_true",
                    help="solo el ajolote sobre fondo transparente, encuadrado (arranque, logos)")
     return a.parse_args(sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else [])
@@ -73,25 +73,133 @@ def _reducir(m):
     return m[:h, :w].reshape(h // 2, 2, w // 2, 2).all(axis=(1, 3))
 
 
-def inflar(m):
-    """Altura redonda: resuelve ∇²u = −1 en la máscara (u = 0 fuera), de grueso a fino; devuelve √u.
-    En una franja de ancho w, √u es una semicircunferencia: branquias, dedos y cuerpo salen redondos."""
+def poisson(m):
+    """Resuelve ∇²u = −1 en la máscara (u = 0 fuera), de grueso a fino (multimalla); u en píxeles²."""
     niveles = [m]
     while niveles[-1].shape[0] > 70:
         niveles.append(_reducir(niveles[-1]))
     u = None
     for i, nivel in enumerate(reversed(niveles)):
-        paso2 = (m.shape[0] / nivel.shape[0]) ** 2
+        paso2 = np.float32((m.shape[0] / nivel.shape[0]) ** 2 * 0.25)
         if u is None:
-            u = np.zeros(nivel.shape)
+            u = np.zeros(nivel.shape, np.float32)
         else:
-            u = np.kron(u, np.ones((2, 2)))
+            u = np.kron(u, np.ones((2, 2), np.float32))
             u = np.pad(u, ((0, max(0, nivel.shape[0] - u.shape[0])), (0, max(0, nivel.shape[1] - u.shape[1]))))
             u = u[:nivel.shape[0], :nivel.shape[1]]
-        for _ in range(900 if i == 0 else 160):
-            vec = (np.roll(u, 1, 0) + np.roll(u, -1, 0) + np.roll(u, 1, 1) + np.roll(u, -1, 1)) * 0.25
-            u = np.where(nivel, vec + paso2 * 0.25, 0.0)
-    return np.sqrt(np.maximum(u, 0.0))
+        vec = np.zeros_like(u)
+        for _ in range(900 if i == 0 else 160):   # la forma no toca el borde de la imagen
+            vec[1:-1, 1:-1] = u[:-2, 1:-1] + u[2:, 1:-1] + u[1:-1, :-2] + u[1:-1, 2:]
+            u = np.where(nivel, vec * np.float32(0.25) + paso2, np.float32(0))
+    return u
+
+
+def inflar(m):
+    """Altura redonda: √u de la ecuación de Poisson. En una franja de ancho w, √u es una
+    semicircunferencia: branquias, dedos y cuerpo salen redondos."""
+    return np.sqrt(np.maximum(poisson(m), 0.0))
+
+
+def _difuminar(a, sigma):
+    """Desenfoque gaussiano por FFT (la forma no toca el borde: da igual que la FFT envuelva)."""
+    fy = np.fft.fftfreq(a.shape[0])[:, None]
+    fx = np.fft.rfftfreq(a.shape[1])[None, :]
+    g = np.exp(-2.0 * (math.pi * sigma) ** 2 * (fx ** 2 + fy ** 2))
+    return np.fft.irfft2(np.fft.rfft2(a) * g, s=a.shape).astype(np.float32)
+
+
+def _bilineal(campo, fi, fj):
+    """Valor de un campo en coordenadas de píxel fraccionarias (fila fi, columna fj)."""
+    i0 = np.clip(np.floor(fi).astype(np.int64), 0, campo.shape[0] - 2)
+    j0 = np.clip(np.floor(fj).astype(np.int64), 0, campo.shape[1] - 2)
+    ti, tj = np.clip(fi - i0, 0, 1), np.clip(fj - j0, 0, 1)
+    return ((campo[i0, j0] * (1 - tj) + campo[i0, j0 + 1] * tj) * (1 - ti)
+            + (campo[i0 + 1, j0] * (1 - tj) + campo[i0 + 1, j0 + 1] * tj) * ti)
+
+
+def malla_implicita(m, escala=4.0, grosor=0.30, fondo=0.38, nombre="malla", paso=2, sigma=1.6, alisado=0.006):
+    """Cuerpo de cristal liso y cerrado a partir de la silueta m (n×n).
+
+    Superficie implícita F(x, y, z) = U − c − (1 − c)·(z / (grosor·a))² = 0, donde U es la solución de
+    Poisson suavizada y normalizada (0…1) y a = 1 arriba, «fondo» abajo: es la misma forma inflada de
+    siempre, pero el canto es la curva de nivel U = c, continua y sin escalones de píxel, y su sección
+    es redonda (tangente vertical en el borde, no un filo). OpenVDB saca la malla en vóxeles de «paso»
+    píxeles; luego cada vértice se lleva exactamente a la superficie (Newton) y las normales salen de
+    ∇F: el sombreado y la refracción del borde no dependen de cómo quedaron los triángulos.
+    «alisado» (en unidades de la forma) quita las ondulaciones del trazado de la silueta (potrace sobre
+    una imagen de 1977 px): de un píxel, pero la refracción del canto las convierte en dientes."""
+    import openvdb
+    n = m.shape[0]
+    k = escala / n                                    # unidades de Blender por píxel
+    if alisado:
+        m = _difuminar(m.astype(np.float32), alisado / k) > 0.5
+    U = _difuminar(poisson(m), sigma)
+    umax = float(U.max())
+    U /= umax
+    c = 10.0 * (n / 3072) / umax                      # nivel del canto: ~ el borde original de la silueta
+    gi, gj = np.gradient(U)                           # ∂U/∂fila, ∂U/∂columna (por píxel)
+    filas, cols = np.nonzero(U > c)
+    i0, j0 = filas.min() - 6 * paso, cols.min() - 6 * paso
+    i1, j1 = filas.max() + 6 * paso, cols.max() + 6 * paso
+    v = paso * k                                      # lado del vóxel
+    zs = np.arange(-grosor * fondo - 4 * v, grosor + 4 * v, v, dtype=np.float32)
+    Us = U[i0:i1:paso, j0:j1:paso].T                  # índices de vóxel (x = columna, y = fila)
+    gx = gj[i0:i1:paso, j0:j1:paso].T * paso
+    gy = gi[i0:i1:paso, j0:j1:paso].T * paso
+    rejilla = openvdb.FloatGrid(background=3.0)
+    for z0 in range(0, len(zs), 24):                  # por capas: la rejilla densa entera no hace falta
+        z = zs[z0:z0 + 24][None, None, :]
+        a = np.where(z >= 0, grosor, grosor * fondo).astype(np.float32)
+        F = Us[:, :, None] - c - (1 - c) * (z / a) ** 2
+        dz = -2 * (1 - c) * z / a ** 2 * v
+        modulo = np.sqrt(gx[:, :, None] ** 2 + gy[:, :, None] ** 2 + dz ** 2) + 1e-9
+        G = np.clip(-F / modulo, -3.0, 3.0).astype(np.float32)   # ~ distancia en vóxeles, < 0 dentro
+        rejilla.copyFromArray(np.ascontiguousarray(G), ijk=(0, 0, z0), tolerance=0.0)
+    rejilla.prune(0.0)
+    puntos, quads = rejilla.convertToQuads(isovalue=0.0)
+    # índice de vóxel → píxel fraccionario y altura
+    fi = i0 + puntos[:, 1] * paso
+    fj = j0 + puntos[:, 0] * paso
+    z = zs[0] + puntos[:, 2] * v
+
+    def campo(fi, fj, z):
+        a = np.where(z >= 0, grosor, grosor * fondo)
+        F = _bilineal(U, fi, fj) - c - (1 - c) * (z / a) ** 2
+        grad = np.stack([_bilineal(gj, fi, fj) / k, -_bilineal(gi, fi, fj) / k, -2 * (1 - c) * z / a ** 2], 1)
+        return F, grad
+
+    for _ in range(3):                                # Newton: cada vértice, sobre la superficie exacta
+        F, grad = campo(fi, fj, z)
+        paso_n = (F / np.maximum((grad ** 2).sum(1), 1e-12))[:, None] * grad
+        largo = np.linalg.norm(paso_n, axis=1, keepdims=True)
+        paso_n *= np.minimum(1.0, v / np.maximum(largo, 1e-12))   # nunca más de un vóxel
+        fj = fj + paso_n[:, 0] / k
+        fi = fi - paso_n[:, 1] / k
+        z = z + paso_n[:, 2]
+    _, grad = campo(fi, fj, z)
+    normales = -grad / np.maximum(np.linalg.norm(grad, axis=1, keepdims=True), 1e-12)
+    verts = np.stack([(fj - n / 2) * k, (n / 2 - fi) * k, z], 1).astype(np.float32)
+    # orientación de las caras: hacia fuera, como las normales
+    p = verts[quads]
+    caras_n = np.cross(p[:, 2] - p[:, 0], p[:, 3] - p[:, 1])
+    if (caras_n * normales[quads].mean(1)).sum(1).mean() < 0:
+        quads = quads[:, ::-1]
+    me = bpy.data.meshes.new(nombre)
+    me.vertices.add(len(verts))
+    me.vertices.foreach_set("co", verts.ravel())
+    me.loops.add(quads.size)
+    me.loops.foreach_set("vertex_index", quads.astype(np.int32).ravel())
+    me.polygons.add(len(quads))
+    me.polygons.foreach_set("loop_start", (np.arange(len(quads)) * 4).astype(np.int32))
+    me.polygons.foreach_set("loop_total", np.full(len(quads), 4, np.int32))
+    me.update(calc_edges=True)
+    me.validate()
+    me.shade_smooth()
+    me.normals_split_custom_set_from_vertices([tuple(x) for x in normales.astype(np.float32)])
+    ob = bpy.data.objects.new(nombre, me)
+    bpy.context.collection.objects.link(ob)
+    print(f"{nombre}: {len(verts)} vértices, vóxel {v:.4f}")
+    return ob
 
 
 def malla(m, h, escala=4.0, grosor=0.30, fondo=0.38, nombre="malla", suavizar=10):
@@ -139,9 +247,7 @@ def malla(m, h, escala=4.0, grosor=0.30, fondo=0.38, nombre="malla", suavizar=10
 
 
 def malla_ajolote(n, escala=4.0, grosor=0.30, fondo=0.38):
-    m = mascara(n)
-    h = inflar(m)
-    return malla(m, h / h.max(), escala, grosor, fondo, "ajolote")
+    return malla_implicita(mascara(n), escala, grosor, fondo, "ajolote")
 
 
 # ---- materiales ----------------------------------------------------------------------------------
@@ -523,8 +629,12 @@ def escena(args):
         sal = nodo(nt, "ShaderNodeOutputMaterial", 320, 0)
         nt.links.new(e.outputs[0], sal.inputs["Surface"])
         cupula.data.materials.append(cm)
-        cupula.visible_camera = cupula.visible_glossy = cupula.visible_diffuse = False
+        # se ve a través del cristal y reflejada en su canto (ángulo rasante: color, no un filo negro);
+        # light linking: el agua no la refleja, el fondo sigue negro
+        cupula.visible_camera = cupula.visible_diffuse = False
         cupula.visible_shadow = cupula.visible_volume_scatter = False
+        solo_cristal(cupula, aj)
+        cupula.scale = (2.4, 2.4, 2.4)   # que envuelva también el cielo de aceite (si no, el agua no lo vería)
         # cielo alto de bandas de aceite: el agua ondulada lo refleja en estelas irisadas (imagen 4)
         o = plano("cielo-agua", (70, 16), (0.0, 34.0, 9.0), rot=(math.radians(100), 0, 0), mat=aceite("aceite", 1.9))
         o.visible_camera = False

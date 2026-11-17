@@ -12,7 +12,10 @@ AxolOS packages are published continuously; each entry groups a visible change.
 - Top bar, dock, menus (Bento and every popup), notifications, tooltips, terminal and window
   sidebars are glass in both modes: Plasma frames were using the near-opaque variant, the dock was
   set to opaque and new accounts started with old colors.
-- Light mode uses its own purple (the dark one was kept by accounts and was hard to read on light glass).
+- Light mode uses its own purple (the dark one was kept by accounts and was hard to read on light glass)
+  and its own icon theme variant, so toolbar icons are dark on light glass instead of white on white.
+- Wallpapers, boot logo and screenshots re-rendered: the glass axolotl now has smooth, rounded edges
+  (no pixel steps on its outline) and its rim catches color instead of a dark line.
 
 ## 2026-11-17 — Liquid glass
 
