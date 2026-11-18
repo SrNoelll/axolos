@@ -2,6 +2,15 @@
 
 AxolOS packages are published continuously; each entry groups a visible change.
 
+## 2026-11-18 — Login fix
+
+- `axolos-glass` 1.6.4-4 could crash KWin (and the login screen) on processors without AVX-512: the
+  build used the build server's processor (`-march=native`). It is now built for any x86-64 processor,
+  the build fails if the effect contains AVX/AVX-512 instructions, and the pacman hook sets the effect
+  aside (normal blur) if it ever needs instructions the processor lacks.
+- The login screen never loads the KWin glass effect (its refraction is drawn in QML), so a broken
+  effect can no longer prevent logging in.
+
 ## 2026-11-18 — Windows and global themes
 
 - Applying the AxolOS global theme with “Desktop and window layout” now sets up the AxolOS desktop (top

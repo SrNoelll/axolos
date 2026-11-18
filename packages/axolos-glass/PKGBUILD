@@ -24,9 +24,23 @@ prepare() {
 }
 
 build() {
+  # PORTABLE. La imagen de CachyOS compila con -march=native: usa todo lo que tenga el procesador del
+  # servidor de GitHub que toque (a veces AVX-512). La 1.6.4-4 salió así y en un Intel sin AVX-512 KWin
+  # caía con SIGILL nada más cargar el efecto, también en la pantalla de inicio de sesión.
+  local quitar='s/(^| )-m(arch|tune)=[^ ]+//g'
+  CFLAGS="$(sed -E "$quitar" <<<"$CFLAGS") -march=x86-64 -mtune=generic"
+  CXXFLAGS="$(sed -E "$quitar" <<<"$CXXFLAGS") -march=x86-64 -mtune=generic"
+  export CFLAGS CXXFLAGS
   cmake -S glass -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release \
     -DGLASS_WAYLAND=ON -DGLASS_X11=OFF -DBUILD_TESTING=OFF
   cmake --build build
+  # y se comprueba: ni una instrucción AVX/AVX2/AVX-512 (registros ymm/zmm) en lo que se va a instalar
+  local so; so=$(find build -name glass.so -print -quit)
+  [[ -n $so ]] || { echo "no se encuentra glass.so" >&2; return 1; }
+  if objdump -d --no-show-raw-insn "$so" | grep -qE '%[yz]mm[0-9]'; then
+    echo "glass.so usa instrucciones AVX/AVX-512: no funcionaría en todos los procesadores" >&2
+    return 1
+  fi
 }
 
 package() {
@@ -37,7 +51,7 @@ package() {
   kwin=$(pacman -Q kwin | awk '{print $2}'); kwin=${kwin#*:}; kwin=${kwin%%-*}
   qt=$(pacman -Q qt6-base | awk '{print $2}'); qt=${qt#*:}; qt=${qt%%-*}; qt=$(cut -d. -f1,2 <<<"$qt")
   install -d "$pkgdir/usr/share/axolos/cristal"
-  printf 'kwin %s\nqt %s\nglass %s\nparche %s\n' "$kwin" "$qt" "$_commit" \
+  printf 'kwin %s\nqt %s\nglass %s\nprocesador x86-64\nparche %s\n' "$kwin" "$qt" "$_commit" \
     "$(sha256sum "$s/ventanas-sin-filo.patch" | cut -c1-16)" > "$pkgdir/usr/share/axolos/cristal/compilado-para"
   # Ajustes de AxolOS (valores por defecto del sistema; cada usuario puede cambiarlos en Efectos)
   install -Dm644 "$s/kwinrc" "$pkgdir/etc/xdg/kwinrc"

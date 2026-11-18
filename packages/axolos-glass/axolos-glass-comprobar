@@ -22,7 +22,38 @@ plugins() {   # plugins GLASS BLUR: qué efecto usa KWin por defecto ([Plugins] 
   sed -i -e "s/^glassEnabled=.*/glassEnabled=$1/" -e "s/^blurEnabled=.*/blurEnabled=$2/" "$CONF"
 }
 
-if [[ $para_kwin == "$hay_kwin" && $para_qt == "$hay_qt" ]]; then
+# ¿Tiene este procesador las instrucciones que usa el efecto? Un binario con AVX-512 en un procesador
+# sin ellas tumba KWin (SIGILL) nada más cargarlo. Sin objdump no se puede mirar: se da por bueno.
+compatible() {
+  local so=$1 asm
+  [[ -f $so ]] && command -v objdump >/dev/null || return 0
+  asm=$(objdump -d --no-show-raw-insn "$so" 2>/dev/null) || return 0
+  if grep -q '%zmm[0-9]' <<<"$asm" && ! grep -qw avx512f /proc/cpuinfo; then return 1; fi
+  if grep -q '%ymm[0-9]' <<<"$asm" && ! grep -qw avx2 /proc/cpuinfo; then return 1; fi
+  return 0
+}
+
+# La pantalla de inicio de sesión (SDDM) no usa el cristal de KWin (su refracción va en QML): así un
+# efecto que fallase nunca deja sin poder entrar. /etc/xdg/kwinrc lo activa para todos; aquí se
+# desactiva solo para la cuenta de SDDM.
+sddm_sin_cristal() {
+  local casa rc
+  casa=$(getent passwd sddm | cut -d: -f6)
+  [[ -n $casa && -d $casa ]] && command -v kwriteconfig6 >/dev/null || return 0
+  rc=$casa/.config/kwinrc
+  install -d -o sddm -g sddm "$casa/.config"
+  kwriteconfig6 --file "$rc" --group Plugins --key glassEnabled --type bool false
+  kwriteconfig6 --file "$rc" --group Plugins --key blurEnabled --type bool true
+  chown sddm:sddm "$rc"
+}
+sddm_sin_cristal
+
+candidato=$SO; [[ -f $SO ]] || candidato=$APARTE
+if [[ $para_kwin == "$hay_kwin" && $para_qt == "$hay_qt" ]] && ! compatible "$candidato"; then
+  if [[ -f $SO ]]; then mkdir -p "${APARTE%/*}"; mv -f "$SO" "$APARTE"; fi
+  plugins false true
+  echo ":: AxolOS: $(t "el cristal líquido se pausa: esta versión usa instrucciones que este procesador no tiene (mientras, desenfoque normal).")"
+elif [[ $para_kwin == "$hay_kwin" && $para_qt == "$hay_qt" ]]; then
   [[ ! -f $SO && -f $APARTE ]] && mv -f "$APARTE" "$SO"
   rm -f "$APARTE"
   plugins true false
