@@ -1,7 +1,7 @@
 # Maintainer: Noel Alarcón
 pkgname=axolos-kde-settings
 pkgver=$(<"${startdir}/../../VERSION")
-pkgrel=12
+pkgrel=13
 pkgdesc="AxolOS Plasma defaults for new users (panel, dock, Konsole, colors…)"
 arch=('any')
 license=('GPL-3.0-or-later')

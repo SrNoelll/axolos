@@ -1,7 +1,7 @@
 # Maintainer: Noel Alarcón
 pkgname=axolos-branding
 pkgver=$(<"${startdir}/../../VERSION")
-pkgrel=9
+pkgrel=10
 pkgdesc="AxolOS identity: os-release, logo, fastfetch, translations and the axolos-apps command"
 arch=('any')
 license=('GPL-3.0-or-later' 'custom')
