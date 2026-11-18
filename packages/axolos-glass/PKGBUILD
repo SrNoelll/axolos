@@ -5,7 +5,7 @@
 pkgname=axolos-glass
 _commit=5e2845fffbe893177c091fe18d603b9095cc2729   # 4v3ngR/kwin-effects-glass, 2026-11-09 (Plasma 6.8)
 pkgver=1.6.4
-pkgrel=4
+pkgrel=5
 pkgdesc="AxolOS liquid glass: KWin Glass effect by 4v3ngR (refraction, chromatic edges, rim light) with AxolOS settings"
 arch=('x86_64')
 url="https://github.com/4v3ngR/kwin-effects-glass"
