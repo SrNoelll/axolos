@@ -46,6 +46,7 @@ guardan en git el generador y su resultado.
 | Menú de arranque (Limine) | `arranque_cristal.py` | a partir del fondo oscuro |
 | Marca del instalador | `instalador_marca_axolos.py` + `instalador_textos.py` | diapositivas en los 6 idiomas |
 | Terminal | `terminal_axolos.py` | Konsole translúcido |
+| Apps GTK (Archivos, libadwaita, GTK3) | `gtk_cristal.py` | fondo de cristal con el color y la transparencia de Kvantum, claro y oscuro; lo importa el `gtk.css` de cada cuenta |
 
 - **KWin**: `axolos-glass` empaqueta el efecto [Glass](https://github.com/4v3ngR/kwin-effects-glass)
   (commit fijado) y su configuración en `/etc/xdg/kwinrc` (`Effect-blurplus`). Un efecto de KWin solo
@@ -60,8 +61,12 @@ guardan en git el generador y su resultado.
   puede alternarlos solo (`DefaultLightLookAndFeel`/`DefaultDarkLookAndFeel`). `axolos-aspecto` lo
   hace desde la terminal y desde el Centro; `axolos-aspecto --migrar` pone al día una cuenta que ya
   existía (una vez por versión, al iniciar sesión).
-- **Apps PyQt**: `axolos_cristal.py` da la paleta del modo activo y, si el cristal está cargado,
-  fondos translúcidos (si no, opacos).
+- **Apps PyQt**: `axolos_cristal.py` da la paleta del modo activo y, si el cristal está cargado, pinta
+  la lámina de cristal una sola vez en la ventana (como Kvantum) y deja transparentes los paneles de
+  dentro (si no, todo opaco).
+- **Sombras de Plasma**: desenfoque gaussiano de la forma redondeada; las piezas se meten por debajo de
+  la esquina (más grandes que `shadow-hint-*`) para que no quede un recuadro. Los radios del efecto
+  Glass coinciden con los de los marcos (ventanas, avisos, menús 14; paneles 18).
 - **Inicio de sesión**: `sddm/AxolOS/Cristal.qml` + `cristal.frag` (refracción, dispersión y brillo en
   QML). Recompilar el shader: `/usr/lib/qt6/bin/qsb --glsl "100 es,120,150" --hlsl 50 --msl 12 -o cristal.frag.qsb cristal.frag`.
 - **Pendiente**: animación de arranque del ajolote de cristal (la anterior terminaba en la pose del

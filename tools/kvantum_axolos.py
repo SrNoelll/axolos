@@ -47,6 +47,8 @@ CRISTAL = {   # [%General]
     "translucent_windows": "true", "blurring": "true", "popup_blurring": "true",
     "blur_only_active_window": "false", "reduce_menu_opacity": "30", "menu_blur_radius": "9",
     "tooltip_blur_radius": "6", "composite": "true",
+    # la vista de archivos de Dolphin también de cristal, como la terminal (era opaca)
+    "transparent_dolphin_view": "true",
 }
 
 

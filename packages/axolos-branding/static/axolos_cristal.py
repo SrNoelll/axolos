@@ -24,8 +24,14 @@ CLARO = dict(bg="#eef2f7", bg_dark="#e3e9f1", side="#e7ecf3", surface="#f8fafc",
              accent_lo="#a69afe", pink="#d6365a", green="#1e9e6a", yellow="#9a6c00", cyan="#1f7f94",
              lilac="#6a5fd6", indigo="#5f55d0", user="#e6e1ff", code_head="#e3e9f1",
              decorador="#9a6c00", numero="#d6365a", comentario="#7a8295", sobre_acento="#ffffff")
-# opacidad de los fondos de ventana con el cristal activo (el resto del contenido es opaco)
-ALFA = {"bg": 0.80, "side": 0.70, "bg_dark": 0.84}
+# Con el cristal activo la ventana es UNA lámina, como la terminal y las ventanas Qt: el fondo se pinta
+# una sola vez en la ventana (VENTANA, el mismo color y opacidad que Kvantum: tools/kvantum_axolos.py) y
+# los paneles de dentro que usaban el mismo fondo quedan transparentes (antes cada panel ponía su capa al
+# 80 % y, apiladas, la ventana salía opaca). Campos y tarjetas llevan una capa ligera encima.
+VENTANA = {"oscuro": ("#121218", 0.66), "claro": ("#eef2f7", 0.72)}
+CAPAS = {   # clave de color → (opacidad en oscuro, opacidad en claro); None = transparente
+    "bg": (None, None), "side": (0.25, 0.30), "bg_dark": (0.55, 0.60), "surface": (0.55, 0.65),
+}
 
 
 def modo():
@@ -62,18 +68,46 @@ def cristal_activo():
     return _activo
 
 
+def _rgba(hexa, alfa):
+    h = hexa.lstrip("#")
+    return "rgba({},{},{},{})".format(*(int(h[i:i + 2], 16) for i in (0, 2, 4)), round(alfa * 255))
+
+
 def translucido(qss, C):
     if not cristal_activo():
         return qss
-    for clave, alfa in ALFA.items():
-        h = C[clave].lstrip("#")
-        rgba = "rgba({},{},{},{})".format(*(int(h[i:i + 2], 16) for i in (0, 2, 4)), round(alfa * 255))
+    i = 0 if modo() == "oscuro" else 1
+    for clave, alfas in CAPAS.items():
+        if clave not in C:
+            continue
+        nuevo = "transparent" if alfas[i] is None else _rgba(C[clave], alfas[i])
         for prop in ("background", "background-color"):
-            qss = qss.replace(f"{prop}: {C[clave]};", f"{prop}: {rgba};")
+            qss = qss.replace(f"{prop}: {C[clave]};", f"{prop}: {nuevo};")
     return qss
 
 
+_filtros = []
+
+
 def preparar(ventana):
-    if cristal_activo():
-        from PyQt6.QtCore import Qt
-        ventana.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+    """Ventana translúcida con su lámina de cristal pintada una vez (KWin pone detrás el desenfoque)."""
+    if not cristal_activo():
+        return
+    from PyQt6.QtCore import QEvent, QObject, Qt
+    from PyQt6.QtGui import QColor, QPainter
+    color, alfa = VENTANA[modo()]
+    lamina = QColor(color)
+    lamina.setAlphaF(alfa)
+
+    class Lamina(QObject):
+        def eventFilter(self, obj, ev):
+            if obj is ventana and ev.type() == QEvent.Type.Paint:
+                p = QPainter(ventana)
+                p.fillRect(ventana.rect(), lamina)
+                p.end()
+            return False
+
+    ventana.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+    filtro = Lamina(ventana)
+    ventana.installEventFilter(filtro)
+    _filtros.append(filtro)

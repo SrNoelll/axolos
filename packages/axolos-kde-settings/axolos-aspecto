@@ -16,7 +16,7 @@ except ImportError:
         return texto
 
 OSCURO, CLARO = "com.noel.axolos", "com.noel.axolos.claro"
-VERSION_ASPECTO = "3"     # 2 = cristal líquido · 3 = barra y dock de cristal (noviembre de 2026)
+VERSION_ASPECTO = "4"     # 2 = cristal líquido · 3 = barra y dock de cristal · 4 = apps GTK de cristal
 MARCA = Path(os.environ.get("XDG_STATE_HOME", Path.home() / ".local/state")) / "axolos/aspecto"
 
 
@@ -92,12 +92,28 @@ def paneles_de_cristal():
                             "--group", grupo, "--key", "panelOpacity", "2"], check=False)
 
 
+def gtk_de_cristal():
+    """Las apps GTK (Archivos y demás libadwaita, GTK3) con fondo de cristal: el gtk.css de la cuenta
+    importa la hoja de AxolOS (/usr/share/axolos/gtk/); el resto del archivo no se toca."""
+    base = Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config"))
+    for v in ("3", "4"):
+        css = base / f"gtk-{v}.0/gtk.css"
+        linea = f'@import url("file:///usr/share/axolos/gtk/cristal-gtk{v}.css");'
+        texto = css.read_text(encoding="utf-8") if css.exists() else ""
+        if f"cristal-gtk{v}.css" in texto:
+            continue
+        css.parent.mkdir(parents=True, exist_ok=True)
+        css.write_text(texto + ("" if not texto or texto.endswith("\n") else "\n") + linea + "\n", encoding="utf-8")
+
+
 def migrar():
     if MARCA.exists() and MARCA.read_text().strip() == VERSION_ASPECTO:
         return
     anterior = MARCA.read_text().strip() if MARCA.exists() else ""
     if anterior in ("", "1", "2"):
         paneles_de_cristal()
+    if anterior in ("", "1", "2", "3"):
+        gtk_de_cristal()
     # el cristal (Glass) y el desenfoque normal no pueden ir juntos: decide /etc/xdg/kwinrc
     for clave in ("blurEnabled", "glassEnabled"):
         if leer("kwinrc", "Plugins", clave):

@@ -1,0 +1,76 @@
+/* AxolOS · cristal en GTK4/libadwaita (generado por tools/gtk_cristal.py; no editar a mano) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* el cristal: fondo de ventana translúcido; cabecera, vista y barra lateral sobre él */
+    --window-bg-color: rgb(18 18 24 / 66%);
+    --window-fg-color: #ececf3;
+    /* la vista (lista o cuadrícula) lleva otra capa, como el texto de la terminal sobre su ventana */
+    --view-bg-color: rgb(14 14 19 / 62%);
+    --view-fg-color: #ececf3;
+    --headerbar-bg-color: transparent;
+    --headerbar-backdrop-color: transparent;
+    --headerbar-fg-color: #ececf3;
+    --headerbar-border-color: transparent;
+    --headerbar-shade-color: transparent;
+    --headerbar-darker-shade-color: transparent;
+    --sidebar-bg-color: rgb(255 255 255 / 4%);
+    --sidebar-backdrop-color: rgb(255 255 255 / 3%);
+    --sidebar-fg-color: #ececf3;
+    --sidebar-border-color: transparent;
+    --sidebar-shade-color: transparent;
+    --secondary-sidebar-bg-color: rgb(255 255 255 / 3%);
+    --secondary-sidebar-backdrop-color: rgb(255 255 255 / 2%);
+    --secondary-sidebar-border-color: transparent;
+    --secondary-sidebar-shade-color: transparent;
+    --card-bg-color: rgb(255 255 255 / 6%);
+    --card-shade-color: transparent;
+    --overview-bg-color: rgb(18 18 24 / 66%);
+    --thumbnail-bg-color: rgb(255 255 255 / 8%);
+    --dialog-bg-color: rgb(18 18 24 / 88%);
+    --popover-bg-color: rgb(18 18 24 / 90%);
+    --popover-shade-color: transparent;
+    --accent-bg-color: #7662ce;
+    --accent-fg-color: #ffffff;
+    --accent-color: #a69afe;
+    --window-radius: 14px;
+  }
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    /* el cristal: fondo de ventana translúcido; cabecera, vista y barra lateral sobre él */
+    --window-bg-color: rgb(238 242 247 / 72%);
+    --window-fg-color: #1c2230;
+    /* la vista (lista o cuadrícula) lleva otra capa, como el texto de la terminal sobre su ventana */
+    --view-bg-color: rgb(248 250 252 / 55%);
+    --view-fg-color: #1c2230;
+    --headerbar-bg-color: transparent;
+    --headerbar-backdrop-color: transparent;
+    --headerbar-fg-color: #1c2230;
+    --headerbar-border-color: transparent;
+    --headerbar-shade-color: transparent;
+    --headerbar-darker-shade-color: transparent;
+    --sidebar-bg-color: rgb(255 255 255 / 28%);
+    --sidebar-backdrop-color: rgb(255 255 255 / 22%);
+    --sidebar-fg-color: #1c2230;
+    --sidebar-border-color: transparent;
+    --sidebar-shade-color: transparent;
+    --secondary-sidebar-bg-color: rgb(255 255 255 / 20%);
+    --secondary-sidebar-backdrop-color: rgb(255 255 255 / 16%);
+    --secondary-sidebar-border-color: transparent;
+    --secondary-sidebar-shade-color: transparent;
+    --card-bg-color: rgb(255 255 255 / 45%);
+    --card-shade-color: transparent;
+    --overview-bg-color: rgb(238 242 247 / 72%);
+    --thumbnail-bg-color: rgb(255 255 255 / 55%);
+    --dialog-bg-color: rgb(238 242 247 / 94%);
+    --popover-bg-color: rgb(238 242 247 / 96%);
+    --popover-shade-color: transparent;
+    --accent-bg-color: #7662ce;
+    --accent-fg-color: #ffffff;
+    --accent-color: #6a55d8;
+    --window-radius: 14px;
+  }
+}
+/* esquinas iguales a las del resto de ventanas (y a las del cristal de KWin) */
+window.csd, window.csd > .titlebar:not(headerbar) { border-radius: 14px; }
+window.csd.maximized, window.csd.fullscreen, window.csd.tiled { border-radius: 0; }

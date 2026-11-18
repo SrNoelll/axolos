@@ -25,6 +25,10 @@ cp -r "$REPO/packages/axolos-menu/org.axolos.bento" "$T/data/plasma/plasmoids/"
 cp -a "$A/icons" "$A/wallpapers" "$A/color-schemes" "$A/konsole" "$T/data/"
 cp -r "$A/aurorae/themes/." "$T/data/aurorae/themes/"
 mkdir -p "$T/config/Kvantum" && cp -r "$A/Kvantum/AxolOS" "$T/config/Kvantum/"
+# GTK: las hojas de cristal del repositorio en vez de las instaladas
+for v in 3 4; do
+  [[ -f "$T/config/gtk-$v.0/gtk.css" ]] && sed -i "s|file:///usr/share/axolos/gtk/|file://$A/axolos/gtk/|" "$T/config/gtk-$v.0/gtk.css"
+done
 glass=/usr/lib/qt6/plugins/kwin/effects/plugins/glass.so
 [[ -f $glass ]] || glass=/usr/lib/axolos/cristal/glass.so.otra-version
 [[ -f $glass ]] && cp "$glass" "$T/plugins/kwin/effects/plugins/glass.so"
@@ -41,6 +45,15 @@ sizerule=2
 wmclass=konsole
 wmclassmatch=2
 
+[3]
+Description=archivos
+position=1000,380
+positionrule=2
+size=860,560
+sizerule=2
+wmclass=nautilus
+wmclassmatch=2
+
 [2]
 Description=derecha
 position=1000,380
@@ -51,9 +64,13 @@ wmclass=dolphin
 wmclassmatch=2
 
 [General]
-count=2
-rules=1,2
+count=3
+rules=1,2,3
 EOF
+
+# apps de AxolOS: los módulos instalados con los del repositorio por encima
+mkdir -p "$T/lib" && cp -r /usr/lib/axolos/. "$T/lib/" 2>/dev/null || true
+cp "$REPO"/packages/axolos-branding/static/*.py "$T/lib/" 2>/dev/null || true
 
 cat > "$T/sesion.sh" <<EOF
 #!/bin/bash
@@ -76,6 +93,8 @@ for v in ${VENTANAS:-konsole dolphin}; do
   case \$v in
     konsole) konsole --workdir /usr/share/axolos >/dev/null 2>&1 & ;;
     dolphin) dolphin /usr/share/wallpapers >/dev/null 2>&1 & ;;
+    nautilus) nautilus --new-window /usr/share/wallpapers >/dev/null 2>&1 & ;;
+    *) \$v >/dev/null 2>&1 & ;;
   esac
   sleep 4
 done
@@ -88,7 +107,10 @@ chmod +x "$T/sesion.sh"
 
 export XDG_CONFIG_HOME="$T/config" XDG_DATA_HOME="$T/data" XDG_CACHE_HOME="$T/cache" XDG_RUNTIME_DIR="$RUN"
 export XDG_CONFIG_DIRS="$T/config/kdedefaults:/etc/xdg" QT_PLUGIN_PATH="$T/plugins:/usr/lib/qt6/plugins"
+export AXOLOS_LIB="$T/lib"
 export KDE_FULL_SESSION=true XDG_CURRENT_DESKTOP=KDE
+# libadwaita sigue el modo por el portal, que en el KWin virtual no está: se le dice aquí
+export ADW_DEBUG_COLOR_SCHEME=$([[ $MODO == claro ]] && echo prefer-light || echo prefer-dark)
 [[ -n "${IDIOMA:-}" ]] && export LANGUAGE=$IDIOMA LANG=en_US.UTF-8
 unset WAYLAND_DISPLAY DISPLAY DBUS_SESSION_BUS_ADDRESS
 timeout 120 dbus-run-session -- kwin_wayland --virtual --width 1920 --height 1080 --socket "axp-$$" \

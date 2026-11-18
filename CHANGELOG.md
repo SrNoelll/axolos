@@ -10,6 +10,10 @@ AxolOS packages are published continuously; each entry groups a visible change.
   focused one turned solid grey), no outline, 14 px corners and a soft shadow that follows them.
 - Windows no longer get a light rim on their edge (menus, panels and notifications keep it).
 - The Bento icon in the dock follows the light or dark text color.
+- GTK apps (Files and other libadwaita apps, GTK3) and the AxolOS apps are glass like the terminal, in
+  both modes; Dolphin's file view too.
+- Panel, menu and notification shadows follow the rounded corners (there was a square around them).
+- Glass icons also for Files (Nautilus), GNOME Terminal/Console and GNOME Settings.
 - `axolos-aspecto` and `axolos-navegadores` were installed without execute permission, so the update
   of existing accounts at login never ran.
 

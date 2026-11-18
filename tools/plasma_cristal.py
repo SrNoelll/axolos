@@ -29,7 +29,7 @@ ESTILO = """<style type="text/css" id="current-color-scheme">
 #         sombra, margen de contenido, prefijos)
 MARCOS = [
     ("dialogs/background", 14, (0.86, 0.21, 0.97), 22, 10, ("",)),
-    ("widgets/tooltip", 11, (0.88, 0.25, 0.97), 16, 8, ("",)),
+    ("widgets/tooltip", 14, (0.88, 0.25, 0.97), 16, 8, ("",)),
     ("widgets/panel-background", 18, (0.84, 0.17, 0.97), 18, 6, ("", "north-", "south-", "west-", "east-")),
     ("widgets/background", 18, (0.82, 0.18, 0.96), 18, 12, ("",)),
     ("widgets/translucentbackground", 18, (0.62, 0.11, 0.92), 0, 12, ("",)),
@@ -70,6 +70,26 @@ class Lienzo:
     def svg(self, ancho, alto):
         return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{ancho}" height="{alto}" viewBox="0 0 {ancho} {alto}">'
                 f'<defs>{ESTILO}{"".join(self.defs)}</defs>{"".join(self.cuerpo)}</svg>')
+
+
+def sombra_redondeada(ancho, alto, s, c):
+    """Alfa de la sombra de un marco redondeado (radio c) que ocupa la imagen menos un margen s."""
+    import numpy as np
+    from decoracion_cristal import cobertura, desenfocar
+    marg = 48
+    A, H = ancho + 2 * marg, alto + 2 * marg
+    x0, y0, x1, y1 = s + marg, s + marg, ancho - s + marg, alto - s + marg
+    total = np.zeros((H, A))
+    for sigma, dy, opacidad in ((s / 2.6, s / 7, 0.34), (2.0, 0.8, 0.12)):   # difusa + de contacto
+        forma = cobertura(A, H, x0, y0 + dy, x1, y1 + dy, c)
+        total = 1 - (1 - total) * (1 - opacidad * np.clip(desenfocar(forma, sigma), 0, 1))
+    total *= 1 - cobertura(A, H, x0, y0, x1, y1, c)
+    return total[marg:marg + alto, marg:marg + ancho]
+
+
+def imagen_png(alfa):
+    from decoracion_cristal import png
+    return png(alfa)
 
 
 def cuarto(cx, cy, r, esquina):
@@ -153,33 +173,29 @@ def marco(L, ox, oy, prefijo, radio, opac, sombra, margen, mascara=True):
             L.grupo(prefijo + "mask-" + nombre, X, Y, w, h, [forma])
         alto += 2 * c + m + 6
 
-    if sombra:    # sombra: degradados que se apagan hacia fuera
+    if sombra:
+        # Sombra de verdad: desenfoque gaussiano de la forma REDONDEADA (no de la caja). Las piezas miden
+        # «s + c»: sobresalen s fuera del marco (las marcas shadow-hint) y se meten c por debajo, así
+        # rellenan la esquina que deja libre la curva; dentro de la forma no hay sombra (no oscurece
+        # el cristal). Antes, degradados desde la esquina cuadrada: un recuadro oscuro alrededor.
         s = sombra
         sy = oy + alto
-        sc = {"topleft": (0, 0, s, s), "top": (s, 0, m, s), "topright": (s + m, 0, s, s),
-              "left": (0, s, s, m), "right": (s + m, s, s, m),
-              "bottomleft": (0, s + m, s, s), "bottom": (s, s + m, m, s), "bottomright": (s + m, s + m, s, s)}
-        tono = [(0, "#000000", 0.30), (0.45, "#000000", 0.12), (1, "#000000", 0)]
+        t = s + c                                         # lado de las piezas
+        ancho, alto_img = 2 * t + m, 2 * t + m
+        alfa = sombra_redondeada(ancho, alto_img, s, c)
+        sc = {"topleft": (0, 0, t, t), "top": (t, 0, m, t), "topright": (t + m, 0, t, t),
+              "left": (0, t, t, m), "right": (t + m, t, t, m),
+              "bottomleft": (0, t + m, t, t), "bottom": (t, t + m, m, t), "bottomright": (t + m, t + m, t, t)}
         for nombre, (x, y, w, h) in sc.items():
             X, Y = ox + x, sy + y
-            if nombre == "top":
-                g = L.grad(X, Y + h, X, Y, tono)
-            elif nombre == "bottom":
-                g = L.grad(X, Y, X, Y + h, tono)
-            elif nombre == "left":
-                g = L.grad(X + w, Y, X, Y, tono)
-            elif nombre == "right":
-                g = L.grad(X, Y, X + w, Y, tono)
-            else:
-                cx_ = X + (w if "left" in nombre else 0)
-                cy_ = Y + (h if "top" in nombre else 0)
-                g = L.radial(cx_, cy_, s, tono)
+            datos = imagen_png(alfa[y:y + h, x:x + w])
             L.grupo(prefijo + "shadow-" + nombre, X, Y, w, h,
-                    [f'<rect x="{f(X)}" y="{f(Y)}" width="{f(w)}" height="{f(h)}" fill="{g}"/>'])
-        for lado, tam in (("top", s), ("bottom", s), ("left", s), ("right", s)):
-            ancho_h, alto_h = (tam, 1) if lado in ("left", "right") else (1, tam)
-            L.grupo(f"{prefijo}shadow-hint-{lado}-margin", ox, sy + 3 * s, ancho_h, alto_h, [])
-        alto += 2 * s + m + 6 + 3 * s
+                    [f'<image x="{f(X)}" y="{f(Y)}" width="{f(w)}" height="{f(h)}" preserveAspectRatio="none" '
+                     f'href="data:image/png;base64,{datos}"/>'])
+        for lado in ("top", "bottom", "left", "right"):
+            ancho_h, alto_h = (s, 1) if lado in ("left", "right") else (1, s)
+            L.grupo(f"{prefijo}shadow-hint-{lado}-margin", ox, sy + 2 * t + m + 4, ancho_h, alto_h, [])
+        alto += 2 * t + m + 6 + s + 6
 
     # márgenes del contenido
     hy = oy + alto

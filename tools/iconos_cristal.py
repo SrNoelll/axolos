@@ -236,10 +236,16 @@ ICONOS = {
     "carpeta-videos": (carpeta, MORADO, "video", ["folder-videos", "folder-video"]),
     "carpeta-escritorio": (carpeta, MORADO, "monitor", ["user-desktop", "folder-desktop"]),
     "carpeta-personal": (carpeta, MORADO, "casa", ["user-home", "folder-home"]),
-    "archivos": (carpeta, ("#c6bdff", "#7a66e0"), "ajolote", ["system-file-manager", "org.kde.dolphin"]),
-    "terminal": (cuadrado, ("#3b3a4a", "#121218"), "terminal", ["utilities-terminal", "org.kde.konsole", "konsole"]),
-    "ajustes": (cuadrado, ("#a9aec2", "#4c5164"), "engranaje", ["preferences-system", "systemsettings"]),
-    "papelera": (papelera, ("#55546a", "#1d1c25"), "ranuras", ["user-trash", "trashcan_empty"]),
+    # con los nombres de KDE y los de GNOME (Archivos/Nautilus, Consola, Configuración), que también se usan
+    "archivos": (carpeta, ("#c6bdff", "#7a66e0"), "ajolote", ["system-file-manager", "org.kde.dolphin",
+                                                              "org.gnome.Nautilus", "nautilus", "file-manager"]),
+    "terminal": (cuadrado, ("#3b3a4a", "#121218"), "terminal", ["utilities-terminal", "org.kde.konsole", "konsole",
+                                                                "org.gnome.Console", "org.gnome.Terminal",
+                                                                "gnome-terminal", "terminal"]),
+    "ajustes": (cuadrado, ("#a9aec2", "#4c5164"), "engranaje", ["preferences-system", "systemsettings",
+                                                                "org.gnome.Settings", "gnome-control-center"]),
+    "papelera": (papelera, ("#55546a", "#1d1c25"), "ranuras", ["user-trash", "trashcan_empty", "user-trash-full",
+                                                              "trashcan_full"]),
 }
 SIMBOLOS = {"chispa": chispa, "corazon": corazon, "deslizadores": deslizadores, "flecha": flecha_abajo,
             "documento": documento, "descargas": flecha_abajo, "nota": nota, "imagen": imagen, "video": video,
@@ -292,8 +298,20 @@ def main():
     a.add_argument("--vista", default="")
     a.add_argument("--muestras", type=int, default=256)
     a.add_argument("--solo-vista", action="store_true", help="no escribe en el tema (pruebas)")
+    a.add_argument("--reinstalar", action="store_true",
+                   help="sin Blender: vuelve a escribir todos los tamaños y nombres desde los renders ya hechos "
+                        "(p. ej. al añadir nombres a ICONOS)")
     args = a.parse_args()
     app = QGuiApplication(["iconos"])  # noqa: F841
+    if args.reinstalar:
+        for nombre, (_, _, _, temas) in ICONOS.items():
+            if nombre.startswith("axolos-") or not temas:
+                continue
+            ctx = "apps" if nombre in ("archivos", "terminal", "ajustes") else "places"
+            maestro = TEMA / "256x256@2x" / ctx / f"{temas[0]}.png"
+            instalar(nombre, QImage(str(maestro)), "", False)
+            print(nombre, "→", ", ".join(temas))
+        return 0
     nombres = [n for n in ICONOS if not args.solo or n in args.solo.split(",")]
     with tempfile.TemporaryDirectory() as tmp:
         trabajos = []

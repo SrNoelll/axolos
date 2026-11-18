@@ -1,0 +1,6 @@
+/* AxolOS · cristal en GTK3 (generado por tools/gtk_cristal.py; no editar a mano)
+   Los colores salen de colors.css (los escribe KDE al cambiar de esquema, claro u oscuro). */
+window.background:not(.popup):not(.tooltip) { background-color: alpha(@theme_bg_color, 0.66); }
+window.csd headerbar, window.csd .titlebar, headerbar { background-color: transparent; background-image: none;
+  box-shadow: none; border-color: transparent; }
+.sidebar, placessidebar, placessidebar list { background-color: transparent; }
