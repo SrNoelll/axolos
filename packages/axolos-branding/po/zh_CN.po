@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AxolOS\n"
 "Report-Msgid-Bugs-To: https://github.com/SrNoelll/axolos/issues\n"
-"POT-Creation-Date: 2026-11-17 13:35+0100\n"
+"POT-Creation-Date: 2026-11-18 11:41+0100\n"
 "PO-Revision-Date: 2026-11-08 12:00+0100\n"
 "Last-Translator: Noel Alarcón\n"
 "Language-Team: Chinese (simplified)\n"
@@ -16,28 +16,28 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:78
+#: iso/airootfs/usr/local/bin/axolos-instalar:84
 msgid "Renovando las claves de los repositorios"
 msgstr "正在更新软件源密钥"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:79
+#: iso/airootfs/usr/local/bin/axolos-instalar:85
 msgid "Descargando el instalador más reciente"
 msgstr "正在下载最新的安装程序"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:80
+#: iso/airootfs/usr/local/bin/axolos-instalar:86
 msgid "Abriendo el instalador"
 msgstr "正在打开安装程序"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:87
-#: iso/airootfs/usr/local/bin/axolos-instalar:143
+#: iso/airootfs/usr/local/bin/axolos-instalar:93
+#: iso/airootfs/usr/local/bin/axolos-instalar:149
 msgid "Instalar AxolOS"
 msgstr "安装 AxolOS"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:105
+#: iso/airootfs/usr/local/bin/axolos-instalar:111
 msgid "Te damos la bienvenida a AxolOS"
 msgstr "欢迎使用 AxolOS"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:107
+#: iso/airootfs/usr/local/bin/axolos-instalar:113
 msgid ""
 "Estás usando AxolOS sin instalar: puedes probarlo todo lo que quieras, nada se guarda en tu equipo. Cuando quieras quedártelo, instálalo.\n"
 "\n"
@@ -47,266 +47,266 @@ msgstr ""
 "\n"
 "安装时会下载所有组件的最新版本，针对你的处理器优化，并包含显卡驱动。"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:114
+#: iso/airootfs/usr/local/bin/axolos-instalar:120
 msgid "Mejor con internet"
 msgstr "建议连接互联网"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:114
+#: iso/airootfs/usr/local/bin/axolos-instalar:120
 msgid "Podrás elegir el disco"
 msgstr "可自选磁盘"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:134
+#: iso/airootfs/usr/local/bin/axolos-instalar:140
 msgid "Ajustes de red"
 msgstr "网络设置"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:137
+#: iso/airootfs/usr/local/bin/axolos-instalar:143
 msgid "Instalar sin conexión"
 msgstr "离线安装"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:138
+#: iso/airootfs/usr/local/bin/axolos-instalar:144
 msgid "Instala la versión de esta ISO. Al conectarte, se pone al día con una actualización."
 msgstr "安装此 ISO 中的版本。联网后，更新一次即可升到最新。"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:141
+#: iso/airootfs/usr/local/bin/axolos-instalar:147
 msgid "Seguir probando"
 msgstr "继续试用"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:180
+#: iso/airootfs/usr/local/bin/axolos-instalar:186
 msgid "Comprobando la conexión a internet…"
 msgstr "正在检查网络连接…"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:190
+#: iso/airootfs/usr/local/bin/axolos-instalar:196
 msgid "No hay conexión a internet"
 msgstr "没有网络连接"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:191
+#: iso/airootfs/usr/local/bin/axolos-instalar:197
 msgid "Conéctate a una red (icono de red del panel) y vuelve a intentarlo."
 msgstr "请连接网络（面板中的网络图标）后重试。"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:192
+#: iso/airootfs/usr/local/bin/axolos-instalar:198
 msgid " También puedes instalar sin conexión la versión de esta ISO y ponerla al día después."
 msgstr " 你也可以离线安装此 ISO 中的版本，稍后再更新。"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:196
-#: iso/airootfs/usr/local/bin/axolos-instalar:262
+#: iso/airootfs/usr/local/bin/axolos-instalar:202
+#: iso/airootfs/usr/local/bin/axolos-instalar:268
 msgid "Reintentar"
 msgstr "重试"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:209
+#: iso/airootfs/usr/local/bin/axolos-instalar:215
 msgid "Preparando el instalador"
 msgstr "正在准备安装程序"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:210
+#: iso/airootfs/usr/local/bin/axolos-instalar:216
 msgid "Sin conexión: se instalará la versión de esta ISO."
 msgstr "离线：将安装此 ISO 中的版本。"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:211
+#: iso/airootfs/usr/local/bin/axolos-instalar:217
 msgid "Se actualiza antes de abrirse: puede tardar uno o dos minutos."
 msgstr "打开前会先自我更新，可能需要一两分钟。"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:237
+#: iso/airootfs/usr/local/bin/axolos-instalar:243
 msgid "El instalador está abierto"
 msgstr "安装程序已打开"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:238
+#: iso/airootfs/usr/local/bin/axolos-instalar:244
 msgid "Sigue los pasos en su ventana. Esta se queda aquí por si la necesitas."
 msgstr "请在它的窗口中按步骤操作。本窗口会保留，以备不时之需。"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:250
+#: iso/airootfs/usr/local/bin/axolos-instalar:256
 msgid "Se ha cerrado el instalador"
 msgstr "安装程序已关闭"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:251
+#: iso/airootfs/usr/local/bin/axolos-instalar:257
 msgid "Si terminó la instalación, reinicia y quita el USB. Si no, puedes volver a abrirlo."
 msgstr "如果安装已完成，请重启并拔出 U 盘；否则可以重新打开安装程序。"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:252
+#: iso/airootfs/usr/local/bin/axolos-instalar:258
 msgid "Abrir el instalador otra vez"
 msgstr "重新打开安装程序"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:254
+#: iso/airootfs/usr/local/bin/axolos-instalar:260
 msgid "No se pudo preparar el instalador"
 msgstr "无法准备安装程序"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:255
+#: iso/airootfs/usr/local/bin/axolos-instalar:261
 #, python-brace-format
 msgid "Comprueba la conexión y vuelve a intentarlo. Detalles en {LOG_CAPA} y /home/liveuser/cachy-install.log"
 msgstr "请检查网络连接后重试。详情见 {LOG_CAPA} 和 /home/liveuser/cachy-install.log"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:256
+#: iso/airootfs/usr/local/bin/axolos-instalar:262
 #, python-brace-format
 msgid "(código {codigo})"
 msgstr "（代码 {codigo}）"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:274
+#: iso/airootfs/usr/local/bin/axolos-instalar:280
 msgid "Esto solo funciona en el sistema live de la ISO de AxolOS."
 msgstr "这只能在 AxolOS ISO 的 Live 系统中使用。"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:182
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:188
 #: packages/axolos-bienvenida/bin/axolos-centro:257
 #: packages/axolos-bienvenida/bin/axolos-centro:308
 msgid "Instalado"
 msgstr "已安装"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:222
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:228
 msgid "Bienvenido a AxolOS"
 msgstr "欢迎使用 AxolOS"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:225
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:231
 msgid "En un par de minutos dejamos tu equipo listo para programar y para usar inteligencia artificial en local, sin depender de internet. Elige lo que quieras; lo pesado se instala solo al final."
 msgstr "只需几分钟，我们就能让你的电脑准备好编程和在本地使用人工智能，无需依赖互联网。按需选择即可，大型组件会在最后才安装。"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:235
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:241
 msgid "Procesador"
 msgstr "处理器"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:236
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:242
 msgid "Gráfica integrada"
 msgstr "集成显卡"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:237
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:243
 #: packages/axolos-bienvenida/bin/axolos-centro:179
 #, python-brace-format
 msgid "{0:.0f} GB de RAM"
 msgstr "{0:.0f} GB 内存"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:253
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:259
 msgid "¿Con qué vas a programar?"
 msgstr "你要用什么编程？"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:254
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:260
 msgid "Marca tus lenguajes y herramientas. Git, Docker, la terminal mejorada y el editor ya vienen de serie."
 msgstr "勾选你的语言和工具。Git、Docker、增强终端和编辑器已默认包含。"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:289
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:295
 msgid "Tu identidad para Git y GitHub"
 msgstr "你的 Git 与 GitHub 身份"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:290
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:296
 msgid "Con esto firmas tus commits y subes código a GitHub por SSH, sin contraseñas."
 msgstr "这样你就能签名提交，并通过 SSH 免密码推送代码到 GitHub。"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:297
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:303
 msgid "Tu nombre"
 msgstr "你的名字"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:299
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:305
 msgid "tu@correo.com"
 msgstr "you@example.com"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:300
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:306
 msgid "Nombre"
 msgstr "姓名"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:302
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:308
 msgid "Correo"
 msgstr "邮箱"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:307
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:313
 msgid "Crear una clave SSH para este equipo"
 msgstr "为这台电脑创建 SSH 密钥"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:310
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:316
 msgid "Ya tienes una clave SSH (~/.ssh/id_ed25519)"
 msgstr "你已经有 SSH 密钥（~/.ssh/id_ed25519）"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:315
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:321
 msgid "Conectar con GitHub al terminar (se abre una terminal y el navegador)"
 msgstr "最后连接 GitHub（会打开终端和浏览器）"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:318
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:324
 msgid "Ya estás conectado a GitHub"
 msgstr "你已连接到 GitHub"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:321
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:674
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:327
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:680
 msgid "Poner el tema AxolOS en VS Code"
 msgstr "在 VS Code 中使用 AxolOS 主题"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:324
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:330
 msgid "Buscar en tu historial de comandos con Ctrl+R (importa el historial actual)"
 msgstr "用 Ctrl+R 搜索命令历史（会导入现有历史）"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:342
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:348
 msgid "Inteligencia artificial en local"
 msgstr "本地人工智能"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:343
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:349
 msgid "Modelos que funcionan en tu equipo: sin internet, sin cuotas y sin que nada salga de aquí. Los he elegido según tu gráfica."
 msgstr "在你电脑上运行的模型：无需联网、没有配额，任何数据都不会离开本机。我已根据你的显卡挑选。"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:348
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:354
 msgid "Sin gráfica dedicada: irá por procesador"
 msgstr "没有独立显卡：将使用处理器运行"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:348
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:354
 #, python-brace-format
 msgid "{0} · {1:.0f} GB de VRAM"
 msgstr "{0} · {1:.0f} GB 显存"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:354
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:360
 msgid "Aceleración por gráfica activada"
 msgstr "显卡加速已启用"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:356
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:362
 #, python-brace-format
 msgid "Se activará la aceleración por gráfica ({0})"
 msgstr "将启用显卡加速（{0}）"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:362
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:368
 msgid "MODELOS"
 msgstr "模型"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:379
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:385
 msgid " · opcional, va bien en tu equipo"
 msgstr " · 可选，在你的电脑上运行良好"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:382
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:388
 msgid "instalado"
 msgstr "已安装"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:387
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:393
 msgid "Conectar VS Code con la IA local (chat y autocompletado con Continue)"
 msgstr "将 VS Code 连接到本地 AI（通过 Continue 聊天和自动补全）"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:401
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:407
 #, python-brace-format
 msgid "Descarga: {gb:.1f} GB"
 msgstr "下载：{gb:.1f} GB"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:401
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:407
 msgid "No hay nada que descargar"
 msgstr "无需下载"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:410
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:416
 msgid "Esto es lo que voy a hacer. Te pediré la contraseña una vez."
 msgstr "以下是我将要做的事。只需输入一次密码。"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:410
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:416
 msgid "Todo listo para empezar"
 msgstr "一切就绪"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:424
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:430
 msgid "Ver detalles"
 msgstr "查看详情"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:447
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:453
 msgid "Tu AxolOS está listo"
 msgstr "你的 AxolOS 已就绪"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:448
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:454
 msgid "Algunos trucos para empezar:"
 msgstr "入门小技巧："
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:451
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:457
 msgid "escribe «ia» y tu pregunta para hablar con Axo, la IA local"
 msgstr "输入“ai”加问题，与本地 AI Axo 对话"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:452
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:458
 msgid "el chat con tu IA, en el menú de aplicaciones"
 msgstr "与 AI 聊天，位于应用菜单中"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:453
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:459
 #: packages/axolos-bienvenida/bin/axolos-centro:413
 #: packages/axolos-bienvenida/bin/axolos-centro:427
 #: packages/axolos-bienvenida/bin/axolos-centro:483
@@ -314,47 +314,47 @@ msgstr "与 AI 聊天，位于应用菜单中"
 msgid "Centro de AxolOS"
 msgstr "AxolOS 中心"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:453
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:459
 msgid "en el menú: actualizaciones, lenguajes, modelos de IA y apariencia"
 msgstr "在菜单中：更新、编程语言、AI 模型和外观"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:454
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:460
 msgid "en la terminal: busca en todo tu historial de comandos"
 msgstr "在终端中：搜索全部命令历史"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:455
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:461
 msgid "salta a tus carpetas más usadas"
 msgstr "跳转到最常用的文件夹"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:455
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:461
 msgid "z carpeta"
 msgstr "z 文件夹"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:495
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:501
 msgid "Terminado"
 msgstr "完成"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:512
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:518
 msgid "(no se pudo ejecutar)"
 msgstr "（无法执行）"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:602
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:540
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:608
 #: packages/axolos-bienvenida/bin/axolos-centro:269
 #: packages/axolos-bienvenida/bin/axolos-centro:385
 #: packages/axolos-bienvenida/bin/axolos-centro:389
 msgid "Aplicar"
 msgstr "应用"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:540
 msgid "Bienvenida"
 msgstr "欢迎"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:540
 msgid "Git y GitHub"
 msgstr "Git 与 GitHub"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:540
 #: packages/axolos-bienvenida/bin/axolos-centro:280
 #: packages/axolos-bienvenida/bin/axolos-centro:396
 #: packages/axolos-ia/lib/axolos-ia-krunner:123
@@ -362,22 +362,22 @@ msgstr "Git 与 GitHub"
 msgid "IA local"
 msgstr "本地 AI"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:540
 msgid "Listo"
 msgstr "完成"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:540
 #: packages/axolos-bienvenida/bin/axolos-centro:235
 #: packages/axolos-bienvenida/bin/axolos-centro:395
 msgid "Programación"
 msgstr "编程"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:539
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:545
 #: packages/axolos-bienvenida/bin/axolos-centro:391
 msgid "Bienvenida a AxolOS"
 msgstr "欢迎使用 AxolOS"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:561
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:567
 msgid ""
 "Nada de esto envía datos a\n"
 "ninguna parte."
@@ -385,103 +385,103 @@ msgstr ""
 "这些操作都不会\n"
 "向外发送任何数据。"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:577
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:583
 msgid "Ahora no"
 msgstr "暂不"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:579
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:585
 msgid "Atrás"
 msgstr "上一步"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:581
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:602
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:587
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:608
 msgid "Empezar"
 msgstr "开始"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:602
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:608
 msgid "Cerrar"
 msgstr "关闭"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:602
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:608
 msgid "Revisar"
 msgstr "检查"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:602
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:608
 msgid "Siguiente"
 msgstr "下一步"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:625
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:631
 msgid "Instalando "
 msgstr "正在安装 "
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:628
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:634
 msgid "Activando la gráfica para la IA"
 msgstr "正在为 AI 启用显卡"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:630
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:636
 msgid "Encendiendo la IA local"
 msgstr "正在启动本地 AI"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:635
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:637
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:641
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:643
 msgid "Configurando Git"
 msgstr "正在配置 Git"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:639
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:645
 msgid "Creando tu clave SSH"
 msgstr "正在创建 SSH 密钥"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:647
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:653
 #: packages/axolos-bienvenida/bin/axolos-centro:268
 msgid "Tema AxolOS en los editores"
 msgstr "编辑器中的 AxolOS 主题"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:649
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:655
 msgid "Importando tu historial de comandos"
 msgstr "正在导入命令历史"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:654
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:660
 msgid "Conectando VS Code con la IA"
 msgstr "正在将 VS Code 连接到 AI"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:663
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:669
 #, python-brace-format
 msgid "Activar la aceleración por gráfica (<b>{0}</b>)"
 msgstr "启用显卡加速（<b>{0}</b>）"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:665
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:671
 msgid "Crear tu clave SSH"
 msgstr "创建 SSH 密钥"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:667
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:673
 msgid "Guardar tu nombre y correo en Git"
 msgstr "在 Git 中保存姓名和邮箱"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:670
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:676
 msgid "Descargar "
 msgstr "下载 "
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:672
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:678
 msgid "Conectar VS Code con la IA local"
 msgstr "将 VS Code 连接到本地 AI"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:676
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:682
 msgid "Al final, abrir la conexión con GitHub"
 msgstr "最后打开 GitHub 连接"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:678
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:684
 msgid "Nada pendiente: tu equipo ya está al día"
 msgstr "无待办事项：你的电脑已是最新"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:703
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:709
 msgid "No se pudo completar: "
 msgstr "无法完成："
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:704
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:710
 msgid ". Puedes volver a abrir «Bienvenida a AxolOS» desde el menú para reintentarlo."
 msgstr "。可以从菜单重新打开“欢迎使用 AxolOS”再试一次。"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:707
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:713
 msgid "Para usar Docker sin sudo, cierra sesión y vuelve a entrar."
 msgstr "要免 sudo 使用 Docker，请注销后重新登录。"
 
@@ -650,7 +650,7 @@ msgstr "模型"
 
 #: packages/axolos-bienvenida/bin/axolos-centro:308
 #: packages/axolos-bienvenida/bin/axolos-centro:319
-#: packages/axolos-ia/bin/axolos-ia-chat:1074
+#: packages/axolos-ia/bin/axolos-ia-chat:1080
 msgid "Quitar"
 msgstr "移除"
 
@@ -1049,7 +1049,11 @@ msgstr ""
 "  axolos-dev install 配置...      安装配置（web、python、rust…）；只需输入一次密码\n"
 "  axolos-dev editors              在 VS Code / VSCodium / Antigravity 中使用 AxolOS 主题\n"
 
-#: packages/axolos-glass/axolos-glass-comprobar:30
+#: packages/axolos-glass/axolos-glass-comprobar:55
+msgid "el cristal líquido se pausa: esta versión usa instrucciones que este procesador no tiene (mientras, desenfoque normal)."
+msgstr "液态玻璃已暂停：此版本使用了该处理器不支持的指令（在此期间使用普通模糊）。"
+
+#: packages/axolos-glass/axolos-glass-comprobar:63
 msgid "el cristal líquido se pausa hasta que llegue su versión para KWin {0} (mientras, desenfoque normal)."
 msgstr "液态玻璃已暂停，直到适配 KWin {0} 的版本发布（期间使用普通模糊）。"
 
@@ -1245,219 +1249,219 @@ msgstr "没有找到相似的内容。"
 msgid "(parecido)"
 msgstr "（相似）"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:216
-#: packages/axolos-ia/bin/axolos-ia-chat:711
+#: packages/axolos-ia/bin/axolos-ia-chat:222
+#: packages/axolos-ia/bin/axolos-ia-chat:717
 msgid "Conversación"
 msgstr "对话"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:243
+#: packages/axolos-ia/bin/axolos-ia-chat:249
 msgid "HOY"
 msgstr "今天"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:245
+#: packages/axolos-ia/bin/axolos-ia-chat:251
 msgid "AYER"
 msgstr "昨天"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:247
+#: packages/axolos-ia/bin/axolos-ia-chat:253
 msgid "ÚLTIMOS 7 DÍAS"
 msgstr "最近 7 天"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:249
+#: packages/axolos-ia/bin/axolos-ia-chat:255
 msgid "ÚLTIMOS 30 DÍAS"
 msgstr "最近 30 天"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:250
+#: packages/axolos-ia/bin/axolos-ia-chat:256
 msgid "ANTES"
 msgstr "更早"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:305
+#: packages/axolos-ia/bin/axolos-ia-chat:311
 msgid "Autocompletado"
 msgstr "自动补全"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:390
+#: packages/axolos-ia/bin/axolos-ia-chat:396
 msgid "Razonamiento"
 msgstr "推理过程"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:401
+#: packages/axolos-ia/bin/axolos-ia-chat:407
 msgid "Copiar"
 msgstr "复制"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:405
+#: packages/axolos-ia/bin/axolos-ia-chat:411
 msgid "Regenerar"
 msgstr "重新生成"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:434
+#: packages/axolos-ia/bin/axolos-ia-chat:440
 msgid "Cargando el modelo"
 msgstr "正在加载模型"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:434
+#: packages/axolos-ia/bin/axolos-ia-chat:440
 msgid "Pensando"
 msgstr "思考中"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:442
+#: packages/axolos-ia/bin/axolos-ia-chat:448
 msgid "Pensando…"
 msgstr "思考中…"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:447
+#: packages/axolos-ia/bin/axolos-ia-chat:453
 msgid "Ver razonamiento"
 msgstr "查看推理过程"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:458
+#: packages/axolos-ia/bin/axolos-ia-chat:464
 #, python-brace-format
 msgid "<span style=\"color:{0}\">(respuesta detenida)</span>"
 msgstr "<span style=\"color:{0}\">（已停止回答）</span>"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:467
+#: packages/axolos-ia/bin/axolos-ia-chat:473
 #, python-brace-format
 msgid "<span style=\"color:{0}\">No he podido responder: {1}</span>"
 msgstr "<span style=\"color:{0}\">无法回答：{1}</span>"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:472
+#: packages/axolos-ia/bin/axolos-ia-chat:478
 msgid "Copiado"
 msgstr "已复制"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:479
+#: packages/axolos-ia/bin/axolos-ia-chat:485
 msgid "Código copiado"
 msgstr "代码已复制"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:518
+#: packages/axolos-ia/bin/axolos-ia-chat:524
 msgid "Conectando con la IA local…"
 msgstr "正在连接本地 AI…"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:538
+#: packages/axolos-ia/bin/axolos-ia-chat:544
 msgid "Ocultar el historial (Ctrl+B)"
 msgstr "隐藏历史记录（Ctrl+B）"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:542
+#: packages/axolos-ia/bin/axolos-ia-chat:548
 msgid "  Nueva conversación"
 msgstr "  新对话"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:549
+#: packages/axolos-ia/bin/axolos-ia-chat:555
 msgid "Buscar en el historial  (Ctrl+K)"
 msgstr "搜索历史记录  (Ctrl+K)"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:561
+#: packages/axolos-ia/bin/axolos-ia-chat:567
 msgid "● Todo se queda en tu equipo"
 msgstr "● 所有内容都留在你的电脑上"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:579
+#: packages/axolos-ia/bin/axolos-ia-chat:585
 msgid "Mostrar el historial (Ctrl+B)"
 msgstr "显示历史记录（Ctrl+B）"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:582
-#: packages/axolos-ia/bin/axolos-ia-chat:1058
+#: packages/axolos-ia/bin/axolos-ia-chat:588
+#: packages/axolos-ia/bin/axolos-ia-chat:1064
 msgid "Nueva conversación"
 msgstr "新对话"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:587
+#: packages/axolos-ia/bin/axolos-ia-chat:593
 msgid "Pensar a fondo"
 msgstr "深度思考"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:589
+#: packages/axolos-ia/bin/axolos-ia-chat:595
 msgid "Razona antes de responder: respuestas más cuidadas, algo más lento"
 msgstr "回答前先推理：答案更严谨，但稍慢"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:632
+#: packages/axolos-ia/bin/axolos-ia-chat:638
 msgid "Adjuntar imagen (también puedes arrastrarla)"
 msgstr "附加图片（也可以直接拖入）"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:636
+#: packages/axolos-ia/bin/axolos-ia-chat:642
 msgid "Pregunta lo que quieras…"
 msgstr "问点什么…"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:648
+#: packages/axolos-ia/bin/axolos-ia-chat:654
 msgid "Intro envía · Mayús+Intro, nueva línea · Esc detiene · Ctrl+N nueva"
 msgstr "回车发送 · Shift+回车换行 · Esc 停止 · Ctrl+N 新建"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:686
+#: packages/axolos-ia/bin/axolos-ia-chat:692
 msgid "Aún no hay conversaciones"
 msgstr "还没有对话"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:686
+#: packages/axolos-ia/bin/axolos-ia-chat:692
 msgid "Sin resultados"
 msgstr "没有结果"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:726
-#: packages/axolos-ia/bin/axolos-ia-chat:734
+#: packages/axolos-ia/bin/axolos-ia-chat:732
+#: packages/axolos-ia/bin/axolos-ia-chat:740
 msgid "Renombrar"
 msgstr "重命名"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:727
+#: packages/axolos-ia/bin/axolos-ia-chat:733
 msgid "Exportar a Markdown…"
 msgstr "导出为 Markdown…"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:729
+#: packages/axolos-ia/bin/axolos-ia-chat:735
 msgid "Eliminar"
 msgstr "删除"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:734
+#: packages/axolos-ia/bin/axolos-ia-chat:740
 msgid "Nombre de la conversación:"
 msgstr "对话名称："
 
-#: packages/axolos-ia/bin/axolos-ia-chat:745
+#: packages/axolos-ia/bin/axolos-ia-chat:751
 msgid "Exportar conversación"
 msgstr "导出对话"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:751
+#: packages/axolos-ia/bin/axolos-ia-chat:757
 msgid "Tú"
 msgstr "你"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:756
+#: packages/axolos-ia/bin/axolos-ia-chat:762
 msgid "Eliminar conversación"
 msgstr "删除对话"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:757
+#: packages/axolos-ia/bin/axolos-ia-chat:763
 #, python-brace-format
 msgid "¿Eliminar esta conversación? Se mueve a la papelera de Axo ({0})."
 msgstr "删除这个对话？它会移到 Axo 的回收站（{0}）。"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:789
+#: packages/axolos-ia/bin/axolos-ia-chat:795
 msgid "Encender la IA local"
 msgstr "开启本地 AI"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:789
+#: packages/axolos-ia/bin/axolos-ia-chat:795
 msgid "La IA local está apagada."
 msgstr "本地 AI 已关闭。"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:791
+#: packages/axolos-ia/bin/axolos-ia-chat:797
 msgid "Aún no hay ningún modelo descargado."
 msgstr "还没有下载任何模型。"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:792
+#: packages/axolos-ia/bin/axolos-ia-chat:798
 #, python-brace-format
 msgid "Descargar {0}"
 msgstr "下载 {0}"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:803
+#: packages/axolos-ia/bin/axolos-ia-chat:809
 msgid "Encendiendo la IA local…"
 msgstr "正在开启本地 AI…"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:808
+#: packages/axolos-ia/bin/axolos-ia-chat:814
 msgid "Descargando el modelo… 0 %"
 msgstr "正在下载模型… 0 %"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:811
+#: packages/axolos-ia/bin/axolos-ia-chat:817
 #, python-brace-format
 msgid "Error: {err}"
 msgstr "错误：{err}"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:846
+#: packages/axolos-ia/bin/axolos-ia-chat:852
 msgid "¿En qué te ayudo?"
 msgstr "需要什么帮助？"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:849
+#: packages/axolos-ia/bin/axolos-ia-chat:855
 msgid "Soy Axo, la IA de tu equipo. Funciono sin internet y nada de lo que me cuentes sale de aquí."
 msgstr "我是 Axo，你电脑里的 AI。无需联网，你告诉我的任何内容都不会离开这台电脑。"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:868
+#: packages/axolos-ia/bin/axolos-ia-chat:874
 msgid "Explícame un error"
 msgstr "解释错误"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:868
+#: packages/axolos-ia/bin/axolos-ia-chat:874
 msgid "Pega el mensaje de la terminal y te digo qué pasa"
 msgstr "粘贴终端里的消息，我来告诉你怎么回事"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:869
+#: packages/axolos-ia/bin/axolos-ia-chat:875
 msgid ""
 "Explícame qué significa este error y cómo lo arreglo:\n"
 "\n"
@@ -1465,27 +1469,27 @@ msgstr ""
 "解释这个错误是什么意思以及如何修复：\n"
 "\n"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:870
+#: packages/axolos-ia/bin/axolos-ia-chat:876
 msgid "En Python, bash o fish, listo para usar"
 msgstr "Python、bash 或 fish，拿来即用"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:870
+#: packages/axolos-ia/bin/axolos-ia-chat:876
 msgid "Escribe un script"
 msgstr "写个脚本"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:871
+#: packages/axolos-ia/bin/axolos-ia-chat:877
 msgid "Escribe un script de Python que "
 msgstr "写一个 Python 脚本，用来"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:872
+#: packages/axolos-ia/bin/axolos-ia-chat:878
 msgid "Fallos, mejoras y buenas prácticas"
 msgstr "缺陷、改进和最佳实践"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:872
+#: packages/axolos-ia/bin/axolos-ia-chat:878
 msgid "Revisa mi código"
 msgstr "审查我的代码"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:873
+#: packages/axolos-ia/bin/axolos-ia-chat:879
 msgid ""
 "Revisa este código y dime cómo mejorarlo:\n"
 "\n"
@@ -1493,35 +1497,35 @@ msgstr ""
 "审查这段代码并告诉我如何改进：\n"
 "\n"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:874
+#: packages/axolos-ia/bin/axolos-ia-chat:880
 msgid "Comandos de Linux"
 msgstr "Linux 命令"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:874
+#: packages/axolos-ia/bin/axolos-ia-chat:880
 msgid "Cómo hacer algo en AxolOS desde la terminal"
 msgstr "如何在 AxolOS 中用终端完成某件事"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:875
+#: packages/axolos-ia/bin/axolos-ia-chat:881
 msgid "¿Cómo puedo, desde la terminal, "
 msgstr "我如何在终端中"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:1048
+#: packages/axolos-ia/bin/axolos-ia-chat:1054
 msgid "Detener (Esc)"
 msgstr "停止（Esc）"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:1048
+#: packages/axolos-ia/bin/axolos-ia-chat:1054
 msgid "Enviar (Intro)"
 msgstr "发送（回车）"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:1065
+#: packages/axolos-ia/bin/axolos-ia-chat:1071
 msgid "Adjuntar imagen"
 msgstr "附加图片"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:1066
+#: packages/axolos-ia/bin/axolos-ia-chat:1072
 msgid "Imágenes (*.png *.jpg *.jpeg *.webp)"
 msgstr "图片 (*.png *.jpg *.jpeg *.webp)"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:1111
+#: packages/axolos-ia/bin/axolos-ia-chat:1117
 msgid "Axo, la IA local de AxolOS"
 msgstr "Axo，AxolOS 的本地 AI"
 
@@ -1700,21 +1704,21 @@ msgstr ""
 "\n"
 "这个对话的标题："
 
-#: packages/axolos-kde-settings/axolos-aspecto:57
+#: packages/axolos-kde-settings/axolos-aspecto:88
 msgid "AxolOS cambiará solo: claro de día y oscuro de noche."
 msgstr "AxolOS 将自动切换：白天浅色，夜晚深色。"
 
-#: packages/axolos-kde-settings/axolos-aspecto:61
-#: packages/axolos-kde-settings/axolos-aspecto:94
+#: packages/axolos-kde-settings/axolos-aspecto:92
+#: packages/axolos-kde-settings/axolos-aspecto:162
 msgid "AxolOS claro"
 msgstr "AxolOS 浅色"
 
-#: packages/axolos-kde-settings/axolos-aspecto:61
-#: packages/axolos-kde-settings/axolos-aspecto:94
+#: packages/axolos-kde-settings/axolos-aspecto:92
+#: packages/axolos-kde-settings/axolos-aspecto:162
 msgid "AxolOS oscuro"
 msgstr "AxolOS 深色"
 
-#: packages/axolos-kde-settings/axolos-aspecto:80
+#: packages/axolos-kde-settings/axolos-aspecto:148
 msgid ""
 "axolos-aspecto · modo del escritorio de cristal líquido de AxolOS.\n"
 "\n"
@@ -1733,7 +1737,7 @@ msgstr ""
 "  axolos-aspecto auto           自动切换：白天浅色，夜晚深色（Plasma）\n"
 "  axolos-aspecto --migrar       每个版本登录时运行一次：更新已有账户\n"
 
-#: packages/axolos-kde-settings/axolos-aspecto:95
+#: packages/axolos-kde-settings/axolos-aspecto:163
 msgid "automático: claro de día y oscuro de noche"
 msgstr "自动：白天浅色，夜晚深色"
 

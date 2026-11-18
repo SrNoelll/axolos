@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AxolOS\n"
 "Report-Msgid-Bugs-To: https://github.com/SrNoelll/axolos/issues\n"
-"POT-Creation-Date: 2026-11-17 13:35+0100\n"
+"POT-Creation-Date: 2026-11-18 11:41+0100\n"
 "PO-Revision-Date: 2026-11-08 12:00+0100\n"
 "Last-Translator: Noel Alarcón\n"
 "Language-Team: French\n"
@@ -16,28 +16,28 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:78
+#: iso/airootfs/usr/local/bin/axolos-instalar:84
 msgid "Renovando las claves de los repositorios"
 msgstr "Renouvellement des clés des dépôts"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:79
+#: iso/airootfs/usr/local/bin/axolos-instalar:85
 msgid "Descargando el instalador más reciente"
 msgstr "Téléchargement de l'installateur le plus récent"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:80
+#: iso/airootfs/usr/local/bin/axolos-instalar:86
 msgid "Abriendo el instalador"
 msgstr "Ouverture de l'installateur"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:87
-#: iso/airootfs/usr/local/bin/axolos-instalar:143
+#: iso/airootfs/usr/local/bin/axolos-instalar:93
+#: iso/airootfs/usr/local/bin/axolos-instalar:149
 msgid "Instalar AxolOS"
 msgstr "Installer AxolOS"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:105
+#: iso/airootfs/usr/local/bin/axolos-instalar:111
 msgid "Te damos la bienvenida a AxolOS"
 msgstr "Bienvenue dans AxolOS"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:107
+#: iso/airootfs/usr/local/bin/axolos-instalar:113
 msgid ""
 "Estás usando AxolOS sin instalar: puedes probarlo todo lo que quieras, nada se guarda en tu equipo. Cuando quieras quedártelo, instálalo.\n"
 "\n"
@@ -47,266 +47,266 @@ msgstr ""
 "\n"
 "L'installation télécharge la version la plus récente de tout, optimisée pour votre processeur et avec les pilotes de votre carte graphique."
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:114
+#: iso/airootfs/usr/local/bin/axolos-instalar:120
 msgid "Mejor con internet"
 msgstr "Idéal avec internet"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:114
+#: iso/airootfs/usr/local/bin/axolos-instalar:120
 msgid "Podrás elegir el disco"
 msgstr "Vous choisissez le disque"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:134
+#: iso/airootfs/usr/local/bin/axolos-instalar:140
 msgid "Ajustes de red"
 msgstr "Paramètres réseau"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:137
+#: iso/airootfs/usr/local/bin/axolos-instalar:143
 msgid "Instalar sin conexión"
 msgstr "Installer hors ligne"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:138
+#: iso/airootfs/usr/local/bin/axolos-instalar:144
 msgid "Instala la versión de esta ISO. Al conectarte, se pone al día con una actualización."
 msgstr "Installe la version de cette ISO. Une fois connecté, une mise à jour la remet à niveau."
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:141
+#: iso/airootfs/usr/local/bin/axolos-instalar:147
 msgid "Seguir probando"
 msgstr "Continuer l'essai"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:180
+#: iso/airootfs/usr/local/bin/axolos-instalar:186
 msgid "Comprobando la conexión a internet…"
 msgstr "Vérification de la connexion internet…"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:190
+#: iso/airootfs/usr/local/bin/axolos-instalar:196
 msgid "No hay conexión a internet"
 msgstr "Pas de connexion internet"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:191
+#: iso/airootfs/usr/local/bin/axolos-instalar:197
 msgid "Conéctate a una red (icono de red del panel) y vuelve a intentarlo."
 msgstr "Connectez-vous à un réseau (icône réseau du panneau) et réessayez."
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:192
+#: iso/airootfs/usr/local/bin/axolos-instalar:198
 msgid " También puedes instalar sin conexión la versión de esta ISO y ponerla al día después."
 msgstr " Vous pouvez aussi installer hors ligne la version de cette ISO et la mettre à jour plus tard."
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:196
-#: iso/airootfs/usr/local/bin/axolos-instalar:262
+#: iso/airootfs/usr/local/bin/axolos-instalar:202
+#: iso/airootfs/usr/local/bin/axolos-instalar:268
 msgid "Reintentar"
 msgstr "Réessayer"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:209
+#: iso/airootfs/usr/local/bin/axolos-instalar:215
 msgid "Preparando el instalador"
 msgstr "Préparation de l'installateur"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:210
+#: iso/airootfs/usr/local/bin/axolos-instalar:216
 msgid "Sin conexión: se instalará la versión de esta ISO."
 msgstr "Hors ligne : la version de cette ISO sera installée."
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:211
+#: iso/airootfs/usr/local/bin/axolos-instalar:217
 msgid "Se actualiza antes de abrirse: puede tardar uno o dos minutos."
 msgstr "Il se met à jour avant de s'ouvrir : cela peut prendre une ou deux minutes."
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:237
+#: iso/airootfs/usr/local/bin/axolos-instalar:243
 msgid "El instalador está abierto"
 msgstr "L'installateur est ouvert"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:238
+#: iso/airootfs/usr/local/bin/axolos-instalar:244
 msgid "Sigue los pasos en su ventana. Esta se queda aquí por si la necesitas."
 msgstr "Suivez les étapes dans sa fenêtre. Celle-ci reste ici au cas où."
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:250
+#: iso/airootfs/usr/local/bin/axolos-instalar:256
 msgid "Se ha cerrado el instalador"
 msgstr "L'installateur s'est fermé"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:251
+#: iso/airootfs/usr/local/bin/axolos-instalar:257
 msgid "Si terminó la instalación, reinicia y quita el USB. Si no, puedes volver a abrirlo."
 msgstr "Si l'installation est terminée, redémarrez et retirez la clé USB. Sinon, vous pouvez le rouvrir."
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:252
+#: iso/airootfs/usr/local/bin/axolos-instalar:258
 msgid "Abrir el instalador otra vez"
 msgstr "Rouvrir l'installateur"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:254
+#: iso/airootfs/usr/local/bin/axolos-instalar:260
 msgid "No se pudo preparar el instalador"
 msgstr "Impossible de préparer l'installateur"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:255
+#: iso/airootfs/usr/local/bin/axolos-instalar:261
 #, python-brace-format
 msgid "Comprueba la conexión y vuelve a intentarlo. Detalles en {LOG_CAPA} y /home/liveuser/cachy-install.log"
 msgstr "Vérifiez la connexion et réessayez. Détails dans {LOG_CAPA} et /home/liveuser/cachy-install.log"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:256
+#: iso/airootfs/usr/local/bin/axolos-instalar:262
 #, python-brace-format
 msgid "(código {codigo})"
 msgstr "(code {codigo})"
 
-#: iso/airootfs/usr/local/bin/axolos-instalar:274
+#: iso/airootfs/usr/local/bin/axolos-instalar:280
 msgid "Esto solo funciona en el sistema live de la ISO de AxolOS."
 msgstr "Cela ne fonctionne que dans le système live de l'ISO d'AxolOS."
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:182
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:188
 #: packages/axolos-bienvenida/bin/axolos-centro:257
 #: packages/axolos-bienvenida/bin/axolos-centro:308
 msgid "Instalado"
 msgstr "Installé"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:222
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:228
 msgid "Bienvenido a AxolOS"
 msgstr "Bienvenue dans AxolOS"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:225
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:231
 msgid "En un par de minutos dejamos tu equipo listo para programar y para usar inteligencia artificial en local, sin depender de internet. Elige lo que quieras; lo pesado se instala solo al final."
 msgstr "En quelques minutes, nous préparons votre ordinateur pour programmer et utiliser l'intelligence artificielle en local, sans dépendre d'internet. Choisissez ce que vous voulez ; le plus lourd s'installe seulement à la fin."
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:235
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:241
 msgid "Procesador"
 msgstr "Processeur"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:236
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:242
 msgid "Gráfica integrada"
 msgstr "Graphique intégré"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:237
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:243
 #: packages/axolos-bienvenida/bin/axolos-centro:179
 #, python-brace-format
 msgid "{0:.0f} GB de RAM"
 msgstr "{0:.0f} Go de RAM"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:253
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:259
 msgid "¿Con qué vas a programar?"
 msgstr "Avec quoi allez-vous programmer ?"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:254
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:260
 msgid "Marca tus lenguajes y herramientas. Git, Docker, la terminal mejorada y el editor ya vienen de serie."
 msgstr "Cochez vos langages et outils. Git, Docker, le terminal amélioré et l'éditeur sont déjà inclus."
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:289
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:295
 msgid "Tu identidad para Git y GitHub"
 msgstr "Votre identité pour Git et GitHub"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:290
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:296
 msgid "Con esto firmas tus commits y subes código a GitHub por SSH, sin contraseñas."
 msgstr "Cela vous permet de signer vos commits et d'envoyer du code sur GitHub par SSH, sans mot de passe."
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:297
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:303
 msgid "Tu nombre"
 msgstr "Votre nom"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:299
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:305
 msgid "tu@correo.com"
 msgstr "vous@exemple.com"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:300
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:306
 msgid "Nombre"
 msgstr "Nom"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:302
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:308
 msgid "Correo"
 msgstr "E-mail"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:307
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:313
 msgid "Crear una clave SSH para este equipo"
 msgstr "Créer une clé SSH pour cet ordinateur"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:310
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:316
 msgid "Ya tienes una clave SSH (~/.ssh/id_ed25519)"
 msgstr "Vous avez déjà une clé SSH (~/.ssh/id_ed25519)"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:315
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:321
 msgid "Conectar con GitHub al terminar (se abre una terminal y el navegador)"
 msgstr "Se connecter à GitHub à la fin (un terminal et le navigateur s'ouvriront)"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:318
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:324
 msgid "Ya estás conectado a GitHub"
 msgstr "Vous êtes déjà connecté à GitHub"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:321
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:674
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:327
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:680
 msgid "Poner el tema AxolOS en VS Code"
 msgstr "Mettre le thème AxolOS dans VS Code"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:324
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:330
 msgid "Buscar en tu historial de comandos con Ctrl+R (importa el historial actual)"
 msgstr "Rechercher dans l'historique des commandes avec Ctrl+R (importe l'historique actuel)"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:342
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:348
 msgid "Inteligencia artificial en local"
 msgstr "Intelligence artificielle en local"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:343
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:349
 msgid "Modelos que funcionan en tu equipo: sin internet, sin cuotas y sin que nada salga de aquí. Los he elegido según tu gráfica."
 msgstr "Des modèles qui tournent sur votre ordinateur : sans internet, sans quotas et sans que rien ne sorte d'ici. Je les ai choisis selon votre carte graphique."
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:348
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:354
 msgid "Sin gráfica dedicada: irá por procesador"
 msgstr "Pas de carte graphique dédiée : cela tournera sur le processeur"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:348
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:354
 #, python-brace-format
 msgid "{0} · {1:.0f} GB de VRAM"
 msgstr "{0} · {1:.0f} Go de VRAM"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:354
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:360
 msgid "Aceleración por gráfica activada"
 msgstr "Accélération graphique activée"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:356
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:362
 #, python-brace-format
 msgid "Se activará la aceleración por gráfica ({0})"
 msgstr "L'accélération graphique sera activée ({0})"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:362
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:368
 msgid "MODELOS"
 msgstr "MODÈLES"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:379
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:385
 msgid " · opcional, va bien en tu equipo"
 msgstr " · facultatif, fonctionne bien sur votre ordinateur"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:382
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:388
 msgid "instalado"
 msgstr "installé"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:387
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:393
 msgid "Conectar VS Code con la IA local (chat y autocompletado con Continue)"
 msgstr "Connecter VS Code à l'IA locale (chat et autocomplétion avec Continue)"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:401
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:407
 #, python-brace-format
 msgid "Descarga: {gb:.1f} GB"
 msgstr "Téléchargement : {gb:.1f} Go"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:401
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:407
 msgid "No hay nada que descargar"
 msgstr "Rien à télécharger"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:410
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:416
 msgid "Esto es lo que voy a hacer. Te pediré la contraseña una vez."
 msgstr "Voici ce que je vais faire. Je vous demanderai le mot de passe une seule fois."
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:410
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:416
 msgid "Todo listo para empezar"
 msgstr "Tout est prêt"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:424
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:430
 msgid "Ver detalles"
 msgstr "Voir les détails"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:447
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:453
 msgid "Tu AxolOS está listo"
 msgstr "Votre AxolOS est prêt"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:448
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:454
 msgid "Algunos trucos para empezar:"
 msgstr "Quelques astuces pour commencer :"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:451
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:457
 msgid "escribe «ia» y tu pregunta para hablar con Axo, la IA local"
 msgstr "tapez « ai » et votre question pour parler à Axo, l'IA locale"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:452
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:458
 msgid "el chat con tu IA, en el menú de aplicaciones"
 msgstr "le chat avec votre IA, dans le menu des applications"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:453
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:459
 #: packages/axolos-bienvenida/bin/axolos-centro:413
 #: packages/axolos-bienvenida/bin/axolos-centro:427
 #: packages/axolos-bienvenida/bin/axolos-centro:483
@@ -314,47 +314,47 @@ msgstr "le chat avec votre IA, dans le menu des applications"
 msgid "Centro de AxolOS"
 msgstr "Centre AxolOS"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:453
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:459
 msgid "en el menú: actualizaciones, lenguajes, modelos de IA y apariencia"
 msgstr "dans le menu : mises à jour, langages, modèles d'IA et apparence"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:454
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:460
 msgid "en la terminal: busca en todo tu historial de comandos"
 msgstr "dans le terminal : recherche dans tout l'historique des commandes"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:455
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:461
 msgid "salta a tus carpetas más usadas"
 msgstr "aller à vos dossiers les plus utilisés"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:455
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:461
 msgid "z carpeta"
 msgstr "z dossier"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:495
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:501
 msgid "Terminado"
 msgstr "Terminé"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:512
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:518
 msgid "(no se pudo ejecutar)"
 msgstr "(impossible d'exécuter)"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:602
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:540
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:608
 #: packages/axolos-bienvenida/bin/axolos-centro:269
 #: packages/axolos-bienvenida/bin/axolos-centro:385
 #: packages/axolos-bienvenida/bin/axolos-centro:389
 msgid "Aplicar"
 msgstr "Appliquer"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:540
 msgid "Bienvenida"
 msgstr "Bienvenue"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:540
 msgid "Git y GitHub"
 msgstr "Git et GitHub"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:540
 #: packages/axolos-bienvenida/bin/axolos-centro:280
 #: packages/axolos-bienvenida/bin/axolos-centro:396
 #: packages/axolos-ia/lib/axolos-ia-krunner:123
@@ -362,22 +362,22 @@ msgstr "Git et GitHub"
 msgid "IA local"
 msgstr "IA locale"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:540
 msgid "Listo"
 msgstr "Terminé"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:534
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:540
 #: packages/axolos-bienvenida/bin/axolos-centro:235
 #: packages/axolos-bienvenida/bin/axolos-centro:395
 msgid "Programación"
 msgstr "Programmation"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:539
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:545
 #: packages/axolos-bienvenida/bin/axolos-centro:391
 msgid "Bienvenida a AxolOS"
 msgstr "Bienvenue dans AxolOS"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:561
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:567
 msgid ""
 "Nada de esto envía datos a\n"
 "ninguna parte."
@@ -385,103 +385,103 @@ msgstr ""
 "Rien de tout cela n'envoie\n"
 "de données nulle part."
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:577
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:583
 msgid "Ahora no"
 msgstr "Pas maintenant"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:579
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:585
 msgid "Atrás"
 msgstr "Retour"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:581
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:602
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:587
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:608
 msgid "Empezar"
 msgstr "Commencer"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:602
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:608
 msgid "Cerrar"
 msgstr "Fermer"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:602
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:608
 msgid "Revisar"
 msgstr "Vérifier"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:602
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:608
 msgid "Siguiente"
 msgstr "Suivant"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:625
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:631
 msgid "Instalando "
 msgstr "Installation de "
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:628
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:634
 msgid "Activando la gráfica para la IA"
 msgstr "Activation de la carte graphique pour l'IA"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:630
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:636
 msgid "Encendiendo la IA local"
 msgstr "Démarrage de l'IA locale"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:635
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:637
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:641
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:643
 msgid "Configurando Git"
 msgstr "Configuration de Git"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:639
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:645
 msgid "Creando tu clave SSH"
 msgstr "Création de votre clé SSH"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:647
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:653
 #: packages/axolos-bienvenida/bin/axolos-centro:268
 msgid "Tema AxolOS en los editores"
 msgstr "Thème AxolOS dans les éditeurs"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:649
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:655
 msgid "Importando tu historial de comandos"
 msgstr "Import de l'historique des commandes"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:654
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:660
 msgid "Conectando VS Code con la IA"
 msgstr "Connexion de VS Code à l'IA"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:663
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:669
 #, python-brace-format
 msgid "Activar la aceleración por gráfica (<b>{0}</b>)"
 msgstr "Activer l'accélération graphique (<b>{0}</b>)"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:665
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:671
 msgid "Crear tu clave SSH"
 msgstr "Créer votre clé SSH"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:667
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:673
 msgid "Guardar tu nombre y correo en Git"
 msgstr "Enregistrer votre nom et votre e-mail dans Git"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:670
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:676
 msgid "Descargar "
 msgstr "Télécharger "
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:672
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:678
 msgid "Conectar VS Code con la IA local"
 msgstr "Connecter VS Code à l'IA locale"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:676
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:682
 msgid "Al final, abrir la conexión con GitHub"
 msgstr "À la fin, ouvrir la connexion à GitHub"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:678
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:684
 msgid "Nada pendiente: tu equipo ya está al día"
 msgstr "Rien en attente : votre ordinateur est à jour"
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:703
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:709
 msgid "No se pudo completar: "
 msgstr "Impossible de terminer : "
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:704
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:710
 msgid ". Puedes volver a abrir «Bienvenida a AxolOS» desde el menú para reintentarlo."
 msgstr ". Vous pouvez rouvrir « Bienvenue dans AxolOS » depuis le menu pour réessayer."
 
-#: packages/axolos-bienvenida/bin/axolos-bienvenida:707
+#: packages/axolos-bienvenida/bin/axolos-bienvenida:713
 msgid "Para usar Docker sin sudo, cierra sesión y vuelve a entrar."
 msgstr "Pour utiliser Docker sans sudo, déconnectez-vous puis reconnectez-vous."
 
@@ -650,7 +650,7 @@ msgstr "Modèles"
 
 #: packages/axolos-bienvenida/bin/axolos-centro:308
 #: packages/axolos-bienvenida/bin/axolos-centro:319
-#: packages/axolos-ia/bin/axolos-ia-chat:1074
+#: packages/axolos-ia/bin/axolos-ia-chat:1080
 msgid "Quitar"
 msgstr "Supprimer"
 
@@ -1049,7 +1049,11 @@ msgstr ""
 "  axolos-dev install PROFIL...    installe des profils (web, python, rust…) ; demande le mot de passe une fois\n"
 "  axolos-dev editors              thème AxolOS dans VS Code / VSCodium / Antigravity\n"
 
-#: packages/axolos-glass/axolos-glass-comprobar:30
+#: packages/axolos-glass/axolos-glass-comprobar:55
+msgid "el cristal líquido se pausa: esta versión usa instrucciones que este procesador no tiene (mientras, desenfoque normal)."
+msgstr "le verre liquide est en pause : cette version utilise des instructions que ce processeur n'a pas (flou normal en attendant)."
+
+#: packages/axolos-glass/axolos-glass-comprobar:63
 msgid "el cristal líquido se pausa hasta que llegue su versión para KWin {0} (mientras, desenfoque normal)."
 msgstr "le verre liquide est en pause jusqu'à l'arrivée de sa version pour KWin {0} (flou normal en attendant)."
 
@@ -1245,219 +1249,219 @@ msgstr "Rien de semblable."
 msgid "(parecido)"
 msgstr "(similaire)"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:216
-#: packages/axolos-ia/bin/axolos-ia-chat:711
+#: packages/axolos-ia/bin/axolos-ia-chat:222
+#: packages/axolos-ia/bin/axolos-ia-chat:717
 msgid "Conversación"
 msgstr "Conversation"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:243
+#: packages/axolos-ia/bin/axolos-ia-chat:249
 msgid "HOY"
 msgstr "AUJOURD'HUI"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:245
+#: packages/axolos-ia/bin/axolos-ia-chat:251
 msgid "AYER"
 msgstr "HIER"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:247
+#: packages/axolos-ia/bin/axolos-ia-chat:253
 msgid "ÚLTIMOS 7 DÍAS"
 msgstr "7 DERNIERS JOURS"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:249
+#: packages/axolos-ia/bin/axolos-ia-chat:255
 msgid "ÚLTIMOS 30 DÍAS"
 msgstr "30 DERNIERS JOURS"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:250
+#: packages/axolos-ia/bin/axolos-ia-chat:256
 msgid "ANTES"
 msgstr "PLUS ANCIEN"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:305
+#: packages/axolos-ia/bin/axolos-ia-chat:311
 msgid "Autocompletado"
 msgstr "Autocomplétion"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:390
+#: packages/axolos-ia/bin/axolos-ia-chat:396
 msgid "Razonamiento"
 msgstr "Raisonnement"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:401
+#: packages/axolos-ia/bin/axolos-ia-chat:407
 msgid "Copiar"
 msgstr "Copier"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:405
+#: packages/axolos-ia/bin/axolos-ia-chat:411
 msgid "Regenerar"
 msgstr "Régénérer"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:434
+#: packages/axolos-ia/bin/axolos-ia-chat:440
 msgid "Cargando el modelo"
 msgstr "Chargement du modèle"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:434
+#: packages/axolos-ia/bin/axolos-ia-chat:440
 msgid "Pensando"
 msgstr "Réflexion"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:442
+#: packages/axolos-ia/bin/axolos-ia-chat:448
 msgid "Pensando…"
 msgstr "Réflexion…"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:447
+#: packages/axolos-ia/bin/axolos-ia-chat:453
 msgid "Ver razonamiento"
 msgstr "Voir le raisonnement"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:458
+#: packages/axolos-ia/bin/axolos-ia-chat:464
 #, python-brace-format
 msgid "<span style=\"color:{0}\">(respuesta detenida)</span>"
 msgstr "<span style=\"color:{0}\">(réponse interrompue)</span>"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:467
+#: packages/axolos-ia/bin/axolos-ia-chat:473
 #, python-brace-format
 msgid "<span style=\"color:{0}\">No he podido responder: {1}</span>"
 msgstr "<span style=\"color:{0}\">Je n'ai pas pu répondre : {1}</span>"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:472
+#: packages/axolos-ia/bin/axolos-ia-chat:478
 msgid "Copiado"
 msgstr "Copié"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:479
+#: packages/axolos-ia/bin/axolos-ia-chat:485
 msgid "Código copiado"
 msgstr "Code copié"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:518
+#: packages/axolos-ia/bin/axolos-ia-chat:524
 msgid "Conectando con la IA local…"
 msgstr "Connexion à l'IA locale…"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:538
+#: packages/axolos-ia/bin/axolos-ia-chat:544
 msgid "Ocultar el historial (Ctrl+B)"
 msgstr "Masquer l'historique (Ctrl+B)"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:542
+#: packages/axolos-ia/bin/axolos-ia-chat:548
 msgid "  Nueva conversación"
 msgstr "  Nouvelle conversation"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:549
+#: packages/axolos-ia/bin/axolos-ia-chat:555
 msgid "Buscar en el historial  (Ctrl+K)"
 msgstr "Rechercher dans l'historique  (Ctrl+K)"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:561
+#: packages/axolos-ia/bin/axolos-ia-chat:567
 msgid "● Todo se queda en tu equipo"
 msgstr "● Tout reste sur votre ordinateur"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:579
+#: packages/axolos-ia/bin/axolos-ia-chat:585
 msgid "Mostrar el historial (Ctrl+B)"
 msgstr "Afficher l'historique (Ctrl+B)"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:582
-#: packages/axolos-ia/bin/axolos-ia-chat:1058
+#: packages/axolos-ia/bin/axolos-ia-chat:588
+#: packages/axolos-ia/bin/axolos-ia-chat:1064
 msgid "Nueva conversación"
 msgstr "Nouvelle conversation"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:587
+#: packages/axolos-ia/bin/axolos-ia-chat:593
 msgid "Pensar a fondo"
 msgstr "Réfléchir à fond"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:589
+#: packages/axolos-ia/bin/axolos-ia-chat:595
 msgid "Razona antes de responder: respuestas más cuidadas, algo más lento"
 msgstr "Raisonne avant de répondre : réponses plus soignées, un peu plus lent"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:632
+#: packages/axolos-ia/bin/axolos-ia-chat:638
 msgid "Adjuntar imagen (también puedes arrastrarla)"
 msgstr "Joindre une image (vous pouvez aussi la glisser)"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:636
+#: packages/axolos-ia/bin/axolos-ia-chat:642
 msgid "Pregunta lo que quieras…"
 msgstr "Demandez ce que vous voulez…"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:648
+#: packages/axolos-ia/bin/axolos-ia-chat:654
 msgid "Intro envía · Mayús+Intro, nueva línea · Esc detiene · Ctrl+N nueva"
 msgstr "Entrée envoie · Maj+Entrée, nouvelle ligne · Échap arrête · Ctrl+N nouvelle"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:686
+#: packages/axolos-ia/bin/axolos-ia-chat:692
 msgid "Aún no hay conversaciones"
 msgstr "Aucune conversation pour l'instant"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:686
+#: packages/axolos-ia/bin/axolos-ia-chat:692
 msgid "Sin resultados"
 msgstr "Aucun résultat"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:726
-#: packages/axolos-ia/bin/axolos-ia-chat:734
+#: packages/axolos-ia/bin/axolos-ia-chat:732
+#: packages/axolos-ia/bin/axolos-ia-chat:740
 msgid "Renombrar"
 msgstr "Renommer"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:727
+#: packages/axolos-ia/bin/axolos-ia-chat:733
 msgid "Exportar a Markdown…"
 msgstr "Exporter en Markdown…"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:729
+#: packages/axolos-ia/bin/axolos-ia-chat:735
 msgid "Eliminar"
 msgstr "Supprimer"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:734
+#: packages/axolos-ia/bin/axolos-ia-chat:740
 msgid "Nombre de la conversación:"
 msgstr "Nom de la conversation :"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:745
+#: packages/axolos-ia/bin/axolos-ia-chat:751
 msgid "Exportar conversación"
 msgstr "Exporter la conversation"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:751
+#: packages/axolos-ia/bin/axolos-ia-chat:757
 msgid "Tú"
 msgstr "Vous"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:756
+#: packages/axolos-ia/bin/axolos-ia-chat:762
 msgid "Eliminar conversación"
 msgstr "Supprimer la conversation"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:757
+#: packages/axolos-ia/bin/axolos-ia-chat:763
 #, python-brace-format
 msgid "¿Eliminar esta conversación? Se mueve a la papelera de Axo ({0})."
 msgstr "Supprimer cette conversation ? Elle va dans la corbeille d'Axo ({0})."
 
-#: packages/axolos-ia/bin/axolos-ia-chat:789
+#: packages/axolos-ia/bin/axolos-ia-chat:795
 msgid "Encender la IA local"
 msgstr "Démarrer l'IA locale"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:789
+#: packages/axolos-ia/bin/axolos-ia-chat:795
 msgid "La IA local está apagada."
 msgstr "L'IA locale est arrêtée."
 
-#: packages/axolos-ia/bin/axolos-ia-chat:791
+#: packages/axolos-ia/bin/axolos-ia-chat:797
 msgid "Aún no hay ningún modelo descargado."
 msgstr "Aucun modèle n'a encore été téléchargé."
 
-#: packages/axolos-ia/bin/axolos-ia-chat:792
+#: packages/axolos-ia/bin/axolos-ia-chat:798
 #, python-brace-format
 msgid "Descargar {0}"
 msgstr "Télécharger {0}"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:803
+#: packages/axolos-ia/bin/axolos-ia-chat:809
 msgid "Encendiendo la IA local…"
 msgstr "Démarrage de l'IA locale…"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:808
+#: packages/axolos-ia/bin/axolos-ia-chat:814
 msgid "Descargando el modelo… 0 %"
 msgstr "Téléchargement du modèle… 0 %"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:811
+#: packages/axolos-ia/bin/axolos-ia-chat:817
 #, python-brace-format
 msgid "Error: {err}"
 msgstr "Erreur : {err}"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:846
+#: packages/axolos-ia/bin/axolos-ia-chat:852
 msgid "¿En qué te ayudo?"
 msgstr "Comment puis-je vous aider ?"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:849
+#: packages/axolos-ia/bin/axolos-ia-chat:855
 msgid "Soy Axo, la IA de tu equipo. Funciono sin internet y nada de lo que me cuentes sale de aquí."
 msgstr "Je suis Axo, l'IA de votre ordinateur. Je fonctionne sans internet et rien de ce que vous me dites ne sort d'ici."
 
-#: packages/axolos-ia/bin/axolos-ia-chat:868
+#: packages/axolos-ia/bin/axolos-ia-chat:874
 msgid "Explícame un error"
 msgstr "Expliquer une erreur"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:868
+#: packages/axolos-ia/bin/axolos-ia-chat:874
 msgid "Pega el mensaje de la terminal y te digo qué pasa"
 msgstr "Collez le message du terminal et je vous dis ce qui se passe"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:869
+#: packages/axolos-ia/bin/axolos-ia-chat:875
 msgid ""
 "Explícame qué significa este error y cómo lo arreglo:\n"
 "\n"
@@ -1465,27 +1469,27 @@ msgstr ""
 "Explique-moi ce que signifie cette erreur et comment la corriger :\n"
 "\n"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:870
+#: packages/axolos-ia/bin/axolos-ia-chat:876
 msgid "En Python, bash o fish, listo para usar"
 msgstr "En Python, bash ou fish, prêt à l'emploi"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:870
+#: packages/axolos-ia/bin/axolos-ia-chat:876
 msgid "Escribe un script"
 msgstr "Écrire un script"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:871
+#: packages/axolos-ia/bin/axolos-ia-chat:877
 msgid "Escribe un script de Python que "
 msgstr "Écris un script Python qui "
 
-#: packages/axolos-ia/bin/axolos-ia-chat:872
+#: packages/axolos-ia/bin/axolos-ia-chat:878
 msgid "Fallos, mejoras y buenas prácticas"
 msgstr "Bogues, améliorations et bonnes pratiques"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:872
+#: packages/axolos-ia/bin/axolos-ia-chat:878
 msgid "Revisa mi código"
 msgstr "Relire mon code"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:873
+#: packages/axolos-ia/bin/axolos-ia-chat:879
 msgid ""
 "Revisa este código y dime cómo mejorarlo:\n"
 "\n"
@@ -1493,35 +1497,35 @@ msgstr ""
 "Relis ce code et dis-moi comment l'améliorer :\n"
 "\n"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:874
+#: packages/axolos-ia/bin/axolos-ia-chat:880
 msgid "Comandos de Linux"
 msgstr "Commandes Linux"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:874
+#: packages/axolos-ia/bin/axolos-ia-chat:880
 msgid "Cómo hacer algo en AxolOS desde la terminal"
 msgstr "Comment faire quelque chose dans AxolOS depuis le terminal"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:875
+#: packages/axolos-ia/bin/axolos-ia-chat:881
 msgid "¿Cómo puedo, desde la terminal, "
 msgstr "Comment puis-je, depuis le terminal, "
 
-#: packages/axolos-ia/bin/axolos-ia-chat:1048
+#: packages/axolos-ia/bin/axolos-ia-chat:1054
 msgid "Detener (Esc)"
 msgstr "Arrêter (Échap)"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:1048
+#: packages/axolos-ia/bin/axolos-ia-chat:1054
 msgid "Enviar (Intro)"
 msgstr "Envoyer (Entrée)"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:1065
+#: packages/axolos-ia/bin/axolos-ia-chat:1071
 msgid "Adjuntar imagen"
 msgstr "Joindre une image"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:1066
+#: packages/axolos-ia/bin/axolos-ia-chat:1072
 msgid "Imágenes (*.png *.jpg *.jpeg *.webp)"
 msgstr "Images (*.png *.jpg *.jpeg *.webp)"
 
-#: packages/axolos-ia/bin/axolos-ia-chat:1111
+#: packages/axolos-ia/bin/axolos-ia-chat:1117
 msgid "Axo, la IA local de AxolOS"
 msgstr "Axo, l'IA locale d'AxolOS"
 
@@ -1700,21 +1704,21 @@ msgstr ""
 "\n"
 "Titre de cette conversation :"
 
-#: packages/axolos-kde-settings/axolos-aspecto:57
+#: packages/axolos-kde-settings/axolos-aspecto:88
 msgid "AxolOS cambiará solo: claro de día y oscuro de noche."
 msgstr "AxolOS changera tout seul : clair le jour et sombre la nuit."
 
-#: packages/axolos-kde-settings/axolos-aspecto:61
-#: packages/axolos-kde-settings/axolos-aspecto:94
+#: packages/axolos-kde-settings/axolos-aspecto:92
+#: packages/axolos-kde-settings/axolos-aspecto:162
 msgid "AxolOS claro"
 msgstr "AxolOS clair"
 
-#: packages/axolos-kde-settings/axolos-aspecto:61
-#: packages/axolos-kde-settings/axolos-aspecto:94
+#: packages/axolos-kde-settings/axolos-aspecto:92
+#: packages/axolos-kde-settings/axolos-aspecto:162
 msgid "AxolOS oscuro"
 msgstr "AxolOS sombre"
 
-#: packages/axolos-kde-settings/axolos-aspecto:80
+#: packages/axolos-kde-settings/axolos-aspecto:148
 msgid ""
 "axolos-aspecto · modo del escritorio de cristal líquido de AxolOS.\n"
 "\n"
@@ -1733,7 +1737,7 @@ msgstr ""
 "  axolos-aspecto auto           change tout seul : clair le jour, sombre la nuit (Plasma)\n"
 "  axolos-aspecto --migrar       une fois par version à la connexion : met à jour un compte existant\n"
 
-#: packages/axolos-kde-settings/axolos-aspecto:95
+#: packages/axolos-kde-settings/axolos-aspecto:163
 msgid "automático: claro de día y oscuro de noche"
 msgstr "automatique : clair le jour et sombre la nuit"
 
