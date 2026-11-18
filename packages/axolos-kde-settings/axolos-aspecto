@@ -16,7 +16,7 @@ except ImportError:
         return texto
 
 OSCURO, CLARO = "com.noel.axolos", "com.noel.axolos.claro"
-VERSION_ASPECTO = "4"     # 2 = cristal líquido · 3 = barra y dock de cristal · 4 = apps GTK de cristal
+VERSION_ASPECTO = "5"     # 2 = cristal · 3 = barra y dock · 4 = apps GTK · 5 = repara el cristal apagado por la 4
 MARCA = Path(os.environ.get("XDG_STATE_HOME", Path.home() / ".local/state")) / "axolos/aspecto"
 
 
@@ -35,6 +35,26 @@ def escribir(archivo, grupo, clave, valor=None):
 MORADOS = ("166,154,254", "118,98,206")   # acento de AxolOS oscuro y claro (los pone cada tema global)
 
 
+def quitar(archivo, grupo, claves):
+    """Quita claves de UN archivo de la cuenta (no de la cascada de KDE). No usa «kwriteconfig6 --delete»:
+    si la clave solo existe en la configuración del sistema (/etc/xdg), deja «clave[$d]», que TAPA el
+    valor del sistema (así la migración 4 apagó el cristal: glassEnabled[$d] → KWin volvía al desenfoque)."""
+    ruta = Path(archivo) if os.path.isabs(archivo) else \
+        Path(os.environ.get("XDG_CONFIG_HOME", Path.home() / ".config")) / archivo
+    if not ruta.exists():
+        return
+    lineas, dentro, cambiado = [], False, False
+    for linea in ruta.read_text(encoding="utf-8").splitlines(keepends=True):
+        if linea.startswith("["):
+            dentro = linea.strip() == f"[{grupo}]"
+        elif dentro and re.match(r"^(%s)(\[[^\]]*\])*\s*(=|$)" % "|".join(map(re.escape, claves)), linea.strip()):
+            cambiado = True
+            continue
+        lineas.append(linea)
+    if cambiado:
+        ruta.write_text("".join(lineas), encoding="utf-8")
+
+
 def aplicar(paquete):
     """Tema global sin tocar la disposición del escritorio (paneles y widgets se quedan)."""
     # un acento de AxolOS guardado en la cuenta taparía el del otro modo (lila claro sobre cristal claro)
@@ -42,7 +62,7 @@ def aplicar(paquete):
     for archivo in ("kdeglobals", defectos):
         for clave in ("AccentColor", "LastUsedCustomAccentColor"):
             if leer(archivo, "General", clave) in MORADOS:
-                escribir(archivo, "General", clave)
+                quitar(archivo, "General", [clave])
     subprocess.run(["plasma-apply-lookandfeel", "--apply", paquete], check=False,
                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     if shutil.which("qdbus6"):
@@ -115,9 +135,7 @@ def migrar():
     if anterior in ("", "1", "2", "3"):
         gtk_de_cristal()
     # el cristal (Glass) y el desenfoque normal no pueden ir juntos: decide /etc/xdg/kwinrc
-    for clave in ("blurEnabled", "glassEnabled"):
-        if leer("kwinrc", "Plugins", clave):
-            escribir("kwinrc", "Plugins", clave)
+    quitar("kwinrc", "Plugins", ["blurEnabled", "glassEnabled"])   # también los «[$d]» de la versión 4
     parejas()
     paquete = leer("kdeglobals", "KDE", "LookAndFeelPackage")
     if paquete in ("", OSCURO, CLARO) and leer("kdeglobals", "KDE", "AutomaticLookAndFeel") != "true":

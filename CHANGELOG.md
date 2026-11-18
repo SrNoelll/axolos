@@ -10,6 +10,9 @@ AxolOS packages are published continuously; each entry groups a visible change.
   aside (normal blur) if it ever needs instructions the processor lacks.
 - The login screen never loads the KWin glass effect (its refraction is drawn in QML), so a broken
   effect can no longer prevent logging in.
+- The account update at login (`axolos-aspecto --migrar` 4) turned the glass off: deleting a key with
+  `kwriteconfig6 --delete` left `glassEnabled[$d]`, which hides the system setting. It now edits the
+  account's own file, and version 5 removes those markers so the glass comes back.
 
 ## 2026-11-18 — Windows and global themes
 

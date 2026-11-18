@@ -29,11 +29,14 @@ mkdir -p "$T/config/Kvantum" && cp -r "$A/Kvantum/AxolOS" "$T/config/Kvantum/"
 for v in 3 4; do
   [[ -f "$T/config/gtk-$v.0/gtk.css" ]] && sed -i "s|file:///usr/share/axolos/gtk/|file://$A/axolos/gtk/|" "$T/config/gtk-$v.0/gtk.css"
 done
-glass=/usr/lib/qt6/plugins/kwin/effects/plugins/glass.so
+glass=${GLASS_SO:-/usr/lib/qt6/plugins/kwin/effects/plugins/glass.so}
 [[ -f $glass ]] || glass=/usr/lib/axolos/cristal/glass.so.otra-version
 [[ -f $glass ]] && cp "$glass" "$T/plugins/kwin/effects/plugins/glass.so"
 { grep -v '^\[Plugins\]\|^cubeEnabled' "$T/config/kwinrc" 2>/dev/null || true
-  cat "$REPO/packages/axolos-glass/kwinrc"; } > "$T/kwinrc" && mv "$T/kwinrc" "$T/config/kwinrc"
+  if [[ -n "${SIN_CRISTAL:-}" ]]; then      # como si el cristal estuviera apartado: desenfoque normal
+    sed -e 's/^glassEnabled=true/glassEnabled=false/' -e 's/^blurEnabled=false/blurEnabled=true/' \
+      "$REPO/packages/axolos-glass/kwinrc"
+  else cat "$REPO/packages/axolos-glass/kwinrc"; fi; } > "$T/kwinrc" && mv "$T/kwinrc" "$T/config/kwinrc"
 # ventanas colocadas: la primera a la izquierda, la segunda a la derecha (con foco)
 cat > "$T/config/kwinrulesrc" <<'EOF'
 [1]
